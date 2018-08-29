@@ -2,7 +2,7 @@
 <form v-on:submit.prevent="onSubmit">
     <div class="form-row">
         <label>Last.fm username</label>
-        <input type="text" v-model="username" v-on:keyup.prevent="onNameChange" placeholder="Last.fm username" required>
+        <input type="text" v-model="userName" v-on:keyup.prevent="onNameChange" placeholder="Last.fm username" required>
     </div>
     <div class="form-row">
         <label>Chart type</label>
@@ -15,8 +15,8 @@
     <div class="form-row">
         <label>Initial date</label>
         <div class="form-row">
-            <input type="date" v-model="startdate" required>
-            <input type="time" v-model="starttime" required>
+            <input type="date" v-model="startDate" required>
+            <input type="time" v-model="startTime" required>
         </div>
     </div>
     <div class="form-row">
@@ -43,23 +43,25 @@ export default Vue.extend({
     name: 'LastFmForm',
     data() {
       return {
-        username: '',
+        userName: '',
         type: 'music',
-        startdate: null,
-        starttime: null,
+        startDate: '',
+        startTime: '00:00',
         timezone: moment.tz.guess(),
-        period: null,
+        period: '',
         timezones: moment.tz.names(),
         timer: null,
-        validusername: false,
+        validUserName: false,
       };
     },
     methods: {
         onSubmit() {
-            console.log(this.username, this.type);
+            if (this.validUserName) {
+                alert('hello, ' + this.userName);
+            }
         },
         onNameChange() {
-            if(this.username.length > 0) {
+            if (this.userName.length > 0) {
                 if (this.timer) {
                     // @ts-ignore
                     clearTimeout(this.timer);
@@ -67,13 +69,33 @@ export default Vue.extend({
                 }
                 // @ts-ignore
                 this.timer = setTimeout(() => {
-                    lastfm.getUserInfo(this.username, (response) => {
-                        if(!(response instanceof Error)) {
-                            this.validusername = true;
-                            console.log(response.data.user);
-                        }else{
-                            this.validusername = false;
+                    const $this = this;
+                    lastfm.getUserInfo($this.userName)
+                    .then((response) => {
+                        $this.validUserName = true;
+                        const date = new Date(response.data.user.registered.unixtime * 1000);
+                        const year = date.getFullYear();
+                        let month = (date.getMonth() + 1) + '';
+                        let day = date.getDate() + '';
+                        if (parseInt(month, 10) < 10) {
+                            month = '0' + month;
                         }
+                        if (parseInt(day, 10) < 10) {
+                            day = '0' + day;
+                        }
+                        let hour = date.getHours() + '';
+                        let minute = date.getMinutes() + '';
+                        if (parseInt(hour, 10) < 10) {
+                            hour = '0' + hour;
+                        }
+                        if (parseInt(minute, 10) < 10) {
+                            minute = '0' + minute;
+                        }
+                        $this.startDate =  year + '-' + month + '-' + day;
+                        $this.startTime = hour + ':' + minute;
+                    })
+                    .catch((error) => {
+                        $this.validUserName = false;
                     });
                 }, 800);
             }

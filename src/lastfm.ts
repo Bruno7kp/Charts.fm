@@ -10,21 +10,15 @@ export default class LastFm {
         this.secret = secret;
     }
 
-    public getUserInfo(user: string, callback: (response: any) => void) {
-        axios.get(this.url, {
+    public getUserInfo(user: string) {
+        return axios.get(this.url, {
             params: {
                 method: 'user.getinfo',
                 user,
                 api_key: this.key,
                 format: 'json',
             },
-        })
-        .then((response) => {
-            return callback(response);
-        })
-        .catch((error) => {
-            return callback(error);
         });
     }
-
 }
+
