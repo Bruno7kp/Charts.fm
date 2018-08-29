@@ -2,7 +2,7 @@
 <form v-on:submit.prevent="onSubmit">
     <div class="form-row">
         <label>Last.fm username</label>
-        <input type="text" v-model="username" placeholder="Last.fm username" required>
+        <input type="text" v-model="username" v-on:keyup.prevent="onNameChange" placeholder="Last.fm username" required>
     </div>
     <div class="form-row">
         <label>Chart type</label>
@@ -36,23 +36,47 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import * as moment from 'moment';
 import 'moment-timezone';
+import LastFm from './../lastfm';
+const lastfm = new LastFm('9e85a3a06e3a65add8a29f7cacefc67e', 'cbd096d7053a3bac648348c023db7a52');
 
 export default Vue.extend({
     name: 'LastFmForm',
     data() {
       return {
-        username: null,
+        username: '',
         type: 'music',
         startdate: null,
         starttime: null,
         timezone: moment.tz.guess(),
         period: null,
         timezones: moment.tz.names(),
+        timer: null,
+        validusername: false,
       };
     },
     methods: {
         onSubmit() {
             console.log(this.username, this.type);
+        },
+        onNameChange() {
+            if(this.username.length > 0) {
+                if (this.timer) {
+                    // @ts-ignore
+                    clearTimeout(this.timer);
+                    this.timer = null;
+                }
+                // @ts-ignore
+                this.timer = setTimeout(() => {
+                    lastfm.getUserInfo(this.username, (response) => {
+                        if(!(response instanceof Error)) {
+                            this.validusername = true;
+                            console.log(response.data.user);
+                        }else{
+                            this.validusername = false;
+                        }
+                    });
+                }, 800);
+            }
         },
     },
  });
