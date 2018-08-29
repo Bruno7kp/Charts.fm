@@ -103,26 +103,3 @@ export default Vue.extend({
     },
  });
 </script>
-
-<style lang="scss" scoped>
-form {
-    max-width: 30em;
-    display: grid;
-    grid-gap: .6em 0;
-    margin: 0 auto;
-}
-form .form-row {
-    display: flex;
-    width: 100%;
-}
-form label {
-  display: block;
-  width: 50%;
-}
-
-input, select {
-    font-size: 1em;
-    border: 1px black solid;
-    width: 100%;
-}
-</style>
