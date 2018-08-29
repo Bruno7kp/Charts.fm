@@ -1,5 +1,5 @@
 <template>
-<form v-on:submit.prevent="onSubmit">
+<b-form v-on:submit.prevent="onSubmit">
     <div class="form-row">
         <label>Last.fm username</label>
         <input type="text" v-model="userName" v-on:keyup.prevent="onNameChange" placeholder="Last.fm username" required>
@@ -29,7 +29,7 @@
     </div>
     
     <input type="submit" value="Go!">
-</form>
+</b-form>
 </template>
 
 <script lang="ts">
