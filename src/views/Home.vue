@@ -1,6 +1,5 @@
 <template>
-  <div class="home">
-    <h1>Light Zero</h1>
+  <div class="container">
     <LastFmForm />
   </div>
 </template>
