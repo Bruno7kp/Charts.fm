@@ -47,70 +47,70 @@
 </template>
 
 <script lang="ts">
-import * as _ from "lodash";
-import { Component, Prop, Vue } from "vue-property-decorator";
-import * as moment from "moment";
-import "moment-timezone";
-import LastFm from "./../lastfm/lastfm";
+import * as _ from 'lodash';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+import * as moment from 'moment';
+import 'moment-timezone';
+import LastFm from './../lastfm/lastfm';
 const lastfm = new LastFm(
-  "9e85a3a06e3a65add8a29f7cacefc67e",
-  "cbd096d7053a3bac648348c023db7a52"
+  '9e85a3a06e3a65add8a29f7cacefc67e',
+  'cbd096d7053a3bac648348c023db7a52',
 );
 
 export default Vue.extend({
-  name: "LastFmForm",
+  name: 'LastFmForm',
   data() {
     return {
-      userName: "",
-      type: "music",
-      startDate: "",
-      startTime: "00:00",
+      userName: '',
+      type: 'music',
+      startDate: '',
+      startTime: '00:00',
       timezone: moment.tz.guess(),
-      period: "",
+      period: '',
       timezones: moment.tz.names(),
       timer: null,
-      validUserName: false
+      validUserName: false,
     };
   },
   watch: {
-    userName: function(newUserName, oldUserName) {
+    userName(newUserName, oldUserName) {
       this.getUserName();
-    }
+    },
   },
   methods: {
     getUserName() {
       const $this = this;
-      console.log($this.userName);
+      /* console.log($this.userName); */
       _.delay(() => {
         if ($this.userName.length > 0) {
           lastfm.user()
             .getInfo($this.userName)
-            .then(response => {
+            .then((response) => {
               $this.validUserName = true;
               const date = new Date(
-                response.data.user.registered.unixtime * 1000
+                response.data.user.registered.unixtime * 1000,
               );
               const year = date.getFullYear();
-              let month = date.getMonth() + 1 + "";
-              let day = date.getDate() + "";
+              let month = date.getMonth() + 1 + '';
+              let day = date.getDate() + '';
               if (parseInt(month, 10) < 10) {
-                month = "0" + month;
+                month = '0' + month;
               }
               if (parseInt(day, 10) < 10) {
-                day = "0" + day;
+                day = '0' + day;
               }
-              let hour = date.getHours() + "";
-              let minute = date.getMinutes() + "";
+              let hour = date.getHours() + '';
+              let minute = date.getMinutes() + '';
               if (parseInt(hour, 10) < 10) {
-                hour = "0" + hour;
+                hour = '0' + hour;
               }
               if (parseInt(minute, 10) < 10) {
-                minute = "0" + minute;
+                minute = '0' + minute;
               }
-              $this.startDate = year + "-" + month + "-" + day;
-              //$this.startTime = hour + ":" + minute;
+              $this.startDate = year + '-' + month + '-' + day;
+              /* $this.startTime = hour + ':' + minute; */
             })
-            .catch(error => {
+            .catch((error) => {
               $this.validUserName = false;
             });
         } else {
@@ -120,11 +120,11 @@ export default Vue.extend({
     },
     onSubmit() {
       if (this.validUserName) {
-        alert("hello, " + this.userName);
+        alert('hello, ' + this.userName);
       } else {
-        alert("invalid username");
+        alert('invalid username');
       }
-    }
-  }
+    },
+  },
 });
 </script>
