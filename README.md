@@ -1,4 +1,4 @@
-# light-zero
+# ONE
 
 ## Project setup
 ```
