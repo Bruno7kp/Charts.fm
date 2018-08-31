@@ -108,7 +108,7 @@ export default Vue.extend({
                 minute = "0" + minute;
               }
               $this.startDate = year + "-" + month + "-" + day;
-              $this.startTime = hour + ":" + minute;
+              //$this.startTime = hour + ":" + minute;
             })
             .catch(error => {
               $this.validUserName = false;
