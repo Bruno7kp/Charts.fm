@@ -51,7 +51,7 @@ import * as _ from "lodash";
 import { Component, Prop, Vue } from "vue-property-decorator";
 import * as moment from "moment";
 import "moment-timezone";
-import LastFm from "./../lastfm";
+import LastFm from "./../lastfm/lastfm";
 const lastfm = new LastFm(
   "9e85a3a06e3a65add8a29f7cacefc67e",
   "cbd096d7053a3bac648348c023db7a52"
@@ -83,8 +83,8 @@ export default Vue.extend({
       console.log($this.userName);
       _.delay(() => {
         if ($this.userName.length > 0) {
-          lastfm
-            .getUserInfo($this.userName)
+          lastfm.user()
+            .getInfo($this.userName)
             .then(response => {
               $this.validUserName = true;
               const date = new Date(
@@ -121,6 +121,8 @@ export default Vue.extend({
     onSubmit() {
       if (this.validUserName) {
         alert("hello, " + this.userName);
+      } else {
+        alert("invalid username");
       }
     }
   }
