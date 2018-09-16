@@ -7,7 +7,7 @@
     <b-collapse is-nav id="nav_collapse">
 
     <b-navbar-nav>
-        <b-nav-item>Week.fm</b-nav-item>
+        <b-nav-item to="/week">Week.fm</b-nav-item>
         <b-nav-item>Month.fm</b-nav-item>
         <b-nav-item>Year.fm</b-nav-item>
         <b-nav-item to="/about">About</b-nav-item>      

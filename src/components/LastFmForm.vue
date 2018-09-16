@@ -85,6 +85,7 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import * as moment from 'moment';
 import 'moment-timezone';
 import LastFm from './../lastfm/lastfm';
+import User from '@/charts/user';
 const lastfm = new LastFm(
   '9e85a3a06e3a65add8a29f7cacefc67e',
   'cbd096d7053a3bac648348c023db7a52',
@@ -98,7 +99,7 @@ export default Vue.extend({
       type: 'music',
       startDate: '',
       startTime: '00:00',
-      endDate: '',
+      endDate: '2018-01-01',
       endTime: '00:00',
       timezone: moment.tz.guess(),
       period: '',
@@ -158,6 +159,8 @@ export default Vue.extend({
     onSubmit() {
       if (this.validUserName) {
         alert('hello, ' + this.userName);
+        const user = new User(this.userName);
+        this.$store.dispatch('addUser', user);
       } else {
         alert('invalid username');
       }
