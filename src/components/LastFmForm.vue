@@ -1,48 +1,81 @@
 <template>
 <b-form v-on:submit.prevent="onSubmit">
-    <div class="form-row">
-        <b-form-group id="userNameInputGroup1"
-            label="Last.fm username:"
-            label-for="userNameInput1"
-            description="We'll never share your email with anyone else.">
-            <b-form-input id="userNameInput1"
-                type="text"
-                v-model.trim="userName"
-                required
-                :state="validUserName"
-                aria-describedby="inputLiveFeedback"
-                placeholder="Enter username">
-            </b-form-input>
-            <b-form-invalid-feedback id="inputLiveFeedback">
-                Username not found
-            </b-form-invalid-feedback>
-        </b-form-group>
-    </div>
-    <div class="form-row">
-        <label>Chart type</label>
-        <select v-model="type" required>
-            <option value="artist">Artist</option>
-            <option value="album">Album</option>
-            <option value="music">Music</option>
-        </select>
-    </div>
-    <div class="form-row">
-        <label>Initial date</label>
-        <div class="form-row">
-            <input type="date" v-model="startDate" required>
-            <input type="time" v-model="startTime" required>
-        </div>
-    </div>
-    <div class="form-row">
-        <label>Timezone</label>
-        <select v-model="timezone">
-            <option v-for="zone in timezones" v-bind:value="zone" v-bind:key="zone">
-                {{ zone }}
-            </option>
-        </select>
-    </div>
-    
-    <input type="submit" value="Go!">
+  <b-row>
+    <b-col sm="6">
+      <b-form-group label="Last.fm username:" label-for="userName">
+        <b-form-input id="userName"
+            type="text"
+            v-model.trim="userName"
+            required
+            :state="validUserName"
+            aria-describedby="inputLiveFeedback"
+            placeholder="Enter username">
+        </b-form-input>
+        <b-form-invalid-feedback id="inputLiveFeedback">
+            Username not found
+        </b-form-invalid-feedback>
+      </b-form-group>
+    </b-col>
+    <b-col sm="6">
+      <b-form-group label="Chart type" label-for="type">
+        <b-select id="type" v-model="type" :options="types"></b-select>
+      </b-form-group>
+    </b-col>
+  </b-row>
+	<b-row>
+    <b-col sm="6">
+			<b-form-group label="Start date" label-for="startDate">
+				<b-form-row>
+					<b-col sm="6">
+						<b-form-input id="startDate"
+							type="date"
+							v-model="startDate"
+							required>
+						</b-form-input>
+					</b-col>
+					<b-col sm="6">
+						<b-form-input id="startTime"
+							type="time"
+							v-model="startTime"
+							required>
+						</b-form-input>
+					</b-col>
+				</b-form-row>
+			</b-form-group>
+		</b-col>
+		<b-col sm="6">
+			<b-form-group label="End date" label-for="endDate">
+				<b-form-row>
+					<b-col sm="6">
+						<b-form-input id="endDate"
+							type="date"
+							v-model="endDate"
+							required>
+						</b-form-input>
+					</b-col>
+					<b-col sm="6">
+						<b-form-input id="endTime"
+							type="time"
+							v-model="endTime"
+							required>
+						</b-form-input>
+					</b-col>
+				</b-form-row>
+			</b-form-group>
+		</b-col>
+	</b-row>
+  <b-row>
+    <b-col sm="6">
+      <b-form-group label="Timezone" label-for="timezone">
+		    <b-select id="timezone" v-model="timezone" :options="timezones"></b-select>
+	    </b-form-group>
+    </b-col>
+  </b-row>
+	<b-row>
+    <b-col>
+      <b-btn type="submit" variant="success">Go!</b-btn>
+    </b-col>
+  </b-row>
 </b-form>
 </template>
 
@@ -65,8 +98,11 @@ export default Vue.extend({
       type: 'music',
       startDate: '',
       startTime: '00:00',
+      endDate: '',
+      endTime: '00:00',
       timezone: moment.tz.guess(),
       period: '',
+      types: { artist: 'Artist', album: 'Album', music: 'Music' },
       timezones: moment.tz.names(),
       timer: null,
       validUserName: false,
@@ -83,7 +119,8 @@ export default Vue.extend({
       /* console.log($this.userName); */
       _.delay(() => {
         if ($this.userName.length > 0) {
-          lastfm.user()
+          lastfm
+            .user()
             .getInfo($this.userName)
             .then((response) => {
               $this.validUserName = true;

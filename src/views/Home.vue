@@ -1,6 +1,16 @@
 <template>
-  <div class="container">
-    <LastFmForm />
+  <div>
+    <b-jumbotron fluid>
+      <template slot="header">
+        Charts.fm
+      </template>
+      <template slot="lead">
+        Create charts based on your <a href="https://last.fm">Last.fm</a> profile.
+      </template>
+    </b-jumbotron>
+    <b-container>
+      <LastFmForm />
+    </b-container>
   </div>
 </template>
 
