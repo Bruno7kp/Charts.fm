@@ -5,21 +5,21 @@
         Weekly.fm
       </template>
       <template slot="lead">
-        Create charts based on your <a href="https://last.fm">Last.fm</a> profile.
+        Create charts based on your <a href="https://last.fm" target="_blank">Last.fm</a> profile.
       </template>
     </b-jumbotron>
     <b-container>
-      <LastFmForm />
+      <WeeklyForm />
     </b-container>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
-import LastFmForm from '@/components/LastFmForm.vue';
+import WeeklyForm from '@/components/WeeklyForm.vue';
 @Component({
   components: {
-    LastFmForm,
+    WeeklyForm,
   },
 })
 export default class Week extends Vue {}

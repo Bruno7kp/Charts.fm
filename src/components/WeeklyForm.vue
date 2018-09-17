@@ -88,7 +88,7 @@ import LastFm from './../lastfm';
 import User from '@/charts/user';
 
 export default Vue.extend({
-  name: 'LastFmForm',
+  name: 'WeeklyForm',
   data() {
     return {
       userName: '',

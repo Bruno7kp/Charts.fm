@@ -4,9 +4,8 @@ import LastFmArtistApi from '@/lastfm/artist';
 import LastFmAlbumApi from '@/lastfm/album';
 import LastFmTrackApi from '@/lastfm/track';
 
-export default class LastFm {
-    private key: string;
-    private secret: string;
+export default class LastFmApiWrapper {
+    private key: string | undefined;
     private baseUrl: string;
     private lang: string = 'en';
     private autocorrect: boolean = false;
@@ -16,9 +15,8 @@ export default class LastFm {
     private artistApi: LastFmArtistApi;
     private trackApi: LastFmTrackApi;
 
-    constructor(key: string, secret: string, baseUrl: string = 'https://ws.audioscrobbler.com/2.0/') {
+    constructor(key: string | undefined, baseUrl: string = 'https://ws.audioscrobbler.com/2.0/') {
         this.key = key;
-        this.secret = secret;
         this.baseUrl = baseUrl;
 
         this.userApi = new LastFmUserApi(this);
@@ -35,12 +33,8 @@ export default class LastFm {
         this.autocorrect = autocorrect;
     }
 
-    public getKey(): string {
+    public getKey(): string | undefined {
         return this.key;
-    }
-
-    public getSecret(): string {
-        return this.secret;
     }
 
     public getBaseUrl(): string {
@@ -73,5 +67,5 @@ export default class LastFm {
 }
 
 export interface LastFmApi {
-    lastfm: LastFm;
+    lastfm: LastFmApiWrapper;
 }

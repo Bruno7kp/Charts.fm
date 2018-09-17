@@ -1,10 +1,10 @@
 import axios from 'axios';
-import LastFm, { LastFmApi } from '@/lastfm/lastfm';
+import LastFmApiWrapper, { LastFmApi } from '@/lastfm/lastfm';
 
 export default class LastFmTrackApi implements LastFmApi {
-    public lastfm: LastFm;
+    public lastfm: LastFmApiWrapper;
 
-    constructor(lastfm: LastFm) {
+    constructor(lastfm: LastFmApiWrapper) {
         this.lastfm = lastfm;
     }
 
