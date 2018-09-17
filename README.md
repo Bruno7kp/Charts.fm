@@ -1,4 +1,4 @@
-# ONE
+# Charts.fm
 
 ## Project setup
 ```

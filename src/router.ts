@@ -17,8 +17,8 @@ export default new Router({
       component: () => import('./views/About.vue'),
     },
     {
-      path: '/week',
-      name: 'week',
+      path: '/weekly',
+      name: 'weekly',
       component: () => import('./views/Week.vue'),
     },
   ],
