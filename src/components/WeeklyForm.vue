@@ -153,13 +153,7 @@ export default Vue.extend({
       }, 500);
     },
     onSubmit() {
-      if (this.validUserName) {
-        alert('hello, ' + this.userName);
-        const user = new User(this.userName);
-        this.$store.dispatch('addUser', user);
-      } else {
-        alert('invalid username');
-      }
+      // if (this.validUserName) {} else {}
     },
   },
 });
