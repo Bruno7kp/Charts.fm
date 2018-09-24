@@ -20,8 +20,8 @@ import * as _ from 'lodash';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import * as moment from 'moment';
 import 'moment-timezone';
-import LastFm from './../lastfm';
-import User from '@/charts/user';
+import LastFm from '@/lastfm';
+import { User } from '@/charts';
 
 export default Vue.extend({
   name: 'SettingsForm',

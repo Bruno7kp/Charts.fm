@@ -9,17 +9,36 @@
       </template>
     </b-jumbotron>
     <b-container>
-      <WeeklyForm />
+      <b-row>
+        <b-col>
+          <h2>Settings</h2>
+          <WeeklyForm 
+            :user="userName" 
+            :users="users" 
+            :limit="user.weeklyCharts.limit" 
+            :weekDay="user.weeklyCharts.startDay" 
+            :startDate="user.weeklyCharts.startDate" />
+        </b-col>
+        <b-col></b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 @Component({
   components: {
     WeeklyForm,
+  },
+  computed: {
+    ...mapGetters({
+      users: 'getUsersAsOptions',
+      userName: 'getDefaultUserName',
+      user: 'getDefaultUser',
+    }),
   },
 })
 export default class Week extends Vue {}

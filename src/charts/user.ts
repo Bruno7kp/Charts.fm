@@ -1,15 +1,13 @@
-import Week from './week';
+import { WeeklyCharts } from '@/charts';
 
 export default class User {
     public login: string;
     public registerDate: Date;
-    public startDate: Date;
-    public weeks: Week[];
+    public weeklyCharts: WeeklyCharts;
 
     constructor(login: string, registerDate: Date) {
         this.login = login;
-        this.weeks = [];
         this.registerDate = registerDate;
-        this.startDate = registerDate;
+        this.weeklyCharts = new WeeklyCharts(registerDate, []);
     }
 }

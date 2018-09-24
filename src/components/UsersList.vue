@@ -34,12 +34,13 @@ export default Vue.extend({
           label: 'Actions',
         },
       },
-      currentUser: this.$store.state.currentUser,
+      // currentUser: this.$store.state.currentUser,
     };
   },
   computed: {
     ...mapGetters({
       items: 'getUsers',
+      currentUser: 'getDefaultUserName',
     }),
   },
   methods: {

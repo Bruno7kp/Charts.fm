@@ -6,6 +6,7 @@
         <b-form-input id="userName"
             type="text"
             v-model.trim="multableUserName"
+            :formatter="format"
             required
             aria-describedby="inputLiveFeedback"
             placeholder="Enter username">
@@ -23,8 +24,8 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
-import LastFm from './../lastfm';
-import User from '@/charts/user';
+import LastFm from '@/lastfm';
+import { User } from '@/charts';
 
 export default Vue.extend({
   name: 'AddUser',
@@ -53,6 +54,9 @@ export default Vue.extend({
             //
           });
       }
+    },
+    format(value: string, event: any) {
+      return value.toLowerCase();
     },
   },
 });
