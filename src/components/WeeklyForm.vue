@@ -3,24 +3,24 @@
   <b-row>
     <b-col>
       <b-form-group label="User" label-for="user">
-		    <b-select id="user" :value="user" :options="users"></b-select>
+		    <b-select id="user" :value="user" :options="users" required></b-select>
 	    </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Week Day">
-        <b-select :value="weekDay" :options="weekDays"></b-select>
+        <b-select :value="weekDay" :options="weekDays" required></b-select>
       </b-form-group>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-form-group label="Start date">
-        <b-input :value="startDate" type="date" :formatter="dateFormat"></b-input>
+        <b-input :value="startDate" type="date" :formatter="dateFormat" required></b-input>
       </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Limit">
-        <b-input :value="limit" type="number" min="5" max="100"></b-input>
+        <b-input :value="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
   </b-row>
@@ -63,6 +63,16 @@ export default Vue.extend({
     dateFormat(value: string, event: any) {
       const date = moment(value);
       return date.format('YYYY-MM-DD');
+    },
+    numberFormat(value: string, event: any) {
+      const limit = parseInt(value, 10);
+      if (limit < 5) {
+        return 5;
+      } else if (limit > 100) {
+        return 100;
+      } else {
+        return limit;
+      }
     },
   },
 });
