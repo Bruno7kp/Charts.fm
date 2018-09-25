@@ -10,6 +10,11 @@ export default {
       context.commit('SET_CURRENT_USER', { login: user.login });
     }
   },
+  updateUser: (context: any, user: User) => {
+    if (context.getters.getUser(user.login)) {
+      context.commit('UPDATE_USER', user);
+    }
+  },
   setCurrentUser: (context: any, user: string) => {
     context.commit('SET_CURRENT_USER', { login: user });
   },

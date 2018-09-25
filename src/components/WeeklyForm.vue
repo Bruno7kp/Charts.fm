@@ -3,30 +3,30 @@
   <b-row>
     <b-col>
       <b-form-group label="User" label-for="user">
-		    <b-select id="user" :value="user" :options="users" required></b-select>
+		    <b-select id="user" name="user" :value="user" :options="users" required></b-select>
 	    </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Week Day">
-        <b-select :value="weekDay" :options="weekDays" required></b-select>
+        <b-select :value="weekDay" name="weekDay" :options="weekDays" required></b-select>
       </b-form-group>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-form-group label="Start date">
-        <b-input :value="startDate" type="date" :formatter="dateFormat" required></b-input>
+        <b-input :value="startDate" name="startDate" type="date" :formatter="dateFormat" required></b-input>
       </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Limit">
-        <b-input :value="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
+        <b-input :value="limit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="success">Go!</b-btn>
+      <b-btn type="submit" variant="success">Save settings</b-btn>
     </b-col>
   </b-row>
 </b-form>
@@ -48,7 +48,7 @@ export default Vue.extend({
     user: String,
     users: Array,
     weekDay: Number,
-    startDate: Date,
+    startDate: String,
     limit: Number,
   },
   computed: {
@@ -57,8 +57,16 @@ export default Vue.extend({
     }),
   },
   methods: {
-    onSubmit() {
-      // if (this.validUserName) {} else {}
+    onSubmit(event: any) {
+      const els = event.target.elements;
+      const user = this.$store.getters.getUser(els.user.value);
+      if (user !== null) {
+        const d = moment(els.startDate.value).tz(this.$store.state.timezone).toDate();
+        user.weeklyCharts.limit = parseInt(els.limit.value, 10);
+        user.weeklyCharts.startDate = d;
+        user.weeklyCharts.startDay = parseInt(els.weekDay.value, 10);
+        this.$store.dispatch('updateUser', user);
+      }
     },
     dateFormat(value: string, event: any) {
       const date = moment(value);

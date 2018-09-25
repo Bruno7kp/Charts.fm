@@ -17,7 +17,7 @@
             :users="users" 
             :limit="user.weeklyCharts.limit" 
             :weekDay="user.weeklyCharts.startDay" 
-            :startDate="user.weeklyCharts.startDate" />
+            :startDate="startDate" />
         </b-col>
         <b-col></b-col>
       </b-row>
@@ -26,6 +26,7 @@
 </template>
 
 <script lang="ts">
+import moment from 'moment';
 import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import WeeklyForm from '@/components/WeeklyForm.vue';
@@ -39,6 +40,9 @@ import WeeklyForm from '@/components/WeeklyForm.vue';
       userName: 'getDefaultUserName',
       user: 'getDefaultUser',
     }),
+    startDate() {
+      return moment(this.$store.getters.getDefaultUser.weeklyCharts.startDate).format('YYYY-MM-DD');
+    },
   },
 })
 export default class Week extends Vue {}
