@@ -3,7 +3,7 @@
   <b-row>
     <b-col>
       <b-form-group label="User" label-for="user">
-		    <b-select id="user" name="user" :value="user" :options="users" required></b-select>
+		    <b-select id="user" name="user" v-model="multableUser" :options="users" required></b-select>
 	    </b-form-group>
     </b-col>
     <b-col>
@@ -27,6 +27,7 @@
 	<b-row>
     <b-col>
       <b-btn type="submit" variant="success">Save settings</b-btn>
+      <b-btn type="button" variant="success" v-on:click="load">Load</b-btn>
     </b-col>
   </b-row>
 </b-form>
@@ -34,13 +35,13 @@
 
 <script lang="ts">
 import * as _ from 'lodash';
-import { Component, Prop, Vue } from 'vue-property-decorator';
 import moment from 'moment';
 import 'moment-timezone';
 import LastFm from '@/lastfm';
-import { User } from '@/charts';
+import { User, fixedStartDate } from '@/charts';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import { mapGetters } from 'vuex';
+import { Component, Prop, Vue } from 'vue-property-decorator';
 
 export default Vue.extend({
   name: 'WeeklyForm',
@@ -56,7 +57,17 @@ export default Vue.extend({
       weekDays: 'getWeekDays',
     }),
   },
+  data() {
+    return {
+      multableUser: this.user,
+    };
+  },
   methods: {
+    load() {
+      const user = this.$store.getters.getUser(this.multableUser);
+      const realStart = fixedStartDate(user.weeklyCharts.startDate, user.weeklyCharts.startDay);
+      console.log(realStart);
+    },
     onSubmit(event: any) {
       const els = event.target.elements;
       const user = this.$store.getters.getUser(els.user.value);
