@@ -3,31 +3,34 @@
   <b-row>
     <b-col>
       <b-form-group label="User" label-for="user">
-		    <b-select id="user" name="user" v-model="multableUser" :options="users" required></b-select>
+		    <b-select id="user" name="user" v-model="mUserName" :options="users" required></b-select>
 	    </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Week Day">
-        <b-select :value="weekDay" name="weekDay" :options="weekDays" required></b-select>
+        <b-select v-model="mUser.weeklyCharts.startDay" name="weekDay" :options="weekDays" required></b-select>
       </b-form-group>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-form-group label="Start date">
-        <b-input :value="startDate" name="startDate" type="date" :formatter="dateFormat" required></b-input>
+        <b-input v-model="mUser.weeklyCharts.startDate" name="startDate" type="date" :formatter="dateFormat" required></b-input>
       </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Limit">
-        <b-input :value="limit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
+        <b-input v-model="mUser.weeklyCharts.limit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="success">Save settings</b-btn>
-      <b-btn type="button" variant="success" v-on:click="load">Load</b-btn>
+      <b-btn type="submit" size="sm" variant="success">Save settings</b-btn>
+    </b-col>
+    <b-col>
+      {{ mUser.weeklyCharts.weeks.length + '/' + weeklyList.length + ' weeks' }}
+      <b-btn type="button" size="sm" variant="success" v-on:click="load">Load charts</b-btn>
     </b-col>
   </b-row>
 </b-form>
@@ -38,7 +41,7 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import 'moment-timezone';
 import LastFm from '@/lastfm';
-import { User, fixedStartDate } from '@/charts';
+import { User, fixedStartDate, weeklyList } from '@/charts';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import { mapGetters } from 'vuex';
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -46,38 +49,35 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default Vue.extend({
   name: 'WeeklyForm',
   props: {
-    user: String,
-    users: Array,
-    weekDay: Number,
-    startDate: String,
-    limit: Number,
+    user: Object,
   },
   computed: {
     ...mapGetters({
       weekDays: 'getWeekDays',
+      users: 'getUsersAsOptions',
     }),
+    weeklyList() {
+      const realStart = fixedStartDate(this.mUser.weeklyCharts.startDate, this.mUser.weeklyCharts.startDay);
+      return weeklyList(realStart, new Date());
+    },
   },
   data() {
     return {
-      multableUser: this.user,
+      mUser: this.user,
+      mUserName: this.user.login,
     };
+  },
+  watch: {
+    mUserName(newUser, oldUser) {
+      this.mUser = this.$store.getters.getUser(newUser);
+    },
   },
   methods: {
     load() {
-      const user = this.$store.getters.getUser(this.multableUser);
-      const realStart = fixedStartDate(user.weeklyCharts.startDate, user.weeklyCharts.startDay);
-      console.log(realStart);
+      
     },
     onSubmit(event: any) {
-      const els = event.target.elements;
-      const user = this.$store.getters.getUser(els.user.value);
-      if (user !== null) {
-        const d = moment(els.startDate.value).tz(this.$store.state.timezone).toDate();
-        user.weeklyCharts.limit = parseInt(els.limit.value, 10);
-        user.weeklyCharts.startDate = d;
-        user.weeklyCharts.startDay = parseInt(els.weekDay.value, 10);
-        this.$store.dispatch('updateUser', user);
-      }
+      this.$store.dispatch('updateUser', this.mUser);
     },
     dateFormat(value: string, event: any) {
       const date = moment(value);

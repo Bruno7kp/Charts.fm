@@ -20,7 +20,7 @@ export default {
         return getters.getUsers.length;
     },
     getDefaultUser: (state: any, getters: any) => {
-        const defaultUser = getters.getUser(state.defaultUser);
+        const defaultUser = getters.getUser(state.currentUser);
         if (defaultUser) {
             return defaultUser;
         }

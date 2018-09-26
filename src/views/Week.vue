@@ -12,12 +12,7 @@
       <b-row>
         <b-col>
           <h2>Settings</h2>
-          <WeeklyForm 
-            :user="userName" 
-            :users="users" 
-            :limit="user.weeklyCharts.limit" 
-            :weekDay="user.weeklyCharts.startDay" 
-            :startDate="startDate" />
+          <WeeklyForm :user="user" />
         </b-col>
         <b-col></b-col>
       </b-row>
@@ -36,8 +31,6 @@ import WeeklyForm from '@/components/WeeklyForm.vue';
   },
   computed: {
     ...mapGetters({
-      users: 'getUsersAsOptions',
-      userName: 'getDefaultUserName',
       user: 'getDefaultUser',
     }),
     startDate() {
