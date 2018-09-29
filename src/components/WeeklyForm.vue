@@ -84,7 +84,8 @@ export default Vue.extend({
         week.load(this.mUser.login).then((response) => {
           this.mUser.weeklyCharts.weeks.push(week);
           if (last) {
-            this.mUser.weeklyCharts.weeks.sort((a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
+            this.mUser.weeklyCharts.weeks.sort(
+              (a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
           }
           this.$store.dispatch('updateUser', this.mUser);
         });
