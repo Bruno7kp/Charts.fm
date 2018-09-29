@@ -75,7 +75,7 @@ export default Vue.extend({
   },
   methods: {
     load() {
-      this.mUser.weeklyCharts.weeks = [];
+      // this.mUser.weeklyCharts.weeks = [];
       const startIndex = this.mUser.weeklyCharts.weeks.length;
       const artistChart = [];
       for (let i = startIndex; i < this.weeklyList.length; i++) {
@@ -92,6 +92,7 @@ export default Vue.extend({
       }
     },
     onSubmit(event: any) {
+      const newSettings = this.mUser.weeklyCharts.weeks = [];
       this.$store.dispatch('updateUser', this.mUser);
     },
     dateFormat(value: string, event: any) {
