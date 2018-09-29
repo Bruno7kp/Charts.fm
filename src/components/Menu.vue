@@ -7,9 +7,9 @@
     <b-collapse is-nav id="nav_collapse">
 
     <b-navbar-nav>
-        <b-nav-item to="/weekly">Weekly.fm</b-nav-item>
-        <b-nav-item>Monthly.fm</b-nav-item>
-        <b-nav-item>Yearly.fm</b-nav-item>
+        <b-nav-item v-if="users.length" to="/weekly">Weekly.fm</b-nav-item>
+        <b-nav-item v-if="users.length">Monthly.fm</b-nav-item>
+        <b-nav-item v-if="users.length">Yearly.fm</b-nav-item>
         <b-nav-item to="/about">About</b-nav-item>      
     </b-navbar-nav>
 
@@ -29,7 +29,14 @@
 </template>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import { mapGetters } from 'vuex';
+
 export default Vue.extend({
     name: 'Menu',
+    computed: {
+        ...mapGetters({
+            users: 'getUsers',
+        }),
+    },
 });
 </script>

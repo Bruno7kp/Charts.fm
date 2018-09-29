@@ -29,8 +29,8 @@
       <b-btn type="submit" size="sm" variant="success">Save settings</b-btn>
     </b-col>
     <b-col>
-      {{ mUser.weeklyCharts.weeks.length + '/' + weeklyList.length + ' weeks' }}
       <b-btn type="button" size="sm" variant="success" v-on:click="load">Load charts</b-btn>
+      {{ mUser.weeklyCharts.weeks.length + '/' + weeklyList.length + ' weeks' }}
     </b-col>
   </b-row>
 </b-form>
@@ -41,7 +41,7 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import 'moment-timezone';
 import LastFm from '@/lastfm';
-import { User, fixedStartDate, weeklyList } from '@/charts';
+import { User, fixedStartDate, getWeeklyList, Week } from '@/charts';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import { mapGetters } from 'vuex';
 import { Component, Prop, Vue } from 'vue-property-decorator';
@@ -56,9 +56,10 @@ export default Vue.extend({
       weekDays: 'getWeekDays',
       users: 'getUsersAsOptions',
     }),
-    weeklyList() {
+    weeklyList(): Week[] {
+      const limit = this.mUser.weeklyCharts.limit;
       const realStart = fixedStartDate(this.mUser.weeklyCharts.startDate, this.mUser.weeklyCharts.startDay);
-      return weeklyList(realStart, new Date());
+      return getWeeklyList(realStart, new Date(), limit);
     },
   },
   data() {
@@ -74,7 +75,20 @@ export default Vue.extend({
   },
   methods: {
     load() {
-      
+      this.mUser.weeklyCharts.weeks = [];
+      const startIndex = this.mUser.weeklyCharts.weeks.length;
+      const artistChart = [];
+      for (let i = startIndex; i < this.weeklyList.length; i++) {
+        const week = this.weeklyList[i];
+        const last = this.weeklyList.length === (i + 1);
+        week.load(this.mUser.login).then((response) => {
+          this.mUser.weeklyCharts.weeks.push(week);
+          if (last) {
+            this.mUser.weeklyCharts.weeks.sort((a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
+          }
+          this.$store.dispatch('updateUser', this.mUser);
+        });
+      }
     },
     onSubmit(event: any) {
       this.$store.dispatch('updateUser', this.mUser);
