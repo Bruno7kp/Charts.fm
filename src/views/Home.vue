@@ -10,11 +10,11 @@
     </b-jumbotron>
     <b-container>
       <b-row>
-        <b-col>
+        <b-col sm="12" md="6" class="mb-4">
           <h2>Settings</h2>
           <SettingsForm v-bind:user-name="userName" v-bind:timezone="timezone" v-bind:timezones="timezones" />
         </b-col>
-        <b-col>
+        <b-col sm="12" md="6">
           <h2>Users</h2>
           <AddUser />
           <hr/>

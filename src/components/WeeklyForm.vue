@@ -26,10 +26,10 @@
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" size="sm" variant="success">Save settings</b-btn>
+      <b-btn type="submit" variant="success">Save settings</b-btn>
     </b-col>
     <b-col>
-      <b-btn type="button" size="sm" variant="success" v-on:click="load">Load charts</b-btn>
+      <b-btn type="button" variant="success" v-on:click="load">Load charts</b-btn>
       {{ mUser.weeklyCharts.weeks.length + '/' + weeklyList.length + ' weeks' }}
     </b-col>
   </b-row>

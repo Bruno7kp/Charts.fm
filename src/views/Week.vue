@@ -10,11 +10,10 @@
     </b-jumbotron>
     <b-container>
       <b-row>
-        <b-col>
+        <b-col sm="12" md="6">
           <h2>Settings</h2>
           <WeeklyForm :user="user" />
         </b-col>
-        <b-col></b-col>
       </b-row>
     </b-container>
   </div>
