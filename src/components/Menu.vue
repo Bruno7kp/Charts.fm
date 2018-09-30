@@ -10,18 +10,19 @@
         <b-nav-item v-if="users.length" to="/weekly">Weekly.fm</b-nav-item>
         <b-nav-item v-if="users.length">Monthly.fm</b-nav-item>
         <b-nav-item v-if="users.length">Yearly.fm</b-nav-item>
-        <b-nav-item to="/about">About</b-nav-item>      
+        <!--<b-nav-item to="/about">About</b-nav-item>-->
     </b-navbar-nav>
 
     <!-- Right aligned nav items -->
+    <!--
     <b-navbar-nav class="ml-auto">
-
         <b-nav-item-dropdown text="Lang" right>
             <b-dropdown-item href="#">PT</b-dropdown-item>
             <b-dropdown-item href="#">EN</b-dropdown-item>
             <b-dropdown-item href="#">ES</b-dropdown-item>
         </b-nav-item-dropdown>
     </b-navbar-nav>
+    -->
 
     </b-collapse>
 </b-navbar>
