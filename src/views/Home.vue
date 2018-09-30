@@ -1,24 +1,31 @@
 <template>
   <div>
-    <b-jumbotron fluid>
-      <template slot="header">
-        Charts.fm
-      </template>
-      <template slot="lead">
-        Create charts based on your <a href="https://last.fm">Last.fm</a> profile.
-      </template>
-    </b-jumbotron>
-    <b-container>
+    <Carousel />
+    <b-container class="my-3">
       <b-row>
-        <b-col sm="12" md="6" class="mb-4">
-          <h2>Settings</h2>
-          <SettingsForm v-bind:user-name="userName" v-bind:timezone="timezone" v-bind:timezones="timezones" />
-        </b-col>
         <b-col sm="12" md="6">
-          <h2>Users</h2>
+          <b-card header="Users" 
+                  header-bg-variant="danger"
+                  header-tag="header"
+                  header-text-variant="white"
+                  border-variant="danger"
+                  class="mt-3"
+          >
+          <h5 slot="header" class="mb-0"><i class="fa fa-users"></i> Users</h5>
           <AddUser />
           <hr/>
           <UsersList />
+          </b-card>
+        </b-col>
+        <b-col sm="12" md="6">
+          <b-card header-bg-variant="dark" 
+                  header-text-variant="white"
+                  border-variant="dark" 
+                  class="mt-3"
+          >
+            <h5 slot="header" class="mb-0"><i class="fa fa-cog"></i> Settings</h5>
+            <SettingsForm v-bind:user-name="userName" v-bind:timezone="timezone" v-bind:timezones="timezones" />
+          </b-card>
         </b-col>
       </b-row>
     </b-container>
@@ -30,6 +37,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import SettingsForm from '@/components/SettingsForm.vue';
 import UsersList from '@/components/UsersList.vue';
 import AddUser from '@/components/AddUser.vue';
+import Carousel from '@/components/Carousel.vue';
 import * as moment from 'moment';
 import 'moment-timezone';
 import User from '@/charts/user';
@@ -40,6 +48,7 @@ import User from '@/charts/user';
     SettingsForm,
     UsersList,
     AddUser,
+    Carousel,
   },
   data() {
     const userName = this.$store.state.currentUser;

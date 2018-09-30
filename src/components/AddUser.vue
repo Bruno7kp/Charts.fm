@@ -2,21 +2,24 @@
 <b-form v-on:submit.prevent="onSubmit">
   <b-row>
     <b-col>
-      <b-form-group label="Last.fm username:" label-for="userName">
+      <b-input-group>
+        <b-input-group-prepend>
+          <b-btn href="https://last.fm" target="_blank" variant="outline-danger">
+            <i class="fab fa-lastfm"></i>
+          </b-btn>
+        </b-input-group-prepend>
         <b-form-input id="userName"
             type="text"
             v-model.trim="multableUserName"
             :formatter="format"
             required
             aria-describedby="inputLiveFeedback"
-            placeholder="Enter username">
+            placeholder="Enter your Last.fm username">
         </b-form-input>
-      </b-form-group>
-    </b-col>
-  </b-row>
-	<b-row>
-    <b-col>
-      <b-btn type="submit" variant="success">Add user</b-btn>
+        <b-input-group-append>
+          <b-btn type="submit" variant="outline-success"><i class="fa fa-plus"></i></b-btn>
+        </b-input-group-append>
+      </b-input-group>
     </b-col>
   </b-row>
 </b-form>

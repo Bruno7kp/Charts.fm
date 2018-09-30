@@ -1,0 +1,77 @@
+<template>
+  <b-row>
+    <b-col>
+      <div class="display-4 text-center">
+        {{ user.weeklyCharts.weeks.length + '/' + weeklyList.length }}
+      </div>
+      <div class="text-muted text-center">weeks loaded</div>
+      <b-progress :value="user.weeklyCharts.weeks.length / weeklyList.length * 100"
+                  variant="danger"
+                  :striped="striped"
+                  :animated="loading"
+                  class="mb-2"></b-progress>
+      <b-btn type="button" variant="outline-dark" :disabled="loading" v-on:click="load">
+        <div v-if="loading">
+          <i class="fas fa-sync-alt fa-spin"></i> Loading
+        </div>
+        <div v-else>
+          <i class="fas fa-sync-alt"></i> Load charts
+        </div>
+      </b-btn>
+    </b-col>
+  </b-row>
+</template>
+
+<script lang="ts">
+import * as _ from 'lodash';
+import LastFm from '@/lastfm';
+import { User, fixedStartDate, getWeeklyList, Week } from '@/charts';
+import { mapGetters } from 'vuex';
+import { Component, Prop, Vue } from 'vue-property-decorator';
+
+export default Vue.extend({
+  name: 'WeeklyWidget',
+  props: {
+    user: Object,
+    loading: Boolean,
+  },
+  computed: {
+    ...mapGetters({
+      weekDays: 'getWeekDays',
+      users: 'getUsersAsOptions',
+    }),
+    weeklyList(): Week[] {
+      const limit = this.user.weeklyCharts.limit;
+      const realStart = fixedStartDate(this.user.weeklyCharts.startDate, this.user.weeklyCharts.startDay);
+      return getWeeklyList(realStart, new Date(), limit);
+    },
+  },
+  data() {
+    return {
+      striped: true,
+      fields: [ 'rank', 'name', 'playcount' ],
+    };
+  },
+  methods: {
+    load() {
+      const startIndex = this.user.weeklyCharts.weeks.length;
+      if (startIndex < this.weeklyList.length) {
+        this.$emit('updateLoading', true);
+        for (let i = startIndex; i < this.weeklyList.length; i++) {
+          const week = this.weeklyList[i];
+          const last = this.weeklyList.length === (i + 1);
+          week.load(this.user.login).then((response) => {
+            this.user.weeklyCharts.weeks.push(week);
+            if (last) {
+              this.user.weeklyCharts.weeks.sort(
+                (a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
+              this.$emit('updateLoading', false);
+            }
+            this.$store.dispatch('updateUser', this.user);
+          });
+        }
+      }
+    },
+  },
+});
+</script>

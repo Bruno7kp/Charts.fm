@@ -3,34 +3,34 @@
   <b-row>
     <b-col>
       <b-form-group label="User" label-for="user">
-		    <b-select id="user" name="user" v-model="mUserName" :options="users" required></b-select>
+		    <b-select id="user" name="user" v-model="mUserName" :options="users" :disabled="loading" required></b-select>
 	    </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Week Day">
-        <b-select v-model="mUser.weeklyCharts.startDay" name="weekDay" :options="weekDays" required></b-select>
+        <b-select v-model="mStartDay" name="weekDay" :options="weekDays" required></b-select>
       </b-form-group>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-form-group label="Start date">
-        <b-input v-model="mUser.weeklyCharts.startDate" name="startDate" type="date" :formatter="dateFormat" required></b-input>
+        <b-input v-model="mStartDate" name="startDate" type="date" :formatter="dateFormat" required></b-input>
       </b-form-group>
     </b-col>
     <b-col>
       <b-form-group label="Limit">
-        <b-input v-model="mUser.weeklyCharts.limit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
+        <b-input v-model="mLimit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="success">Save settings</b-btn>
-    </b-col>
-    <b-col>
-      <b-btn type="button" variant="success" v-on:click="load">Load charts</b-btn>
-      {{ mUser.weeklyCharts.weeks.length + '/' + weeklyList.length + ' weeks' }}
+      <b-btn type="submit" variant="outline-success" :disabled="loading">
+        <i class="far fa-save"></i>
+      </b-btn>
+      <p v-if="user.weeklyCharts.weeks.length" class="text-danger m-0">If you change your settings, your data will be reset.
+      </p>
     </b-col>
   </b-row>
 </b-form>
@@ -41,8 +41,7 @@ import * as _ from 'lodash';
 import moment from 'moment';
 import 'moment-timezone';
 import LastFm from '@/lastfm';
-import { User, fixedStartDate, getWeeklyList, Week } from '@/charts';
-import WeeklyForm from '@/components/WeeklyForm.vue';
+import { User, fixedStartDate, Week } from '@/charts';
 import { mapGetters } from 'vuex';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
@@ -50,50 +49,39 @@ export default Vue.extend({
   name: 'WeeklyForm',
   props: {
     user: Object,
+    loading: Boolean,
   },
   computed: {
     ...mapGetters({
       weekDays: 'getWeekDays',
       users: 'getUsersAsOptions',
     }),
-    weeklyList(): Week[] {
-      const limit = this.mUser.weeklyCharts.limit;
-      const realStart = fixedStartDate(this.mUser.weeklyCharts.startDate, this.mUser.weeklyCharts.startDay);
-      return getWeeklyList(realStart, new Date(), limit);
-    },
   },
   data() {
     return {
-      mUser: this.user,
       mUserName: this.user.login,
+      mStartDate: this.user.weeklyCharts.startDate,
+      mStartDay: this.user.weeklyCharts.startDay,
+      mLimit: this.user.weeklyCharts.limit,
     };
   },
   watch: {
     mUserName(newUser, oldUser) {
-      this.mUser = this.$store.getters.getUser(newUser);
+      this.$emit('update:user', newUser);
+    },
+    user(newUser, oldUser) {
+      this.mStartDate = this.user.weeklyCharts.startDate;
+      this.mStartDay = this.user.weeklyCharts.startDay;
+      this.mLimit = this.user.weeklyCharts.limit;
     },
   },
   methods: {
-    load() {
-      // this.mUser.weeklyCharts.weeks = [];
-      const startIndex = this.mUser.weeklyCharts.weeks.length;
-      const artistChart = [];
-      for (let i = startIndex; i < this.weeklyList.length; i++) {
-        const week = this.weeklyList[i];
-        const last = this.weeklyList.length === (i + 1);
-        week.load(this.mUser.login).then((response) => {
-          this.mUser.weeklyCharts.weeks.push(week);
-          if (last) {
-            this.mUser.weeklyCharts.weeks.sort(
-              (a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
-          }
-          this.$store.dispatch('updateUser', this.mUser);
-        });
-      }
-    },
     onSubmit(event: any) {
-      const newSettings = this.mUser.weeklyCharts.weeks = [];
-      this.$store.dispatch('updateUser', this.mUser);
+      this.user.weeklyCharts.weeks = [];
+      this.user.weeklyCharts.startDate = this.mStartDate;
+      this.user.weeklyCharts.startDay = this.mStartDay;
+      this.user.weeklyCharts.limit = this.mLimit;
+      this.$store.dispatch('updateUser', this.user);
     },
     dateFormat(value: string, event: any) {
       const date = moment(value);

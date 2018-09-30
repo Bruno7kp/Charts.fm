@@ -1,8 +1,8 @@
 <template>
   <b-table outlined :items="items" :fields="fields">
     <template slot="actions" slot-scope="data">
-      <b-button size="sm" class="mr-2" variant="danger" @click="removeUser(data.item.login)">
-        Remove
+      <b-button size="sm" class="mr-2" variant="outline-danger" @click="removeUser(data.item.login)">
+        <i class="fa fa-trash"></i>
       </b-button>
     </template>
     <template slot="defaultUser" slot-scope="data">
