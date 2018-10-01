@@ -1,35 +1,52 @@
 <template>
   <b-row>
-      
     <b-col>
-      <b-btn type="button" variant="success" v-on:click="load">Load charts</b-btn>
-      {{ mUser.weeklyCharts.weeks.length + '/' + weeklyList.length + ' weeks' }}
-      <b-table :items="items" :fields="fields">
-    <template slot="show_details" slot-scope="row">
-      <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-      <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2">
-       {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
-      </b-button>
-      <!-- In some circumstances you may need to use @click.native.stop instead -->
-      <!-- As `row.showDetails` is one-way, we call the toggleDetails function on @change -->
-      <b-form-checkbox @click.native.stop @change="row.toggleDetails" v-model="row.detailsShowing">
-        Details via check
-      </b-form-checkbox>
-    </template>
-    <template slot="row-details" slot-scope="row">
-      <b-card>
-        <b-row class="mb-2">
-          <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
-          <b-col>{{ row.item.age }}</b-col>
-        </b-row>
-        <b-row class="mb-2">
-          <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
-          <b-col>{{ row.item.isActive }}</b-col>
-        </b-row>
-        <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
-      </b-card>
-    </template>
-  </b-table>
+      <b-row>
+        <b-col sm="12" md="4" class="mt-3">
+          <b-nav pills fill>
+            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><i class="fa fa-user"></i> Artists</b-nav-item>
+            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><i class="fa fa-compact-disc"></i> Albums</b-nav-item>
+            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><i class="fa fa-music"></i> Tracks</b-nav-item>
+          </b-nav>
+        </b-col>
+        <b-col sm="12" md="4" class="mt-3">
+          <div class="h3">{{ user.login }}</div>
+        </b-col>
+        <b-col sm="12" md="4" class="mt-3">
+          <b-navbar>
+            <b-input-group>
+              <b-input-group-prepend>
+                <b-button variant="outline-dark" @click="decrement"><i class="fa fa-chevron-left"></i></b-button>
+              </b-input-group-prepend>
+              <b-form-input type="date" @change="setWeek" :value="currentDate"></b-form-input>
+              <b-input-group-append>
+                <b-btn variant="outline-dark" @click="increment"><i class="fa fa-chevron-right"></i></b-btn>
+              </b-input-group-append>
+            </b-input-group>
+          </b-navbar>
+        </b-col>
+      </b-row>
+      <b-table :items="items" :fields="fields" class="mt-3" responsive="md" bordered small>
+        <template slot="show_details" slot-scope="row">
+          <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
+          <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2">
+            {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
+          </b-button>
+        </template>
+        <template slot="row-details" slot-scope="row">
+          <b-card>
+            <b-row class="mb-2">
+              <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
+              <b-col>asdsd</b-col>
+            </b-row>
+            <b-row class="mb-2">
+              <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
+              <b-col>test</b-col>
+            </b-row>
+            <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
+          </b-card>
+        </template>
+      </b-table>
     </b-col>
   </b-row>
 </template>
@@ -37,9 +54,11 @@
 <script lang="ts">
 import * as _ from 'lodash';
 import LastFm from '@/lastfm';
-import { User, fixedStartDate, getWeeklyList, Week } from '@/charts';
+import { User, fixedStartDate, Week } from '@/charts';
 import { mapGetters } from 'vuex';
 import { Component, Prop, Vue } from 'vue-property-decorator';
+import moment from 'moment';
+import 'moment-timezone';
 
 export default Vue.extend({
   name: 'ChartTable',
@@ -47,52 +66,60 @@ export default Vue.extend({
     user: Object,
   },
   computed: {
-    ...mapGetters({
-      weekDays: 'getWeekDays',
-      users: 'getUsersAsOptions',
-    }),
-    weeklyList(): Week[] {
-      const limit = this.mUser.weeklyCharts.limit;
-      const realStart = fixedStartDate(this.mUser.weeklyCharts.startDate, this.mUser.weeklyCharts.startDay);
-      return getWeeklyList(realStart, new Date(), limit);
-    },
     items(): any[] {
-      if (this.mUser.weeklyCharts.weeks.length > 0) {
-        return this.mUser.weeklyCharts.weeks[0].artists;
+      if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
+        return this.user.weeklyCharts.weeks[this.index][this.selected];
       }
       return [];
+    },
+    fields(): string[] {
+      if (this.selected === 'artists') {
+        return [ 'rank', 'name', 'playcount' ];
+      } else {
+        return [ 'rank', 'name', 'artist', 'playcount' ];
+      }
+    },
+    currentDate(): string {
+      if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
+        return moment(this.user.weeklyCharts.weeks[this.index].start).format('YYYY-MM-DD');
+      }
+      return '';
+    },
+  },
+  methods: {
+    increment() {
+      this.setIndex(this.index + 1);
+    },
+    decrement() {
+      this.setIndex(this.index - 1);
+    },
+    setIndex(index: number) {
+      if (index >= 0 && index < this.user.weeklyCharts.weeks.length) {
+        this.index = index;
+      }
+    },
+    setWeek(newValue: string) {
+      const m = moment(newValue);
+      m.tz(this.user.timezone);
+      const date = fixedStartDate(m.toDate(), this.user.weeklyCharts.startDay);
+      const found = this.user.weeklyCharts.weeks.findIndex((week: Week) => date >= week.start && date < week.end);
+      this.setIndex(found);
+    },
+    selectArtists() {
+      this.selected = 'artists';
+    },
+    selectAlbums() {
+      this.selected = 'albums';
+    },
+    selectTracks() {
+      this.selected = 'tracks';
     },
   },
   data() {
     return {
-      mUser: this.user,
-      mUserName: this.user.login,
-      fields: [ 'rank', 'name', 'playcount' ],
+      index: this.user.weeklyCharts.weeks.length - 1,
+      selected: 'artists',
     };
-  },
-  watch: {
-    mUserName(newUser, oldUser) {
-      this.mUser = this.$store.getters.getUser(newUser);
-    },
-  },
-  methods: {
-    load() {
-      // this.mUser.weeklyCharts.weeks = [];
-      const startIndex = 426; // this.mUser.weeklyCharts.weeks.length;
-      const artistChart = [];
-      for (let i = startIndex; i < this.weeklyList.length; i++) {
-        const week = this.weeklyList[i];
-        const last = this.weeklyList.length === (i + 1);
-        week.load(this.mUser.login).then((response) => {
-          this.mUser.weeklyCharts.weeks.push(week);
-          if (last) {
-            this.mUser.weeklyCharts.weeks.sort(
-              (a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
-          }
-          this.$store.dispatch('updateUser', this.mUser);
-        });
-      }
-    },
   },
 });
 </script>

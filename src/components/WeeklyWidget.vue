@@ -57,18 +57,20 @@ export default Vue.extend({
       const startIndex = this.user.weeklyCharts.weeks.length;
       if (startIndex < this.weeklyList.length) {
         this.$emit('updateLoading', true);
-        for (let i = startIndex; i < this.weeklyList.length; i++) {
+        for (let i = startIndex, p = Promise.resolve(); i < this.weeklyList.length; i++) {
           const week = this.weeklyList[i];
           const last = this.weeklyList.length === (i + 1);
-          week.load(this.user.login).then((response) => {
-            this.user.weeklyCharts.weeks.push(week);
-            if (last) {
-              this.user.weeklyCharts.weeks.sort(
-                (a: Week, b: Week) => (a.start > b.start) ? 1 : ((b.start > a.start) ? -1 : 0));
-              this.$emit('updateLoading', false);
-            }
-            this.$store.dispatch('updateUser', this.user);
-          });
+          // @ts-ignore
+          p = p.then(() => new Promise((resolve) => {
+            week.load(this.user.login).then((response) => {
+              this.user.weeklyCharts.weeks.push(week);
+              if (last) {
+                this.$emit('updateLoading', false);
+              }
+              this.$store.dispatch('updateUser', this.user);
+              resolve();
+            });
+          }));
         }
       }
     },

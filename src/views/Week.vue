@@ -11,7 +11,7 @@
             no-body
           >
             <h5 slot="header" class="mb-0">
-              <i class="fa fa-list-ol"></i> Weekly Charts
+              <i class="fas fa-sync-alt"></i> Update Charts
               <i @click="toggleWidget" :class="widgetIconClass"></i>
             </h5>
             <b-card-body :class="widgetBodyClass">
@@ -37,6 +37,12 @@
           </b-card>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col class="pt-0">
+          <hr/>
+          <ChartTable v-bind:user.sync="user" />
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -47,10 +53,16 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import WeeklyWidget from '@/components/WeeklyWidget.vue';
+import ChartTable from '@/components/ChartTable.vue';
+
+const upClass = 'fa fa-chevron-up float-right pt-1 c-pointer';
+const downClass = 'fa fa-chevron-down float-right pt-1 c-pointer';
+
 @Component({
   components: {
     WeeklyForm,
     WeeklyWidget,
+    ChartTable,
   },
   computed: {
     user: {
@@ -69,10 +81,10 @@ import WeeklyWidget from '@/components/WeeklyWidget.vue';
     return {
       settingsVisible: true,
       settingsBodyClass: '',
-      settingsIconClass: 'fa fa-chevron-up float-right pt-1',
+      settingsIconClass: upClass,
       widgetVisible: true,
       widgetBodyClass: '',
-      widgetIconClass: 'fa fa-chevron-up float-right pt-1',
+      widgetIconClass: downClass,
       loading: false,
     };
   },
@@ -97,12 +109,12 @@ import WeeklyWidget from '@/components/WeeklyWidget.vue';
         // @ts-ignore
         this.settingsBodyClass = '';
         // @ts-ignore
-        this.settingsIconClass = 'fa fa-chevron-up float-right pt-1';
+        this.settingsIconClass = upClass;
       } else {
         // @ts-ignore
         this.settingsBodyClass = 'd-none';
         // @ts-ignore
-        this.settingsIconClass = 'fa fa-chevron-down float-right pt-1';
+        this.settingsIconClass = downClass;
       }
     },
     widgetVisible() {
@@ -111,15 +123,20 @@ import WeeklyWidget from '@/components/WeeklyWidget.vue';
         // @ts-ignore
         this.widgetBodyClass = '';
         // @ts-ignore
-        this.widgetIconClass = 'fa fa-chevron-up float-right pt-1';
+        this.widgetIconClass = upClass;
       } else {
         // @ts-ignore
         this.widgetBodyClass = 'd-none';
         // @ts-ignore
-        this.widgetIconClass = 'fa fa-chevron-down float-right pt-1';
+        this.widgetIconClass = downClass;
       }
     },
   },
 })
 export default class Week extends Vue {}
 </script>
+<style>
+.c-pointer {
+  cursor: pointer;
+}
+</style>
