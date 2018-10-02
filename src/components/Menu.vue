@@ -1,5 +1,5 @@
 <template>
-<b-navbar toggleable="md" type="light" variant="white" class="py-3">
+<b-navbar toggleable="md" type="light" variant="white" class="py-3 shadow-sm">
     <b-container>
         <b-navbar-brand to="/">Charts.fm</b-navbar-brand>
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
