@@ -3,24 +3,25 @@
     <b-col>
       <b-row>
         <b-col sm="12" md="4" class="mt-3">
-          <b-nav pills fill>
+          <b-nav pills fill class="nav-danger">
             <b-nav-item :active="selected == 'artists'" @click="selectArtists"><i class="fa fa-user"></i> Artists</b-nav-item>
             <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><i class="fa fa-compact-disc"></i> Albums</b-nav-item>
             <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><i class="fa fa-music"></i> Tracks</b-nav-item>
           </b-nav>
         </b-col>
-        <b-col sm="12" md="4" class="mt-3">
+        <b-col sm="12" md="4" class="mt-3 text-center">
           <div class="h3">{{ user.login }}</div>
+          <div class="h6" v-if="index > -1">Week {{ index + 1 }} - {{ currentDate + ' - ' + currentEndDate }}</div>
         </b-col>
         <b-col sm="12" md="4" class="mt-3">
           <b-navbar>
             <b-input-group>
               <b-input-group-prepend>
-                <b-button variant="outline-dark" @click="decrement"><i class="fa fa-chevron-left"></i></b-button>
+                <b-button variant="danger" @click="decrement" @dblclick="setIndex(0)"><i class="fa fa-angle-left"></i></b-button>
               </b-input-group-prepend>
-              <b-form-input type="date" @change="setWeek" :value="currentDate"></b-form-input>
+              <b-form-input class="border-danger" type="date" @change="setWeek" :value="currentDate"></b-form-input>
               <b-input-group-append>
-                <b-btn variant="outline-dark" @click="increment"><i class="fa fa-chevron-right"></i></b-btn>
+                <b-btn variant="danger" @click="increment" @dblclick="setIndex(user.weeklyCharts.weeks.length - 1)"><i class="fa fa-angle-right"></i></b-btn>
               </b-input-group-append>
             </b-input-group>
           </b-navbar>
@@ -85,6 +86,12 @@ export default Vue.extend({
       }
       return '';
     },
+    currentEndDate(): string {
+      if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
+        return moment(this.user.weeklyCharts.weeks[this.index].end).format('YYYY-MM-DD');
+      }
+      return '';
+    },
   },
   methods: {
     increment() {
@@ -123,3 +130,13 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+.nav-danger.nav-pills .nav-link.active {
+  background-color: #dc3545;
+}
+.nav-danger a {
+  color: #212529;
+}
+</style>
+

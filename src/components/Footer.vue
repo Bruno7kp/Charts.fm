@@ -1,5 +1,5 @@
 <template>
-    <footer class="footer py-4 mt-4">
+    <footer class="footer py-4 bg-dark text-white">
         <b-container>
             <b-row>
                 <b-col>
@@ -18,10 +18,3 @@ export default Vue.extend({
     name: 'Footer',
 });
 </script>
-<style>
-    footer.footer {
-        background-color: rgb(241, 241, 241);
-        color: #444;
-    }
-</style>
-

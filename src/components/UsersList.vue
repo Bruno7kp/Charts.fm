@@ -5,9 +5,6 @@
         <i class="fa fa-trash"></i>
       </b-button>
     </template>
-    <template slot="defaultUser" slot-scope="data">
-      <b-form-radio name="currentUser" @change="changeUser(data.item.login)" v-model="currentUser" :value="data.item.login"></b-form-radio>
-    </template>
   </b-table>
 </template>
 
@@ -21,17 +18,13 @@ export default Vue.extend({
   data() {
     return {
       fields: {
-        defaultUser: {
-          label: 'Default',
-          class: 'w-25',
-        },
         login: {
           label: 'User',
           sortable: true,
-          class: 'w-50',
+          class: 'w-75',
         },
         actions: {
-          label: 'Actions',
+          label: 'Remove',
         },
       },
       // currentUser: this.$store.state.currentUser,

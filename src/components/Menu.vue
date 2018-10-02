@@ -1,5 +1,5 @@
 <template>
-<b-navbar toggleable="md" type="dark" variant="danger">
+<b-navbar toggleable="md" type="light" variant="white" class="py-3">
     <b-container>
         <b-navbar-brand to="/">Charts.fm</b-navbar-brand>
         <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
@@ -13,7 +13,14 @@
         <!-- Right aligned nav items -->
         
         <b-navbar-nav class="ml-auto">
-            <b-nav-item target="_blank" href="https://github.com/Bruno7kp/Charts.fm"><i class="fab fa-github fa-lg"></i></b-nav-item>
+            <b-nav-item target="_blank" href="https://github.com/Bruno7kp/Charts.fm">
+                <i class="fab fa-github fa-lg"></i><span class="d-md-none pl-2">GitHub</span>
+            </b-nav-item>
+            <b-nav-item target="_blank" href="https://forum.zero.b7kp.com">
+                <i class="far fa-comment-alt"></i><span class="d-md-none pl-2">Forum</span>
+            </b-nav-item>
+            <b-nav-item to="/settings"><i class="fa fa-cog"></i><span class="d-md-none pl-2">Settings</span></b-nav-item>
+            
             <!--
             <b-nav-item-dropdown text="Lang" right>
                 <b-dropdown-item href="#">PT</b-dropdown-item>

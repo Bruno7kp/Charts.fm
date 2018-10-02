@@ -5,10 +5,7 @@ export default {
     if (!context.getters.getUser(user.login)) {
       context.commit('ADD_USER', user);
     }
-
-    if (context.getters.getUsersCount() === 1) {
-      context.commit('SET_CURRENT_USER', { login: user.login });
-    }
+    context.commit('SET_CURRENT_USER', { login: user.login });
   },
   updateUser: (context: any, user: User) => {
     if (context.getters.getUser(user.login)) {

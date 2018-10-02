@@ -4,7 +4,7 @@
     <b-col>
       <b-input-group>
         <b-input-group-prepend>
-          <b-btn href="https://last.fm" target="_blank" variant="outline-danger">
+          <b-btn href="https://last.fm" target="_blank" variant="danger">
             <i class="fab fa-lastfm"></i>
           </b-btn>
         </b-input-group-prepend>
@@ -17,7 +17,7 @@
             placeholder="Enter your Last.fm username">
         </b-form-input>
         <b-input-group-append>
-          <b-btn type="submit" variant="outline-success"><i class="fa fa-plus"></i></b-btn>
+          <b-btn type="submit" variant="outline-danger">Continue</b-btn>
         </b-input-group-append>
       </b-input-group>
     </b-col>
@@ -34,6 +34,10 @@ export default Vue.extend({
   name: 'AddUser',
   props: {
     userName: String,
+    redirect: {
+      type: Boolean,
+      default: false,
+    },
   },
   data() {
     return {
@@ -52,9 +56,13 @@ export default Vue.extend({
             );
             const user = new User($this.multableUserName, date);
             $this.$store.dispatch('addUser', user);
+            // console.log(user);
+            if (this.redirect) {
+              this.$router.push({ name: 'weekly' });
+            }
           })
           .catch((error) => {
-            //
+            // console.log(error);
           });
       }
     },

@@ -54,6 +54,20 @@ async function initializeApp() {
       actions: appActions,
   });
 
+  router.beforeEach((to, from, next) => {
+    if (to.matched.some((record) => record.meta.requiresUser)) {
+      if (store.getters.getUsersCount === 0) {
+        next({
+          path: '/',
+        });
+      } else {
+        next();
+      }
+    } else {
+      next();
+    }
+  });
+
   Vue.config.productionTip = false;
   Vue.use(BootstrapVue);
 

@@ -1,34 +1,21 @@
 <template>
   <div>
     <Carousel />
-    <b-container class="my-3">
-      <b-row>
-        <b-col sm="12" md="6">
-          <b-card header="Users" 
-                  header-bg-variant="danger"
+    <div class="jumbotron jumbotron-fluid m-0 pt-4">
+      <b-container class="my-3">
+        <b-row>
+          <b-col sm="12" md="6" offset-md="3">
+            <b-card header-bg-variant="danger"
                   header-tag="header"
-                  header-text-variant="white"
-                  border-variant="danger"
-                  class="mt-3"
-          >
-          <h5 slot="header" class="mb-0"><i class="fa fa-users"></i> Users</h5>
-          <AddUser />
-          <hr/>
-          <UsersList />
-          </b-card>
-        </b-col>
-        <b-col sm="12" md="6">
-          <b-card header-bg-variant="dark" 
-                  header-text-variant="white"
-                  border-variant="dark" 
-                  class="mt-3"
-          >
-            <h5 slot="header" class="mb-0"><i class="fa fa-cog"></i> Settings</h5>
-            <SettingsForm v-bind:user-name="userName" v-bind:timezone="timezone" v-bind:timezones="timezones" />
-          </b-card>
-        </b-col>
-      </b-row>
-    </b-container>
+                  header-text-variant="light"
+                  class="mt-3 shadow-lg border-0">
+                <h6 slot="header" class="mb-0">Enter your last.fm username</h6>
+              <AddUser redirect />
+            </b-card>
+          </b-col>
+        </b-row>
+      </b-container>
+    </div>
   </div>
 </template>
 
@@ -65,3 +52,10 @@ import User from '@/charts/user';
 })
 export default class Home extends Vue {}
 </script>
+<style>
+.jumbotron {
+  background-color: #cebdbd;
+  background-image: url("/img/3px-tile.png");
+}
+</style>
+

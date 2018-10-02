@@ -12,6 +12,11 @@ export default new Router({
       component: Home,
     },
     {
+      path: '/settings',
+      name: 'settings',
+      component: () => import('./views/Settings.vue'),
+    },
+    {
       path: '/about',
       name: 'about',
       component: () => import('./views/About.vue'),
@@ -20,6 +25,7 @@ export default new Router({
       path: '/weekly',
       name: 'weekly',
       component: () => import('./views/Week.vue'),
+      meta: { requiresUser: true },
     },
   ],
 });

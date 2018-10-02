@@ -6,14 +6,13 @@
           <b-card 
             header-bg-variant="danger" 
             header-text-variant="white"
-            border-variant="danger" 
-            class="mt-3"
+            class="mt-3 border-0 shadow"
             no-body
           >
-            <h5 slot="header" class="mb-0">
+            <h6 slot="header" class="mb-0">
               <i class="fas fa-sync-alt"></i> Update Charts
               <i @click="toggleWidget" :class="widgetIconClass"></i>
-            </h5>
+            </h6>
             <b-card-body :class="widgetBodyClass">
               <WeeklyWidget v-bind:user.sync="user" v-bind:loading.sync="loading" @updateLoading="setLoading" />
             </b-card-body>
@@ -23,14 +22,13 @@
           <b-card 
             header-bg-variant="dark" 
             header-text-variant="white"
-            border-variant="dark" 
-            class="mt-3"
+            class="mt-3 border-0 shadow"
             no-body
           >
-            <h5 slot="header" class="mb-0">
+            <h6 slot="header" class="mb-0">
               <i class="fa fa-cog"></i> Settings
               <i @click="toggleSettings" :class="settingsIconClass"></i>
-            </h5>
+            </h6>
             <b-card-body :class="settingsBodyClass">
               <WeeklyForm v-bind:user.sync="user" v-bind:loading.sync="loading" />
             </b-card-body>
@@ -38,9 +36,10 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col class="pt-0">
-          <hr/>
-          <ChartTable v-bind:user.sync="user" />
+        <b-col>
+          <b-card class="my-4 shadow border-0">
+            <ChartTable v-bind:user.sync="user" />
+          </b-card>
         </b-col>
       </b-row>
     </b-container>
@@ -84,7 +83,7 @@ const downClass = 'fa fa-chevron-down float-right pt-1 c-pointer';
       settingsIconClass: upClass,
       widgetVisible: true,
       widgetBodyClass: '',
-      widgetIconClass: downClass,
+      widgetIconClass: upClass,
       loading: false,
     };
   },

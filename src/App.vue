@@ -18,4 +18,10 @@ import Footer from '@/components/Footer.vue';
 })
 export default class App extends Vue {}
 </script>
+<style>
+body {
+  background-color: #f5f6f8;
+}
+</style>
+
 
