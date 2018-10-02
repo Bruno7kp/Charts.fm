@@ -6,7 +6,11 @@ const fixedStartDate = (start: Date, weekDay: number) => {
     if (n.toDate() > start) {
         n.subtract(1, 'weeks');
     }
-    return n.toDate();
+    const date = n.toDate();
+    date.setHours(0);
+    date.setMinutes(0);
+    date.setSeconds(0);
+    return date;
 };
 
 const getWeeklyList = (start: Date, end: Date, limit: number) => {

@@ -47,4 +47,7 @@ export default {
         }
         return days;
     },
+    getCardOpen: (state: any) => {
+        return state.cardOpen;
+    },
 };

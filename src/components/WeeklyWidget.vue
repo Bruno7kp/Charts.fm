@@ -7,7 +7,7 @@
       <div class="text-muted text-center">weeks loaded</div>
       <b-progress :value="user.weeklyCharts.weeks.length / weeklyList.length * 100"
                   variant="danger"
-                  :striped="striped"
+                  :striped="loading"
                   :animated="loading"
                   class="mb-2"></b-progress>
       <b-btn type="button" variant="outline-dark" :disabled="loading" v-on:click="load">
@@ -48,7 +48,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      striped: true,
       fields: [ 'rank', 'name', 'playcount' ],
     };
   },

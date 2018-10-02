@@ -21,4 +21,7 @@ export default {
   setTimezone: (context: any, timezone: string) => {
     context.commit('SET_TIMEZONE', timezone);
   },
+  setCardOpen: (context: any, cardOpen: object) => {
+    context.commit('SET_CARD_OPEN', cardOpen);
+  },
 };

@@ -11,9 +11,9 @@
           >
             <h6 slot="header" class="mb-0">
               <i class="fas fa-sync-alt"></i> Update Charts
-              <i @click="toggleWidget" :class="widgetIconClass"></i>
+              <i @click="toggleWidget" :class="cardOpen.updateWeek ? upClass : downClass"></i>
             </h6>
-            <b-card-body :class="widgetBodyClass">
+            <b-card-body :class="cardOpen.updateWeek ? '' : 'd-none'">
               <WeeklyWidget v-bind:user.sync="user" v-bind:loading.sync="loading" @updateLoading="setLoading" />
             </b-card-body>
           </b-card>
@@ -27,9 +27,9 @@
           >
             <h6 slot="header" class="mb-0">
               <i class="fa fa-cog"></i> Settings
-              <i @click="toggleSettings" :class="settingsIconClass"></i>
+              <i @click="toggleSettings" :class="cardOpen.settingsWeek ? upClass : downClass"></i>
             </h6>
-            <b-card-body :class="settingsBodyClass">
+            <b-card-body :class="cardOpen.settingsWeek ? '' : 'd-none'">
               <WeeklyForm v-bind:user.sync="user" v-bind:loading.sync="loading" />
             </b-card-body>
           </b-card>
@@ -54,9 +54,6 @@ import WeeklyForm from '@/components/WeeklyForm.vue';
 import WeeklyWidget from '@/components/WeeklyWidget.vue';
 import ChartTable from '@/components/ChartTable.vue';
 
-const upClass = 'fa fa-chevron-up float-right pt-1 c-pointer';
-const downClass = 'fa fa-chevron-down float-right pt-1 c-pointer';
-
 @Component({
   components: {
     WeeklyForm,
@@ -75,26 +72,29 @@ const downClass = 'fa fa-chevron-down float-right pt-1 c-pointer';
     startDate(): string {
       return moment(this.$store.getters.getDefaultUser.weeklyCharts.startDate).format('YYYY-MM-DD');
     },
+    cardOpen(): object {
+      return this.$store.getters.getCardOpen;
+    },
   },
   data() {
     return {
-      settingsVisible: true,
-      settingsBodyClass: '',
-      settingsIconClass: upClass,
-      widgetVisible: true,
-      widgetBodyClass: '',
-      widgetIconClass: upClass,
+      upClass: 'fa fa-chevron-up float-right pt-1 c-pointer',
+      downClass: 'fa fa-chevron-down float-right pt-1 c-pointer',
       loading: false,
     };
   },
   methods: {
     toggleSettings() {
       // @ts-ignore
-      this.settingsVisible = !this.settingsVisible;
+      this.cardOpen.settingsWeek = !this.cardOpen.settingsWeek;
+      // @ts-ignore
+      this.$store.dispatch('setCardOpen', this.cardOpen);
     },
     toggleWidget() {
       // @ts-ignore
-      this.widgetVisible = !this.widgetVisible;
+      this.cardOpen.updateWeek = !this.cardOpen.updateWeek;
+      // @ts-ignore
+      this.$store.dispatch('setCardOpen', this.cardOpen);
     },
     setLoading(value: boolean) {
       // @ts-ignore
@@ -102,9 +102,9 @@ const downClass = 'fa fa-chevron-down float-right pt-1 c-pointer';
     },
   },
   watch: {
-    settingsVisible() {
+    cardOpen() {
       // @ts-ignore
-      if (this.settingsVisible) {
+      if (this.cardOpen.settingsWeek) {
         // @ts-ignore
         this.settingsBodyClass = '';
         // @ts-ignore
@@ -115,10 +115,8 @@ const downClass = 'fa fa-chevron-down float-right pt-1 c-pointer';
         // @ts-ignore
         this.settingsIconClass = downClass;
       }
-    },
-    widgetVisible() {
       // @ts-ignore
-      if (this.widgetVisible) {
+      if (this.cardOpen.updateWeek) {
         // @ts-ignore
         this.widgetBodyClass = '';
         // @ts-ignore

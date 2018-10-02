@@ -40,6 +40,10 @@ const initialState = {
   lang: 'en',
   timezone: moment.tz.guess(),
   currentUser: '',
+  cardOpen: {
+    updateWeek: true,
+    settingsWeek: true,
+  },
 };
 
 async function initializeApp() {
