@@ -48,3 +48,8 @@ export default Vue.extend({
     },
 });
 </script>
+<style>
+button.navbar-toggler:focus {
+    outline: 1px none;
+}
+</style>

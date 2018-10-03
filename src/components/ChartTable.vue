@@ -32,25 +32,23 @@
           </b-input-group>
         </b-col>
       </b-row>
-      <b-table :items="items" :fields="fields" class="mt-3" responsive="md" bordered small>
+      <b-table :items="items" :fields="fields" class="mt-3" responsive="md" small>
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-          <b-button size="sm" @click.stop="row.toggleDetails" class="mr-2">
-            {{ row.detailsShowing ? 'Hide' : 'Show'}} Details
+          <b-button size="sm" variant="outline-dark" @click.stop="row.toggleDetails" class="p-0 px-1">
+            <i class="fa fa-chevron-up" v-if="row.detailsShowing"></i>
+            <i class="fa fa-chevron-down" v-if="!row.detailsShowing"></i>
           </b-button>
         </template>
         <template slot="row-details" slot-scope="row">
           <b-card>
             <b-row class="mb-2">
-              <b-col sm="3" class="text-sm-right"><b>Age:</b></b-col>
-              <b-col>asdsd</b-col>
+              <b-col>{{ stats(row.index).getCurrentResume() }}</b-col>
             </b-row>
-            <b-row class="mb-2">
-              <b-col sm="3" class="text-sm-right"><b>Is Active:</b></b-col>
-              <b-col>test</b-col>
-            </b-row>
-            <b-button size="sm" @click="row.toggleDetails">Hide Details</b-button>
           </b-card>
+        </template>
+        <template slot="previous" slot-scope="row">
+          {{ stats(row.index).getVariantion(false).rank }}
         </template>
       </b-table>
     </b-col>
@@ -79,47 +77,24 @@ export default Vue.extend({
       return [];
     },
     fields(): object[] {
+      const fields = [];
+      let i = 0;
+      fields[i] = { key: 'rank', label: '#', class: 'w-10 text-center' };
+      i++;
+      fields[i] = { key: 'previous', label: 'pv', class: 'w-10 text-center' };
+      i++;
       if (this.selected === 'artists') {
-        return [
-            {
-              key: 'rank',
-              label: '#',
-              class: 'w-10',
-            },
-            {
-              key: 'name',
-              label: 'Artist',
-              class: 'w-65',
-            },
-            {
-              key: 'playcount',
-              label: 'Plays',
-              class: 'w-25',
-            },
-          ];
+        fields[i] = { key: 'name', label: 'Artist', class: 'w-65' };
       } else {
-        return [
-            {
-              key: 'rank',
-              label: '#',
-              class: 'w-10',
-            },
-            {
-              key: 'name',
-              label: 'Title',
-              class: 'w-40',
-            },
-            {
-              key: 'artist',
-              class: 'w-25',
-            },
-            {
-              key: 'playcount',
-              label: 'Plays',
-              class: 'w-25',
-            },
-          ];
+        fields[i] = { key: 'name', label: 'Title', class: 'w-40' };
+        i++;
+        fields[i] = { key: 'artist', class: 'w-25' };
       }
+      i++;
+      fields[i] = { key: 'playcount', label: 'Plays', class: 'w-25 text-center' };
+      i++;
+      fields[i] = { key: 'show_details', label: '+', class: 'text-center' };
+      return fields;
     },
     currentDate(): string {
       if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
@@ -177,6 +152,12 @@ export default Vue.extend({
     },
     selectTracks() {
       this.selected = 'tracks';
+    },
+    getWeeklyStats(type: string, name: string, artist: string|null = null) {
+      return this.$store.getters.getWeeklyStats(type, name, artist);
+    },
+    stats(i: number): any {
+      return this.getWeeklyStats(this.selected, this.items[i].name, this.items[i].artist).until(this.index);
     },
   },
   data() {
