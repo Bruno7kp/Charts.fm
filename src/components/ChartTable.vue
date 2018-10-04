@@ -129,7 +129,7 @@ export default Vue.extend({
       return [];
     },
     resumes(): any[] {
-      let resumes: any = [];
+      const resumes: any = [];
       for (let i = 0; i < this.items.length; i++) {
         resumes[i] = this.stats(i).getCurrentResume();
       }
