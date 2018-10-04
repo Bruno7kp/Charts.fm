@@ -115,8 +115,8 @@ class Stats {
                 };
             } else if (this.isReEntry()) {
                 return {
-                    rank: 're-entry',
-                    playcount: 're-entry',
+                    rank: 're',
+                    playcount: 're',
                 };
             } else {
                 if (showDiff) {
@@ -147,10 +147,7 @@ class Stats {
                 playcount: this.getCurrent().playcount,
             },
             peak: this.getPeak(),
-            previous: {
-                rank: this.getPrevious().rank,
-                playcount: this.getPrevious().playcount,
-            },
+            previous: this.getVariantion(false),
             variation: this.getVariantion(),
         };
 
