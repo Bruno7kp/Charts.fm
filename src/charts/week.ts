@@ -34,4 +34,4 @@ class Week {
     }
 }
 
-export { Week };
+export default Week;

@@ -3,7 +3,7 @@
     <Carousel />
     <div class="jumbotron jumbotron-fluid m-0 pt-4">
       <b-container class="my-3">
-        <b-row v-if="userName">
+        <b-row v-if="userName.length">
           <b-col sm="12" md="6" offset-md="3">
             <b-card header-bg-variant="dark"
                   header-tag="header"
@@ -51,7 +51,11 @@ import User from '@/charts/user';
     Carousel,
   },
   data() {
-    const userName = this.$store.state.currentUser;
+    let userName = '';
+    if (this.$store.state.users.length) {
+      userName = this.$store.state.currentUser;
+    }
+    
     let timezone = this.$store.state.timezone;
     if (!timezone) {
       timezone = moment.tz.guess();

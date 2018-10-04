@@ -6,8 +6,8 @@
           <div class="h3">{{ user.login }}</div>
         </b-col>
         <b-col sm="12" md="6" lg="5" class="mt-3 text-center">
-          <div class="h5" v-if="totalWeeks > 0">Week {{ index + 1 }}</div>
-          <div class="h6" v-if="totalWeeks > 0">{{ currentDate + ' - ' + currentEndDate }}</div>
+          <div class="h5 text-capitalize" v-if="totalCharts > 0">{{ chartType + ' ' + (index + 1) }}</div>
+          <div class="h6" v-if="totalCharts > 0">{{ currentDate + ' - ' + currentEndDate }}</div>
         </b-col>
       </b-row>
       <b-row>
@@ -24,10 +24,10 @@
               <b-button variant="danger" @click="setIndex(0)"><i class="fa fa-angle-double-left"></i></b-button>
               <b-button variant="danger" @click="decrement"><i class="fa fa-angle-left"></i></b-button>
             </b-input-group-prepend>
-            <b-form-input class="border-danger" type="date" @change="setWeek" :min="minDate" :max="maxDate" :value="currentDate"></b-form-input>
+            <b-form-input class="border-danger" type="date" @change="setChart" :min="minDate" :max="maxDate" :value="currentDate"></b-form-input>
             <b-input-group-append>
               <b-btn variant="danger" @click="increment"><i class="fa fa-angle-right"></i></b-btn>
-              <b-btn variant="danger" @click="setIndex(user.weeklyCharts.weeks.length - 1)"><i class="fa fa-angle-double-right"></i></b-btn>
+              <b-btn variant="danger" @click="setIndex(totalCharts - 1)"><i class="fa fa-angle-double-right"></i></b-btn>
             </b-input-group-append>
           </b-input-group>
         </b-col>
@@ -50,6 +50,34 @@
         <template slot="previous" slot-scope="row">
           {{ stats(row.index).getVariantion(false).rank }}
         </template>
+        <template slot="table-caption">
+          <h6>Lengend</h6>
+          <b-row>
+            <b-col>
+              <b-row>
+                <b-col><strong>CR</strong> Current Rank</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>PR</strong> Previous Rank</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>PK</strong> Peak Position</b-col>
+              </b-row>
+              
+            </b-col>
+            <b-col>
+              <b-row>
+                <b-col><strong>CP</strong> Current Playcount</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>PP</strong> Previous Playcount</b-col>
+              </b-row>
+              <b-row>
+                <b-col class="text-capitalize"><strong>OC</strong> {{ chartType }}s On Chart</b-col>
+              </b-row>
+            </b-col>
+          </b-row>
+        </template>
       </b-table>
     </b-col>
   </b-row>
@@ -58,11 +86,12 @@
 <script lang="ts">
 import * as _ from 'lodash';
 import LastFm from '@/lastfm';
-import { User, fixedStartDate, Week, Stats } from '@/charts';
+import { User, fixedStartDate, Stats } from '@/charts';
 import { mapGetters } from 'vuex';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import moment from 'moment';
 import 'moment-timezone';
+import { getUserChart, getUserChartList, getUserChartLength } from '@/charts/helpers';
 
 let chartStats: any = {};
 
@@ -71,18 +100,19 @@ export default Vue.extend({
   props: {
     user: Object,
     loading: Boolean,
+    chartType: String,
   },
   computed: {
     items(): any[] {
-      if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
-        return this.user.weeklyCharts.weeks[this.index][this.selected];
+      if (typeof getUserChartList(this.user, this.chartType)[this.index] !== 'undefined') {
+        return getUserChartList(this.user, this.chartType)[this.index][this.selected];
       }
       return [];
     },
     fields(): object[] {
       const fields = [];
       let i = 0;
-      fields[i] = { key: 'rank', label: '#', class: 'w-10 text-center' };
+      fields[i] = { key: 'rank', label: 'tw', class: 'w-10 text-center' };
       i++;
       fields[i] = { key: 'previous', label: 'pv', class: 'w-10 text-center' };
       i++;
@@ -100,32 +130,32 @@ export default Vue.extend({
       return fields;
     },
     currentDate(): string {
-      if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
-        return moment(this.user.weeklyCharts.weeks[this.index].start).format('YYYY-MM-DD');
+      if (typeof getUserChartList(this.user, this.chartType)[this.index] !== 'undefined') {
+        return moment(getUserChartList(this.user, this.chartType)[this.index].start).format('YYYY-MM-DD');
       }
       return '';
     },
     currentEndDate(): string {
-      if (typeof this.user.weeklyCharts.weeks[this.index] !== 'undefined') {
-        return moment(this.user.weeklyCharts.weeks[this.index].end).subtract(1, 'days').format('YYYY-MM-DD');
+      if (typeof getUserChartList(this.user, this.chartType)[this.index] !== 'undefined') {
+        return moment(getUserChartList(this.user, this.chartType)[this.index].end).subtract(1, 'days').format('YYYY-MM-DD');
       }
       return '';
     },
     maxDate(): string {
-      const l = this.user.weeklyCharts.weeks.length - 1;
-      if (typeof this.user.weeklyCharts.weeks[l] !== 'undefined') {
-        return moment(this.user.weeklyCharts.weeks[l].start).format('YYYY-MM-DD');
+      const l = getUserChartLength(this.user, this.chartType) - 1;
+      if (typeof getUserChartList(this.user, this.chartType)[l] !== 'undefined') {
+        return moment(getUserChartList(this.user, this.chartType)[l].start).format('YYYY-MM-DD');
       }
       return '';
     },
     minDate(): string {
-      if (typeof this.user.weeklyCharts.weeks[0] !== 'undefined') {
-        return moment(this.user.weeklyCharts.weeks[0].start).format('YYYY-MM-DD');
+      if (typeof getUserChartList(this.user, this.chartType)[0] !== 'undefined') {
+        return moment(getUserChartList(this.user, this.chartType)[0].start).format('YYYY-MM-DD');
       }
       return '';
     },
-    totalWeeks(): number {
-      return this.user.weeklyCharts.weeks.length;
+    totalCharts(): number {
+      return getUserChartLength(this.user, this.chartType);
     },
   },
   methods: {
@@ -136,15 +166,15 @@ export default Vue.extend({
       this.setIndex(this.index - 1);
     },
     setIndex(index: number) {
-      if (index >= 0 && index < this.user.weeklyCharts.weeks.length) {
+      if (index >= 0 && index < getUserChartLength(this.user, this.chartType)) {
         this.index = index;
       }
     },
-    setWeek(newValue: string) {
+    setChart(newValue: string) {
       const m = moment(newValue);
       m.tz(this.user.timezone);
-      const date = fixedStartDate(m.toDate(), this.user.weeklyCharts.startDay);
-      const found = this.user.weeklyCharts.weeks.findIndex((week: Week) => date >= week.start && date < week.end);
+      const date = fixedStartDate(m.toDate(), getUserChart(this.user, this.chartType).startDay);
+      const found = getUserChartList(this.user, this.chartType).findIndex((chart: any) => date >= chart.start && date < chart.end);
       this.setIndex(found);
     },
     selectArtists() {
@@ -156,17 +186,17 @@ export default Vue.extend({
     selectTracks() {
       this.selected = 'tracks';
     },
-    getWeeklyStats(type: string, name: string, artist: string|null = null): Stats {
+    getStats(type: string, name: string, artist: string|null = null): Stats {
       if (this.loading) {
         chartStats = [];
-        return this.$store.getters.getWeeklyStats(type, name, artist);
+        return this.$store.getters.getStats(this.chartType, type, name, artist);
       }
       if (typeof chartStats[this.user.login] === 'undefined') {
         chartStats[this.user.login] = { artists: {}, albums: {}, tracks: {} };
       }
       if (type === 'artists') {
         if (typeof chartStats[this.user.login][type][name] === 'undefined') {
-          chartStats[this.user.login][type][name] = this.$store.getters.getWeeklyStats(type, name, artist);
+          chartStats[this.user.login][type][name] = this.$store.getters.getStats(this.chartType, type, name, artist);
         }
         return chartStats[this.user.login][type][name];
       } else {
@@ -175,24 +205,24 @@ export default Vue.extend({
         }
         if (typeof chartStats[this.user.login][type][(artist as string)][name] === 'undefined') {
           chartStats[this.user.login][type][(artist as string)][name] =
-            this.$store.getters.getWeeklyStats(type, name, artist);
+            this.$store.getters.getStats(this.chartType, type, name, artist);
         }
         return chartStats[this.user.login][type][(artist as string)][name];
       }
     },
     stats(i: number): any {
-      return this.getWeeklyStats(this.selected, this.items[i].name, this.items[i].artist).until(this.index);
+      return this.getStats(this.selected, this.items[i].name, this.items[i].artist).until(this.index);
     },
   },
   data() {
     return {
-      index: this.user.weeklyCharts.weeks.length - 1,
+      index: getUserChartLength(this.user, this.chartType) - 1,
       selected: 'artists',
     };
   },
   watch: {
-    totalWeeks() {
-      if (this.totalWeeks === 1) {
+    totalCharts() {
+      if (this.totalCharts === 1) {
         this.setIndex(0);
       }
     },

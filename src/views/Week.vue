@@ -38,7 +38,7 @@
       <b-row>
         <b-col class="px-0 px-sm-3">
           <b-card class="my-4 shadow border-0">
-            <ChartTable v-bind:user.sync="user" v-bind:loading.sync="loading" />
+            <ChartTable chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" />
           </b-card>
         </b-col>
       </b-row>

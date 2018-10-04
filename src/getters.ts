@@ -1,6 +1,7 @@
 import { User, Week, Artist, Album, Track } from '@/charts';
 import * as moment from 'moment';
 import { Stats } from '@/charts';
+import { getUserChartList } from '@/charts/helpers';
 
 export default {
     getUser: (state: any) => (login: string) => {
@@ -38,16 +39,18 @@ export default {
         }
         return null;
     },
-    getWeeklyStats: (state: any, getters: any) => (type: string, name: string, artist: string|null = null) => {
+    getStats: (state: any, getters: any) =>
+    (chart: string, type: string, name: string, artist: string|null = null) => {
+
         const user = getters.getDefaultUser;
         const stats = new Stats(type, name, artist);
         const searchAT = (entry: Album|Track) => entry.name === name && entry.artist === artist;
         const searchA = (entry: Artist) => entry.name === name;
         const search = (type !== 'artists' && type !== 'artist') ? searchAT : searchA;
         if (user !== null) {
-            const wks = user.weeklyCharts.weeks;
-            for (let i = 0; i < wks.length; i++) {
-                stats.add(i, wks[i], wks[i][type].find(search));
+            const charts = getUserChartList(user, chart);
+            for (let i = 0; i < charts.length; i++) {
+                stats.add(i, charts[i], charts[i][type].find(search));
             }
         }
         return stats;
