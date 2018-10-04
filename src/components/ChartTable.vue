@@ -32,25 +32,27 @@
           </b-input-group>
         </b-col>
       </b-row>
-      <b-table :items="items" :fields="fields" class="mt-3" responsive="md" small>
-        <template slot="show_details" slot-scope="row">
-          <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-          <b-button size="sm" variant="outline-dark" @click.stop="row.toggleDetails" class="p-0 px-1">
-            <i class="fa fa-chevron-up" v-if="row.detailsShowing"></i>
-            <i class="fa fa-chevron-down" v-if="!row.detailsShowing"></i>
-          </b-button>
-        </template>
-        <template slot="row-details" slot-scope="row">
-          <b-card>
-            <b-row class="mb-2">
-              <b-col>{{ stats(row.index).getCurrentResume() }}</b-col>
-            </b-row>
-          </b-card>
-        </template>
-        <template slot="previous" slot-scope="row">
-          {{ stats(row.index).getVariantion(false).rank }}
-        </template>
-      </b-table>
+      <b-row>
+        <b-table :items="items" :fields="fields" class="mt-3" responsive="md" small>
+          <template slot="show_details" slot-scope="row">
+            <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
+            <b-button size="sm" variant="outline-dark" @click.stop="row.toggleDetails" class="p-0 px-1">
+              <i class="fa fa-chevron-up" v-if="row.detailsShowing"></i>
+              <i class="fa fa-chevron-down" v-if="!row.detailsShowing"></i>
+            </b-button>
+          </template>
+          <template slot="row-details" slot-scope="row">
+            <b-card>
+              <b-row class="mb-2">
+                <b-col>{{ stats(row.index).getCurrentResume() }}</b-col>
+              </b-row>
+            </b-card>
+          </template>
+          <template slot="previous" slot-scope="row">
+            {{ stats(row.index).getVariantion(false).rank }}
+          </template>
+        </b-table>
+      </b-row>
     </b-col>
   </b-row>
 </template>
