@@ -36,12 +36,10 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col>
-          <b-row>
-            <b-card class="my-4 shadow border-0">
-              <ChartTable v-bind:user.sync="user" v-bind:loading.sync="loading" />
-            </b-card>
-          </b-row>
+        <b-col class="px-0 px-sm-3">
+          <b-card class="my-4 shadow border-0">
+            <ChartTable v-bind:user.sync="user" v-bind:loading.sync="loading" />
+          </b-card>
         </b-col>
       </b-row>
     </b-container>
