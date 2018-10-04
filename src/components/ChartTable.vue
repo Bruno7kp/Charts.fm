@@ -64,12 +64,13 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 import moment from 'moment';
 import 'moment-timezone';
 
-const chartStats: any = {};
+let chartStats: any = {};
 
 export default Vue.extend({
   name: 'ChartTable',
   props: {
     user: Object,
+    loading: Boolean,
   },
   computed: {
     items(): any[] {
@@ -156,6 +157,10 @@ export default Vue.extend({
       this.selected = 'tracks';
     },
     getWeeklyStats(type: string, name: string, artist: string|null = null): Stats {
+      if (this.loading) {
+        chartStats = [];
+        return this.$store.getters.getWeeklyStats(type, name, artist);
+      }
       if (typeof chartStats[this.user.login] === 'undefined') {
         chartStats[this.user.login] = { artists: {}, albums: {}, tracks: {} };
       }
