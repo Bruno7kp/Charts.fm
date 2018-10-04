@@ -55,7 +55,7 @@ import User from '@/charts/user';
     if (this.$store.state.users.length) {
       userName = this.$store.state.currentUser;
     }
-    
+
     let timezone = this.$store.state.timezone;
     if (!timezone) {
       timezone = moment.tz.guess();

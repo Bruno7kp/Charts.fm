@@ -106,35 +106,36 @@ class Stats {
         return peak;
     }
 
-    public getVariantion(showDiff: boolean = true) {
+    public getVariantion() {
+        // todo 0 to = / percent
         if (this.isCharting()) {
             if (this.isNewEntry()) {
                 return {
-                    rank: 'new',
-                    playcount: 'new',
+                    previous: {rank: 'NEW', playcount: 'NEW'},
+                    diff: {rank: 'NEW', playcount: 'NEW'},
+                    percent: {rank: 'NEW', playcount: 'NEW'},
                 };
             } else if (this.isReEntry()) {
                 return {
-                    rank: 're',
-                    playcount: 're',
+                    previous: {rank: 'RE', playcount: 'RE'},
+                    diff: {rank: 'RE', playcount: 'RE'},
+                    percent: {rank: 'RE', playcount: 'RE'},
                 };
             } else {
-                if (showDiff) {
-                    return {
-                        rank: (this.getPrevious().rank as number) - (this.getCurrent().rank as number),
-                        playcount: (this.getCurrent().playcount as number) - (this.getPrevious().playcount as number),
-                    };
-                } else {
-                    return {
-                        rank: this.getPrevious().rank,
-                        playcount: this.getPrevious().playcount,
-                    };
-                }
+                const pr = this.getPrevious().rank as number;
+                const cr = this.getCurrent().rank as number;
+                const pp = this.getPrevious().playcount as number;
+                const cp = this.getCurrent().playcount as number;
+                return {
+                    previous: {rank: pr, playcount: pp},
+                    diff: {rank: (pr - cr), playcount: (cp - pp)},
+                    percent: {rank: (pr - cr), playcount: ((cp * 100 / pp) - 100).toFixed(2)},
+                };
             }
         } else {
             return {
-                rank: 'out',
-                playcount: 'out',
+                rank: 'OUT',
+                playcount: 'OUT',
             };
         }
     }
@@ -147,7 +148,6 @@ class Stats {
                 playcount: this.getCurrent().playcount,
             },
             peak: this.getPeak(),
-            previous: this.getVariantion(false),
             variation: this.getVariantion(),
         };
 

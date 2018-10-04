@@ -43,12 +43,21 @@
         <template slot="row-details" slot-scope="row">
           <b-card>
             <b-row class="mb-2">
-              <b-col>{{ stats(row.index).getCurrentResume() }}</b-col>
+              <b-col>{{ resumes[row.index] }}</b-col>
             </b-row>
           </b-card>
         </template>
-        <template slot="previous" slot-scope="row">
-          {{ stats(row.index).getVariantion(false).rank }}
+        <template slot="on_chart" slot-scope="row">
+          {{ resumes[row.index].total }}
+        </template>
+        <template slot="peak" slot-scope="row">
+          {{ resumes[row.index].peak.rank }}
+        </template>
+        <template slot="previous_rank" slot-scope="row">
+          {{ resumes[row.index].variation.previous.rank }}
+        </template>
+        <template slot="previous_playcount" slot-scope="row">
+          {{ resumes[row.index].variation.previous.playcount }}
         </template>
         <template slot="table-caption">
           <h6>Lengend</h6>
@@ -63,7 +72,6 @@
               <b-row>
                 <b-col><strong>PK</strong> Peak Position</b-col>
               </b-row>
-              
             </b-col>
             <b-col>
               <b-row>
@@ -74,6 +82,17 @@
               </b-row>
               <b-row>
                 <b-col class="text-capitalize"><strong>OC</strong> {{ chartType }}s On Chart</b-col>
+              </b-row>
+            </b-col>
+            <b-col>
+              <b-row>
+                <b-col><strong>RE</strong> Re-Entry</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>NEW</strong> New Entry</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>=</strong> No Change</b-col>
               </b-row>
             </b-col>
           </b-row>
@@ -109,12 +128,23 @@ export default Vue.extend({
       }
       return [];
     },
+    resumes(): any[] {
+      let resumes: any = [];
+      for (let i = 0; i < this.items.length; i++) {
+        resumes[i] = this.stats(i).getCurrentResume();
+      }
+      return resumes;
+    },
     fields(): object[] {
       const fields = [];
       let i = 0;
-      fields[i] = { key: 'rank', label: 'tw', class: 'w-10 text-center' };
+      fields[i] = { key: 'rank', label: 'CP', class: 'text-center' };
       i++;
-      fields[i] = { key: 'previous', label: 'pv', class: 'w-10 text-center' };
+      fields[i] = { key: 'previous_rank', label: 'PP', class: 'text-center' };
+      i++;
+      fields[i] = { key: 'peak', label: 'PK', class: 'text-center' };
+      i++;
+      fields[i] = { key: 'on_chart', label: 'OC', class: 'text-center' };
       i++;
       if (this.selected === 'artists') {
         fields[i] = { key: 'name', label: 'Artist', class: 'w-65' };
@@ -124,7 +154,9 @@ export default Vue.extend({
         fields[i] = { key: 'artist', class: 'w-25' };
       }
       i++;
-      fields[i] = { key: 'playcount', label: 'Plays', class: 'w-25 text-center' };
+      fields[i] = { key: 'playcount', label: 'CP', class: 'text-center' };
+      i++;
+      fields[i] = { key: 'previous_playcount', label: 'PP', class: 'text-center' };
       i++;
       fields[i] = { key: 'show_details', label: '+', class: 'text-center' };
       return fields;
@@ -137,7 +169,8 @@ export default Vue.extend({
     },
     currentEndDate(): string {
       if (typeof getUserChartList(this.user, this.chartType)[this.index] !== 'undefined') {
-        return moment(getUserChartList(this.user, this.chartType)[this.index].end).subtract(1, 'days').format('YYYY-MM-DD');
+        return moment(getUserChartList(this.user, this.chartType)[this.index].end)
+          .subtract(1, 'days').format('YYYY-MM-DD');
       }
       return '';
     },
@@ -174,7 +207,8 @@ export default Vue.extend({
       const m = moment(newValue);
       m.tz(this.user.timezone);
       const date = fixedStartDate(m.toDate(), getUserChart(this.user, this.chartType).startDay);
-      const found = getUserChartList(this.user, this.chartType).findIndex((chart: any) => date >= chart.start && date < chart.end);
+      const found = getUserChartList(this.user, this.chartType)
+        .findIndex((chart: any) => date >= chart.start && date < chart.end);
       this.setIndex(found);
     },
     selectArtists() {
