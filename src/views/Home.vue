@@ -3,6 +3,19 @@
     <Carousel />
     <div class="jumbotron jumbotron-fluid m-0 pt-4">
       <b-container class="my-3">
+        <b-row v-if="userName">
+          <b-col sm="12" md="6" offset-md="3">
+            <b-card header-bg-variant="dark"
+                  header-tag="header"
+                  header-text-variant="light"
+                  class="mt-3 shadow-lg border-0">
+                <h6 slot="header" class="mb-0">{{ userName }}'s Charts</h6>
+              <b-link to="/weekly" class="btn btn-outline-danger">
+                Weekly Charts <i class="fa fa-chevron-right"></i>
+              </b-link>
+            </b-card>
+          </b-col>
+        </b-row>
         <b-row>
           <b-col sm="12" md="6" offset-md="3">
             <b-card header-bg-variant="danger"
@@ -53,9 +66,9 @@ import User from '@/charts/user';
 export default class Home extends Vue {}
 </script>
 <style>
-.jumbotron {
-  background-color: #cebdbd;
-  background-image: url("/img/3px-tile.png");
+div.jumbotron {
+  background-image: linear-gradient(to left top, #711222, #8b1a2b, #a52334, #c02c3c, #dc3545);
+  background-color: #a52334;
 }
 </style>
 

@@ -14,12 +14,12 @@
         
         <b-navbar-nav class="ml-auto">
             <b-nav-item target="_blank" href="https://github.com/Bruno7kp/Charts.fm">
-                <i class="fab fa-github fa-lg"></i><span class="d-md-none pl-2">GitHub</span>
+                <i class="fab fa-github fa-fw"></i><span class="d-md-none pl-2">GitHub</span>
             </b-nav-item>
             <b-nav-item target="_blank" href="https://forum.zero.b7kp.com">
-                <i class="far fa-comment-alt"></i><span class="d-md-none pl-2">Forum</span>
+                <i class="far fa-comment-alt fa-fw"></i><span class="d-md-none pl-2">Forum</span>
             </b-nav-item>
-            <b-nav-item to="/settings"><i class="fa fa-cog"></i><span class="d-md-none pl-2">Settings</span></b-nav-item>
+            <b-nav-item to="/settings"><i class="fa fa-cog fa-fw"></i><span class="d-md-none pl-2">Settings</span></b-nav-item>
             
             <!--
             <b-nav-item-dropdown text="Lang" right>
