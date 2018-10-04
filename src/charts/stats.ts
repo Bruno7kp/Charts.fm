@@ -1,7 +1,16 @@
-import { Week } from '@/charts';
+import { Artist, Album, Track } from '@/charts';
+
+interface Chart {
+    start: Date;
+    end: Date;
+    artists: Artist[];
+    albums: Album[];
+    tracks: Track[];
+    limit: number;
+}
 
 interface Entry {
-    week: {
+    chart: {
         start: any,
         end: any,
         index: number,
@@ -10,7 +19,7 @@ interface Entry {
     playcount: number|null;
 }
 
-class WeekStats {
+class Stats {
     public type: string;
     public name: string;
     public artist: string|null;
@@ -27,11 +36,11 @@ class WeekStats {
         this.index = 0;
     }
 
-    public week(index: number, week: Week, entry: any) {
+    public add(index: number, chart: Chart, entry: any) {
         this.run[index] = {
-            week: {
-                start: week.start,
-                end: week.end,
+            chart: {
+                start: chart.start,
+                end: chart.end,
                 index,
             },
             rank: (typeof entry !== 'undefined') ? entry.rank : null,
@@ -132,7 +141,7 @@ class WeekStats {
 
     public getCurrentResume() {
         const resume = {
-            weeks: this.getTotalEntries(),
+            total: this.getTotalEntries(),
             current: {
                 rank: this.getCurrent().rank,
                 playcount: this.getCurrent().playcount,
@@ -175,4 +184,4 @@ class WeekStats {
     }
 }
 
-export { WeekStats };
+export { Stats, Entry };

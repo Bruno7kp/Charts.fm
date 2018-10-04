@@ -2,7 +2,7 @@
   <b-row>
     <b-col>
       <b-row>
-        <b-col sm="12" md="6" lg="7" class="mt-3">
+        <b-col sm="12" md="6" lg="7" class="mt-3 text-center text-md-left">
           <div class="h3">{{ user.login }}</div>
         </b-col>
         <b-col sm="12" md="6" lg="5" class="mt-3 text-center">
@@ -58,11 +58,13 @@
 <script lang="ts">
 import * as _ from 'lodash';
 import LastFm from '@/lastfm';
-import { User, fixedStartDate, Week } from '@/charts';
+import { User, fixedStartDate, Week, Stats } from '@/charts';
 import { mapGetters } from 'vuex';
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import moment from 'moment';
 import 'moment-timezone';
+
+const chartStats: any = {};
 
 export default Vue.extend({
   name: 'ChartTable',
@@ -153,8 +155,25 @@ export default Vue.extend({
     selectTracks() {
       this.selected = 'tracks';
     },
-    getWeeklyStats(type: string, name: string, artist: string|null = null) {
-      return this.$store.getters.getWeeklyStats(type, name, artist);
+    getWeeklyStats(type: string, name: string, artist: string|null = null): Stats {
+      if (typeof chartStats[this.user.login] === 'undefined') {
+        chartStats[this.user.login] = { artists: {}, albums: {}, tracks: {} };
+      }
+      if (type === 'artists') {
+        if (typeof chartStats[this.user.login][type][name] === 'undefined') {
+          chartStats[this.user.login][type][name] = this.$store.getters.getWeeklyStats(type, name, artist);
+        }
+        return chartStats[this.user.login][type][name];
+      } else {
+        if (typeof chartStats[this.user.login][type][(artist as string)] === 'undefined') {
+          chartStats[this.user.login][type][(artist as string)] = {};
+        }
+        if (typeof chartStats[this.user.login][type][(artist as string)][name] === 'undefined') {
+          chartStats[this.user.login][type][(artist as string)][name] =
+            this.$store.getters.getWeeklyStats(type, name, artist);
+        }
+        return chartStats[this.user.login][type][(artist as string)][name];
+      }
     },
     stats(i: number): any {
       return this.getWeeklyStats(this.selected, this.items[i].name, this.items[i].artist).until(this.index);

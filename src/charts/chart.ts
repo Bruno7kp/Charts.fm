@@ -1,7 +1,7 @@
 import LastFm from '@/lastfm';
 import { fixArtistChart, fixAlbumChart, fixTrackChart, Artist, Album, Track } from '@/charts';
 
-export default class Week {
+class Week {
     public start: Date;
     public end: Date;
     public artists: Artist[];
@@ -33,3 +33,5 @@ export default class Week {
         });
     }
 }
+
+export { Week };
