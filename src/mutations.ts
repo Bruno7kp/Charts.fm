@@ -24,4 +24,7 @@ export default {
     SET_CARD_OPEN(state: any, cardOpen: object) {
         state.cardOpen = cardOpen;
     },
+    SET_TABLE(state: any, table: object) {
+        state.table = table;
+    },
 };

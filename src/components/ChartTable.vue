@@ -32,7 +32,15 @@
           </b-input-group>
         </b-col>
       </b-row>
-      <b-table :items="items" :fields="fields" class="mt-3" responsive="md" small>
+      <b-table 
+        :items="items"
+        :fields="fields"
+        class="mt-3"
+        responsive="md"
+        :small="this.table.small.length > 0"
+        :bordered="this.table.bordered.length > 0"
+        :hover="this.table.hover.length > 0"
+        :striped="this.table.striped.length > 0">
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" variant="outline-dark" @click.stop="row.toggleDetails" class="p-0 px-1">
@@ -54,15 +62,15 @@
           {{ resumes[row.index].peak.rank }}
         </template>
         <template slot="previous_rank" slot-scope="row">
-          {{ resumes[row.index].variation.previous.rank }}
+          {{ resumes[row.index].variation[table.previous].rank }}
         </template>
         <template slot="previous_playcount" slot-scope="row">
-          {{ resumes[row.index].variation.previous.playcount }}
+          {{ resumes[row.index].variation[table.previous].playcount }}
         </template>
         <template slot="table-caption">
-          <h6>Lengend</h6>
+          <h6>Legend</h6>
           <b-row>
-            <b-col>
+            <b-col sm="12" md="4">
               <b-row>
                 <b-col><strong>CR</strong> Current Rank</b-col>
               </b-row>
@@ -73,7 +81,7 @@
                 <b-col><strong>PK</strong> Peak Position</b-col>
               </b-row>
             </b-col>
-            <b-col>
+            <b-col sm="12" md="4">
               <b-row>
                 <b-col><strong>CP</strong> Current Playcount</b-col>
               </b-row>
@@ -84,7 +92,7 @@
                 <b-col class="text-capitalize"><strong>OC</strong> {{ chartType }}s On Chart</b-col>
               </b-row>
             </b-col>
-            <b-col>
+            <b-col sm="12" md="4">
               <b-row>
                 <b-col><strong>RE</strong> Re-Entry</b-col>
               </b-row>
@@ -140,12 +148,18 @@ export default Vue.extend({
       let i = 0;
       fields[i] = { key: 'rank', label: 'CP', class: 'text-center' };
       i++;
-      fields[i] = { key: 'previous_rank', label: 'PP', class: 'text-center' };
-      i++;
-      fields[i] = { key: 'peak', label: 'PK', class: 'text-center' };
-      i++;
-      fields[i] = { key: 'on_chart', label: 'OC', class: 'text-center' };
-      i++;
+      if (this.table.previousRank.length) {
+        fields[i] = { key: 'previous_rank', label: 'PP', class: 'text-center' };
+        i++;
+      }
+      if (this.table.peak.length) {
+        fields[i] = { key: 'peak', label: 'PK', class: 'text-center' };
+        i++;
+      }
+      if (this.table.onChart.length) {
+        fields[i] = { key: 'on_chart', label: 'OC', class: 'text-center' };
+        i++;
+      }
       if (this.selected === 'artists') {
         fields[i] = { key: 'name', label: 'Artist', class: 'w-65' };
       } else {
@@ -156,8 +170,10 @@ export default Vue.extend({
       i++;
       fields[i] = { key: 'playcount', label: 'CP', class: 'text-center' };
       i++;
-      fields[i] = { key: 'previous_playcount', label: 'PP', class: 'text-center' };
-      i++;
+      if (this.table.previousPlaycount.length) {
+        fields[i] = { key: 'previous_playcount', label: 'PP', class: 'text-center' };
+        i++;
+      }
       fields[i] = { key: 'show_details', label: '+', class: 'text-center' };
       return fields;
     },
@@ -189,6 +205,9 @@ export default Vue.extend({
     },
     totalCharts(): number {
       return getUserChartLength(this.user, this.chartType);
+    },
+    table(): any {
+      return this.$store.getters.getTable;
     },
   },
   methods: {

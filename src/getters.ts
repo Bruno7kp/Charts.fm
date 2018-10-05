@@ -68,4 +68,7 @@ export default {
     getCardOpen: (state: any) => {
         return state.cardOpen;
     },
+    getTable: (state: any) => {
+        return state.table;
+    },
 };

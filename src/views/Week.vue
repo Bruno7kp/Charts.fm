@@ -2,7 +2,23 @@
   <div>
     <b-container>
       <b-row>
-        <b-col sm="12" md="6">
+        <b-col sm="12" md="4">
+          <b-card 
+            header-bg-variant="dark" 
+            header-text-variant="white"
+            class="mt-3 border-0 shadow"
+            no-body
+          >
+            <h6 slot="header" class="mb-0 c-pointer" @click="toggleSettings">
+              <i class="fa fa-cog"></i> Settings
+              <i :class="cardOpen.settingsWeek ? upClass : downClass"></i>
+            </h6>
+            <b-card-body :class="cardOpen.settingsWeek ? '' : 'd-none'">
+              <WeeklyForm v-bind:user.sync="user" v-bind:loading.sync="loading" />
+            </b-card-body>
+          </b-card>
+        </b-col>
+        <b-col sm="12" md="4">
           <b-card 
             header-bg-variant="danger"
             header-text-variant="white"
@@ -18,19 +34,19 @@
             </b-card-body>
           </b-card>
         </b-col>
-        <b-col sm="12" md="6">
+        <b-col sm="12" md="4">
           <b-card 
-            header-bg-variant="dark" 
+            header-bg-variant="secondary" 
             header-text-variant="white"
             class="mt-3 border-0 shadow"
             no-body
           >
-            <h6 slot="header" class="mb-0 c-pointer" @click="toggleSettings">
-              <i class="fa fa-cog"></i> Settings
-              <i :class="cardOpen.settingsWeek ? upClass : downClass"></i>
+            <h6 slot="header" class="mb-0 c-pointer" @click="toggleStyle">
+              <i class="fa fa-table"></i> Table Settings
+              <i :class="cardOpen.settingsStyle ? upClass : downClass"></i>
             </h6>
-            <b-card-body :class="cardOpen.settingsWeek ? '' : 'd-none'">
-              <WeeklyForm v-bind:user.sync="user" v-bind:loading.sync="loading" />
+            <b-card-body :class="cardOpen.settingsStyle ? '' : 'd-none'">
+              <SettingsStyle />
             </b-card-body>
           </b-card>
         </b-col>
@@ -52,6 +68,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import WeeklyWidget from '@/components/WeeklyWidget.vue';
+import SettingsStyle from '@/components/SettingsStyle.vue';
 import ChartTable from '@/components/ChartTable.vue';
 import { User } from '@/charts';
 
@@ -61,6 +78,7 @@ export default Vue.extend({
     WeeklyForm,
     WeeklyWidget,
     ChartTable,
+    SettingsStyle,
   },
   computed: {
     user: {
@@ -74,7 +92,7 @@ export default Vue.extend({
     startDate(): string {
       return moment(this.$store.getters.getDefaultUser.weeklyCharts.startDate).format('YYYY-MM-DD');
     },
-    cardOpen(): { settingsWeek: boolean, updateWeek: boolean } {
+    cardOpen(): { settingsWeek: boolean, updateWeek: boolean, settingsStyle: boolean } {
       return this.$store.getters.getCardOpen;
     },
   },
@@ -92,6 +110,10 @@ export default Vue.extend({
     },
     toggleWidget() {
       this.cardOpen.updateWeek = !this.cardOpen.updateWeek;
+      this.$store.dispatch('setCardOpen', this.cardOpen);
+    },
+    toggleStyle() {
+      this.cardOpen.settingsStyle = !this.cardOpen.settingsStyle;
       this.$store.dispatch('setCardOpen', this.cardOpen);
     },
     setLoading(value: boolean) {

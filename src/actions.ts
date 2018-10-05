@@ -24,4 +24,7 @@ export default {
   setCardOpen: (context: any, cardOpen: object) => {
     context.commit('SET_CARD_OPEN', cardOpen);
   },
+  setTable: (context: any, table: object) => {
+    context.commit('SET_TABLE', table);
+  },
 };

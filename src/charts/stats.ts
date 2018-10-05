@@ -107,7 +107,6 @@ class Stats {
     }
 
     public getVariantion() {
-        // todo 0 to = / percent
         if (this.isCharting()) {
             if (this.isNewEntry()) {
                 return {

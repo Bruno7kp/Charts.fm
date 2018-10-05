@@ -43,6 +43,20 @@ const initialState = {
   cardOpen: {
     updateWeek: true,
     settingsWeek: true,
+    settingsStyle: true,
+  },
+  theme: 'light',
+  table: {
+    previousRank: [true],
+    peak: [true],
+    onChart: [true],
+    previousPlaycount: [true],
+    small: [true],
+    striped: [],
+    bordered: [],
+    hover: [],
+    previous: 'previous',
+    colored: [true],
   },
 };
 
