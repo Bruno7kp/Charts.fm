@@ -57,7 +57,7 @@ import LastFm from '@/lastfm';
 import { User } from '@/charts';
 
 export default Vue.extend({
-  name: 'SettingsStyle',
+  name: 'SettingsTable',
   computed: {
     ...mapGetters({
       table: 'getTable',

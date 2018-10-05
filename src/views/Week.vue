@@ -41,12 +41,12 @@
             class="mt-3 border-0 shadow"
             no-body
           >
-            <h6 slot="header" class="mb-0 c-pointer" @click="toggleStyle">
+            <h6 slot="header" class="mb-0 c-pointer" @click="toggleTableSettings">
               <i class="fa fa-table"></i> Table Settings
-              <i :class="cardOpen.settingsStyle ? upClass : downClass"></i>
+              <i :class="cardOpen.settingsTable ? upClass : downClass"></i>
             </h6>
-            <b-card-body :class="cardOpen.settingsStyle ? '' : 'd-none'">
-              <SettingsStyle />
+            <b-card-body :class="cardOpen.settingsTable ? '' : 'd-none'">
+              <SettingsTable />
             </b-card-body>
           </b-card>
         </b-col>
@@ -68,7 +68,7 @@ import { Component, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import WeeklyWidget from '@/components/WeeklyWidget.vue';
-import SettingsStyle from '@/components/SettingsStyle.vue';
+import SettingsTable from '@/components/SettingsTable.vue';
 import ChartTable from '@/components/ChartTable.vue';
 import { User } from '@/charts';
 
@@ -78,7 +78,7 @@ export default Vue.extend({
     WeeklyForm,
     WeeklyWidget,
     ChartTable,
-    SettingsStyle,
+    SettingsTable,
   },
   computed: {
     user: {
@@ -92,7 +92,7 @@ export default Vue.extend({
     startDate(): string {
       return moment(this.$store.getters.getDefaultUser.weeklyCharts.startDate).format('YYYY-MM-DD');
     },
-    cardOpen(): { settingsWeek: boolean, updateWeek: boolean, settingsStyle: boolean } {
+    cardOpen(): { settingsWeek: boolean, updateWeek: boolean, settingsTable: boolean } {
       return this.$store.getters.getCardOpen;
     },
   },
@@ -112,8 +112,8 @@ export default Vue.extend({
       this.cardOpen.updateWeek = !this.cardOpen.updateWeek;
       this.$store.dispatch('setCardOpen', this.cardOpen);
     },
-    toggleStyle() {
-      this.cardOpen.settingsStyle = !this.cardOpen.settingsStyle;
+    toggleTableSettings() {
+      this.cardOpen.settingsTable = !this.cardOpen.settingsTable;
       this.$store.dispatch('setCardOpen', this.cardOpen);
     },
     setLoading(value: boolean) {

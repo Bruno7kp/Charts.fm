@@ -43,7 +43,7 @@ const initialState = {
   cardOpen: {
     updateWeek: true,
     settingsWeek: true,
-    settingsStyle: true,
+    settingsTable: true,
   },
   theme: 'light',
   table: {
