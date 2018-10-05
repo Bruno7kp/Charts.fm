@@ -36,7 +36,10 @@
       </b-row>
       <b-row>
         <b-col>
-            <b-form-checkbox v-model="table.colored" class="d-block">Colored Variation</b-form-checkbox>
+          <b-form-checkbox v-model="table.colored" class="d-block">Color Variat.</b-form-checkbox>
+        </b-col>
+        <b-col>
+          <b-form-checkbox v-model="table.times" class="d-block">Times at #1</b-form-checkbox>
         </b-col>
       </b-row>
     </b-col>

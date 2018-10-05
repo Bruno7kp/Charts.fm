@@ -57,6 +57,7 @@ const initialState = {
     hover: [],
     previous: 'previous',
     colored: [true],
+    times: [],
   },
 };
 

@@ -58,15 +58,15 @@
         <template slot="on_chart" slot-scope="row">
           {{ resumes[row.index].total }}
         </template>
-        <template slot="peak" slot-scope="row">
-          {{ resumes[row.index].peak.rank }}
-        </template>
-        <template slot="previous_rank" slot-scope="row">
-          {{ resumes[row.index].variation[table.previous].rank }}
-        </template>
-        <template slot="previous_playcount" slot-scope="row">
-          {{ resumes[row.index].variation[table.previous].playcount }}
-        </template>
+        <span slot="peak" 
+              slot-scope="row" 
+              v-html="peakFormatter(resumes[row.index].peak.rank, resumes[row.index].peak.times)"></span>
+        <span slot="previous_rank" 
+              slot-scope="row" 
+              v-html="formatter(resumes[row.index].variation[table.previous].rank)"></span>
+        <span slot="previous_playcount" 
+              slot-scope="row" 
+              v-html="formatter(resumes[row.index].variation[table.previous].playcount, '%')"></span>
         <template slot="table-caption">
           <h6>Legend</h6>
           <b-row>
@@ -97,10 +97,10 @@
                 <b-col><strong>RE</strong> Re-Entry</b-col>
               </b-row>
               <b-row>
-                <b-col><strong>NEW</strong> New Entry</b-col>
+                <b-col><strong>NE</strong> New Entry</b-col>
               </b-row>
               <b-row>
-                <b-col><strong>=</strong> No Change</b-col>
+                <b-col><strong>=</strong> No Variation</b-col>
               </b-row>
             </b-col>
           </b-row>
@@ -146,17 +146,17 @@ export default Vue.extend({
     fields(): object[] {
       const fields = [];
       let i = 0;
-      fields[i] = { key: 'rank', label: 'CP', class: 'text-center' };
+      fields[i] = { key: 'rank', label: 'CR', class: 'text-center' };
       i++;
-      if (this.table.previousRank.length) {
-        fields[i] = { key: 'previous_rank', label: 'PP', class: 'text-center' };
+      if (this.table.previousRank.length > 0) {
+        fields[i] = { key: 'previous_rank', label: 'PR', class: 'text-center' };
         i++;
       }
-      if (this.table.peak.length) {
+      if (this.table.peak.length > 0) {
         fields[i] = { key: 'peak', label: 'PK', class: 'text-center' };
         i++;
       }
-      if (this.table.onChart.length) {
+      if (this.table.onChart.length > 0) {
         fields[i] = { key: 'on_chart', label: 'OC', class: 'text-center' };
         i++;
       }
@@ -170,7 +170,7 @@ export default Vue.extend({
       i++;
       fields[i] = { key: 'playcount', label: 'CP', class: 'text-center' };
       i++;
-      if (this.table.previousPlaycount.length) {
+      if (this.table.previousPlaycount.length > 0) {
         fields[i] = { key: 'previous_playcount', label: 'PP', class: 'text-center' };
         i++;
       }
@@ -265,6 +265,34 @@ export default Vue.extend({
     },
     stats(i: number): any {
       return this.getStats(this.selected, this.items[i].name, this.items[i].artist).until(this.index);
+    },
+    formatter(value: number|string, suffix: string = ''): any {
+      const prefix = this.table.colored.length > 0 ? 'text-' : '';
+      if (value === 0) {
+        return '=';
+      } else if (value === 'RE') {
+        return '<span class="' + prefix + 'warning">RE</span>';
+      } else if (value === 'NEW') {
+        return '<span class="' + prefix + 'primary">NE</span>';
+      } else {
+        if (this.table.previous !== 'previous') {
+          suffix = this.table.previous === 'percent' ? suffix : '';
+          if (value > 0) {
+            return '<span class="' + prefix + 'success">+' + value + suffix + '</span>';
+          } else {
+            return '<span class="' + prefix + 'danger">' + value + suffix + '</span>';
+          }
+        }
+      }
+      return value;
+    },
+    peakFormatter(value: number, times: number): any {
+      const prefix = this.table.colored.length > 0 ? 'text-' : '';
+      const suffix = this.table.times.length > 0 ? ' <small class="text-secondary">(' + times + 'x)</small>' : '';
+      if (value === 1) {
+        return '<span class="' + prefix + 'primary">' + value + suffix + '</span>';
+      }
+      return value;
     },
   },
   data() {
