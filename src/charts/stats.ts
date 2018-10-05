@@ -58,7 +58,7 @@ class Stats {
     }
 
     public getEntries() {
-        return this.entries.slice(0, this.index + 1);
+        return this.entries.filter((value: any) => value <= this.index);
     }
 
     public getCurrent() {
