@@ -19,6 +19,9 @@ import App from './App.vue';
 import moment from 'moment';
 import 'moment-timezone';
 
+// tslint:disable-next-line:no-var-requires
+const Promised = require('vue-promised').default;
+// tslint:disable-next-line:no-var-requires
 const VueAnalytics = require('vue-analytics').default;
 
 Vue.use(Vuex);
@@ -26,6 +29,7 @@ Vue.use(VueAnalytics, {
   id: 'UA-126624153-2',
   router,
 });
+Vue.component('Promised', Promised);
 
 LocalForage.config({
   driver      : LocalForage.INDEXEDDB,
@@ -64,6 +68,7 @@ const initialState = {
     previous: 'previous',
     colored: [true],
     times: [],
+    images: [true],
   },
 };
 

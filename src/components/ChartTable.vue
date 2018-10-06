@@ -48,11 +48,24 @@
             <i class="fa fa-chevron-down" v-if="!row.detailsShowing"></i>
           </b-button>
         </template>
+        <template slot="image" slot-scope="row">
+          <Promised :promise="getImage(row.index)">
+            <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" />
+            <span slot-scope="data">
+              <b-img center class="w-cover" :src="data" />
+            </span>
+          </Promised>
+        </template>  
         <template slot="row-details" slot-scope="row">
           <b-card>
             <b-row class="mb-2">
               <b-col sm="12" md="3">
-                 <b-img-lazy blank-color="#bbb" center fluid :src="getImage(items[row.index].name, items[row.index].artist)" alt="cover" />
+                <Promised :promise="getImage(row.index)">
+                  <div>...</div>
+                  <span slot-scope="data">
+                    <b-img-lazy center fluid :src="data" />
+                  </span>
+                </Promised>
               </b-col>
               <b-col>
                 <b-list-group>
@@ -79,7 +92,6 @@
                     Current Playcount
                   </b-list-group-item>
                 </b-list-group>
-                
               </b-col>
             </b-row>
           </b-card>
@@ -182,11 +194,15 @@ export default Vue.extend({
         i++;
       }
       if (this.table.peak.length > 0) {
-        fields[i] = { key: 'peak', label: 'PK', class: 'text-center' };
+        fields[i] = { key: 'peak', label: 'PK', class: 'text-center px-0' };
         i++;
       }
       if (this.table.onChart.length > 0) {
         fields[i] = { key: 'on_chart', label: 'OC', class: 'text-center' };
+        i++;
+      }
+      if (this.table.images.length > 0) {
+        fields[i] = { key: 'image', label: '', class: 'text-center p-0' };
         i++;
       }
       if (this.selected === 'artists') {
@@ -317,7 +333,7 @@ export default Vue.extend({
     },
     peakFormatter(value: number, times: number): any {
       const prefix = this.table.colored.length > 0 ? 'text-' : '';
-      const suffix = this.table.times.length > 0 ? ' <small class="text-secondary">(' + times + 'x)</small>' : '';
+      const suffix = this.table.times.length > 0 ? ' <small class="text-secondary">' + times + 'x</small>' : '';
       if (value === 1) {
         return '<span class="' + prefix + 'primary">' + value + suffix + '</span>';
       }
@@ -326,17 +342,60 @@ export default Vue.extend({
     dateFormatter(value: string): string {
       return moment(value).format('YYYY-MM-DD');
     },
-    getImage(name: string, artist: string): string {
-      if (this.selected === 'artists') {
-        LastFm.artist().getInfo(name).then((response) => console.log(response));
-      }
-      return '';
+    loadImage(index: number) {
+      return new Promise ((resolve) => {
+        const images = this.images;
+        let name = this.items[index].name;
+        const artist = this.items[index].artist;
+        if (this.selected === 'artists' || this.selected === 'tracks') {
+          name = this.selected === 'tracks' ? artist : name;
+          if (!images.artists.hasOwnProperty(name)) {
+            (images.artists as any)[name] = '';
+            LastFm.artist().getImage(name).then((image: any) => {
+              (images.artists as any)[name] = image;
+              resolve(image);
+              this.images = Object.assign({}, images);
+            });
+          } else {
+            resolve((this.images.artists as any)[name]);
+          }
+        } else if (this.selected === 'albums') {
+          const id = artist + name;
+          if (!images.albums.hasOwnProperty(id)) {
+            (images.albums as any)[id] = '';
+            LastFm.album().getImage(name, artist).then((image: any) => {
+              (images.albums as any)[id] = image;
+              resolve(image);
+              this.images = Object.assign({}, images);
+            });
+          } else {
+            resolve((this.images.albums as any)[id]);
+          }
+        }
+      });
+    },
+    getImage(index: number) {
+      const a = this.items[index].artist;
+      const n = this.items[index].name;
+      const c = this.selected === 'albums' ? 'albums' : 'artists';
+      const id = (c === 'albums') ? a + n : (this.selected === 'artists') ? n : a;
+      const p = new Promise((resolve) => {
+        if (this.images[c].hasOwnProperty(id)) {
+          resolve((this.images as any)[c][id]);
+        } else {
+          setTimeout(() => {
+            this.loadImage(index).then((image) => resolve(image));
+          }, 1000 + index * 100);
+        }
+      });
+      return p;
     },
   },
   data() {
     return {
       index: getUserChartLength(this.user, this.chartType) - 1,
       selected: 'artists',
+      images: {artists: {}, albums: {}},
     };
   },
   watch: {
@@ -364,6 +423,17 @@ export default Vue.extend({
 }
 .w-65 {
     width: 65% !important;
+}
+td img.w-cover {
+  width: 50px !important;
+  height: 50px !important;
+}
+.table-sm td img.w-cover {
+  width: 35px !important;
+  height: 35px !important; 
+}
+small.text-secondary {
+  font-size: 70%;
 }
 </style>
 

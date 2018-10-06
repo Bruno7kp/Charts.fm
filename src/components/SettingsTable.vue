@@ -7,6 +7,7 @@
         <b-col>
           <b-form-checkbox v-model="table.previousRank" class="d-block">Previous Rank</b-form-checkbox>
           <b-form-checkbox v-model="table.peak" class="d-block">Peak</b-form-checkbox>
+          <b-form-checkbox v-model="table.images" class="d-block">Image</b-form-checkbox>
         </b-col>
         <b-col>
           <b-form-checkbox v-model="table.onChart" class="d-block">On Chart</b-form-checkbox>

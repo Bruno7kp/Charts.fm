@@ -26,7 +26,10 @@ export default class LastFmArtistApi implements LastFmApi {
     public getImage(artist: string) {
         return new Promise((resolve, reject) => {
             this.getInfo(artist).then((response) => {
-                console.log(response);
+                const images = response.data.artist.image;
+                if (images.length > 0) {
+                    resolve(images[images.length - 1]['#text']);
+                }
             });
         });
     }

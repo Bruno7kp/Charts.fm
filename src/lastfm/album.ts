@@ -23,4 +23,15 @@ export default class LastFmAlbumApi implements LastFmApi {
             },
         });
     }
+
+    public getImage(name: string, artist: string) {
+        return new Promise((resolve, reject) => {
+            this.getInfo(artist, name).then((response) => {
+                const images = response.data.album.image;
+                if (images.length > 0) {
+                    resolve(images[images.length - 1]['#text']);
+                }
+            });
+        });
+    }
 }
