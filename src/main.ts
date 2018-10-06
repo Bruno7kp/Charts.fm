@@ -19,7 +19,13 @@ import App from './App.vue';
 import moment from 'moment';
 import 'moment-timezone';
 
+const VueAnalytics = require('vue-analytics').default;
+
 Vue.use(Vuex);
+Vue.use(VueAnalytics, {
+  id: 'UA-126624153-2',
+  router,
+});
 
 LocalForage.config({
   driver      : LocalForage.INDEXEDDB,

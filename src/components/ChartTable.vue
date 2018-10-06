@@ -51,7 +51,36 @@
         <template slot="row-details" slot-scope="row">
           <b-card>
             <b-row class="mb-2">
-              <b-col>{{ resumes[row.index] }}</b-col>
+              <b-col sm="12" md="3">
+                 <b-img-lazy blank-color="#bbb" center fluid :src="getImage(items[row.index].name, items[row.index].artist)" alt="cover" />
+              </b-col>
+              <b-col>
+                <b-list-group>
+                  <b-list-group-item>
+                    <span class="font-weight-bold">{{ items[row.index].name }}</span>
+                  </b-list-group-item>
+                  <b-list-group-item v-if="items[row.index].artist">
+                    <span class="font-weight-bold">{{ items[row.index].artist }}</span>
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <span class="font-weight-bold">
+                      #{{ resumes[row.index].peak.rank }}
+                    </span>
+                    Peak
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <span class="font-weight-bold">
+                      #{{ resumes[row.index].current.rank }}
+                    </span>
+                    Current Rank
+                  </b-list-group-item>
+                  <b-list-group-item>
+                    <span class="font-weight-bold">{{ resumes[row.index].current.playcount }}</span>
+                    Current Playcount
+                  </b-list-group-item>
+                </b-list-group>
+                
+              </b-col>
             </b-row>
           </b-card>
         </template>
@@ -293,6 +322,15 @@ export default Vue.extend({
         return '<span class="' + prefix + 'primary">' + value + suffix + '</span>';
       }
       return value;
+    },
+    dateFormatter(value: string): string {
+      return moment(value).format('YYYY-MM-DD');
+    },
+    getImage(name: string, artist: string): string {
+      if (this.selected === 'artists') {
+        LastFm.artist().getInfo(name).then((response) => console.log(response));
+      }
+      return '';
     },
   },
   data() {

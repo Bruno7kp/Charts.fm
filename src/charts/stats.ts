@@ -61,6 +61,10 @@ class Stats {
         return this.entries.filter((value: any) => value <= this.index);
     }
 
+    public getDebut() {
+        return this.run[this.entries[0]];
+    }
+
     public getCurrent() {
         return this.run[this.index];
     }
@@ -148,6 +152,7 @@ class Stats {
             },
             peak: this.getPeak(),
             variation: this.getVariantion(),
+            debut: this.getDebut(),
         };
 
         return resume;
