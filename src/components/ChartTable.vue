@@ -36,7 +36,7 @@
         :items="items"
         :fields="fields"
         class="mt-3"
-        responsive="md"
+        responsive="lg"
         :small="this.table.small.length > 0"
         :bordered="this.table.bordered.length > 0"
         :hover="this.table.hover.length > 0"
@@ -58,13 +58,37 @@
               <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" />
             </span>
           </Promised>
-        </template>  
+        </template>
+        <template slot="name_artist" slot-scope="row">
+          <span class="d-block">{{ items[row.index].name }}</span> 
+          <span class="d-block sub">{{ items[row.index].artist }}</span>
+        </template>
         <template slot="row-details" slot-scope="row">
           <b-card>
-            <b-row class="mb-2">
-              <b-col cols="5" md="3">
+            <b-row class=" border rounded">
+              <b-col cols="6" md="3" class="text-center border-right">
+                <b-row class="border-bottom py-2">
+                  <b-col>
+                    <small class="text-secondary">CURRENT RANK</small>
+                    <h4 class="font-weight-bold pt-2">{{ resumes[row.index].current.rank }}</h4>
+                  </b-col>
+                </b-row>
+                <b-row class="border-bottom py-2">
+                  <b-col>
+                    <small class="text-secondary">PREVIOUS RANK</small>
+                    <h5 class="font-weight-bold pt-2">{{ resumes[row.index].variation.previous.rank }}</h5>
+                  </b-col>
+                </b-row>
+                <b-row class="py-2">
+                  <b-col>
+                    <small class="text-secondary text-uppercase">{{ chartType }}s</small>
+                    <h5 class="font-weight-bold pt-2">{{ resumes[row.index].total }}</h5>
+                  </b-col>
+                </b-row>
+              </b-col>
+              <b-col cols="6" md="3" class="my-auto">
                 <Promised :promise="getImage(row.index)">
-                  <div>...</div>
+                  <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" />
                   <span slot-scope="data">
                     <b-img center fluid :src="data" />
                   </span>
@@ -73,33 +97,49 @@
                   </span>
                 </Promised>
               </b-col>
-              <b-col cols="12" md="9">
-                <b-list-group>
-                  <b-list-group-item>
-                    <span class="font-weight-bold">{{ items[row.index].name }}</span>
-                  </b-list-group-item>
-                  <b-list-group-item v-if="items[row.index].artist">
-                    <span class="font-weight-bold">{{ items[row.index].artist }}</span>
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-row>
-                      <b-col md="1" cols="3" class="font-weight-bold p-0 text-center">#{{ resumes[row.index].peak.rank }}</b-col>
-                      <b-col>Peak</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-row>
-                      <b-col md="1" cols="3" class="font-weight-bold p-0 text-center">{{ resumes[row.index].total }}</b-col>
-                      <b-col class="text-capitalize">{{ chartType }}s</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                  <b-list-group-item>
-                    <b-row>
-                      <b-col md="1" cols="3" class="font-weight-bold text-center p-0">{{ resumes[row.index].peak.points }}</b-col>
-                      <b-col class="text-capitalize">Chart Points</b-col>
-                    </b-row>
-                  </b-list-group-item>
-                </b-list-group>
+              <b-col cols="12" md="6" class="border-left border-on-info">
+                <b-row class="border-bottom">
+                  <b-col>
+                    <h4 class="font-weight-bold pt-1 text-center text-md-left">{{ items[row.index].name }}</h4>
+                  </b-col>
+                </b-row>
+                <b-row class="border-bottom" v-if="items[row.index].artist">
+                  <b-col>
+                    <h4 class="font-weight-bold pt-1 text-center text-md-left">{{ items[row.index].artist }}</h4>
+                  </b-col>
+                </b-row>
+                <b-row class="border-bottom">
+                  <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
+                    {{ resumes[row.index].peak.rank }}
+                  </b-col>
+                  <b-col class="my-auto">
+                    Peak
+                  </b-col>
+                </b-row>
+                <b-row class="border-bottom">
+                  <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
+                    {{ resumes[row.index].debut.rank }}
+                  </b-col>
+                  <b-col class="my-auto">
+                    Debut
+                  </b-col>
+                </b-row>
+                <b-row class="border-bottom">
+                  <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
+                    {{ resumes[row.index].peak.points }}
+                  </b-col>
+                  <b-col class="my-auto">
+                    Chart Points
+                  </b-col>
+                </b-row>
+                <b-row class="border-bottom">
+                  <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
+                    {{ resumes[row.index].peak.playcount_sum }}
+                  </b-col>
+                  <b-col class="my-auto">
+                    Total Playcount (while on the chart)
+                  </b-col>
+                </b-row>
               </b-col>
             </b-row>
           </b-card>
@@ -214,11 +254,15 @@ export default Vue.extend({
         i++;
       }
       if (this.selected === 'artists') {
-        fields[i] = { key: 'name', label: 'Artist', class: 'w-65' };
+        fields[i] = { key: 'name', label: 'Artist', class: 'w-65 title' };
       } else {
-        fields[i] = { key: 'name', label: 'Title', class: 'w-40' };
-        i++;
-        fields[i] = { key: 'artist', class: 'w-25' };
+        if (this.table.separateArtist.length > 0) {
+          fields[i] = { key: 'name', label: 'Title', class: 'w-40 title min-' + this.selected };
+          i++;
+          fields[i] = { key: 'artist', class: 'w-25 min-artists' };
+        } else {
+          fields[i] = { key: 'name_artist', label: 'Title, Artist', class: 'w-65 title title-both min-artists' };
+        }
       }
       i++;
       fields[i] = { key: 'playcount', label: 'CP', class: 'text-center' };
@@ -431,21 +475,33 @@ export default Vue.extend({
 </script>
 
 <style>
+/* Selector */
 .nav-danger.nav-pills .nav-link.active {
   background-color: #dc3545;
 }
 .nav-danger a {
   color: #212529;
 }
+/* Columns Helpers */
 .w-10 {
-    width: 10% !important;
+  width: 10% !important;
 }
 .w-40 {
-    width: 40% !important;
+  width: 40% !important;
 }
 .w-65 {
-    width: 65% !important;
+  width: 65% !important;
 }
+/* Images */
+td img.w-cover {
+  width: 65px;
+  height: 65px;
+}
+.table-sm td img.w-cover {
+  width: 35px;
+  height: 35px;
+}
+/* Not found image placeholder */
 td img.w-cover:before {
   content: " ";
   position: absolute;
@@ -453,15 +509,7 @@ td img.w-cover:before {
   width: 65px;
   background-color: #ddd;
 }
-td img.w-cover {
-  width: 65px;
-  height: 65px;
-}
 .table-sm td img.w-cover:before {
-  width: 35px;
-  height: 35px;
-}
-.table-sm td img.w-cover {
   width: 35px;
   height: 35px;
 }
@@ -475,11 +523,42 @@ table td {
   line-height: 1;
   font-size: 1.25rem;
 }
+table td.title-both {
+  line-height: 1.4;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+.table-sm td.title-both {
+  line-height: 1.1;
+}
 .table-sm td {
   font-size: 1.1rem;
 }
-.table tr:first-child td:first-child {
-  color: #007bff;
+@media (max-width: 767px) { 
+  .border-on-info {
+    border-left: 0 !important;
+    border-top: 1px solid #dee2e6;
+  }
 }
+.min-albums {
+  min-width: 250px;
+}
+.min-tracks {
+  min-width: 200px;
+}
+.min-artists {
+  min-width: 200px;
+}
+td.title {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.table-sm td.title {
+  font-size: 1rem;
+}
+td.title .sub {
+  font-weight: 400;
+}
+
 </style>
 

@@ -12,6 +12,7 @@
         <b-col>
           <b-form-checkbox v-model="table.onChart" class="d-block">Total {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}s</b-form-checkbox>
           <b-form-checkbox v-model="table.previousPlaycount" class="d-block">Previous Plays</b-form-checkbox>
+          <b-form-checkbox v-model="table.separateArtist" class="d-block m-0">Artist (separate)</b-form-checkbox>
         </b-col>
       </b-row>
       <hr/>

@@ -97,6 +97,7 @@ const initialState = {
     colored: [true],
     times: [],
     images: [true],
+    separateArtist: [],
   },
   images: {
     artists: {},
