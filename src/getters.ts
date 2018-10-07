@@ -71,4 +71,7 @@ export default {
     getTable: (state: any) => {
         return state.table;
     },
+    getImages: (state: any) => {
+        return state.images;
+    },
 };

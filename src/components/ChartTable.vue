@@ -63,7 +63,7 @@
                 <Promised :promise="getImage(row.index)">
                   <div>...</div>
                   <span slot-scope="data">
-                    <b-img-lazy center fluid :src="data" />
+                    <b-img center fluid :src="data" />
                   </span>
                 </Promised>
               </b-col>
@@ -254,6 +254,11 @@ export default Vue.extend({
     table(): any {
       return this.$store.getters.getTable;
     },
+    images: {
+      get(): any {
+        return this.$store.getters.getImages;
+      },
+    },
   },
   methods: {
     increment() {
@@ -344,29 +349,28 @@ export default Vue.extend({
     },
     loadImage(index: number) {
       return new Promise ((resolve) => {
-        const images = this.images;
         let name = this.items[index].name;
         const artist = this.items[index].artist;
         if (this.selected === 'artists' || this.selected === 'tracks') {
           name = this.selected === 'tracks' ? artist : name;
-          if (!images.artists.hasOwnProperty(name)) {
-            (images.artists as any)[name] = '';
+          if (!this.images.artists.hasOwnProperty(name)) {
+            (this.images.artists as any)[name] = '';
             LastFm.artist().getImage(name).then((image: any) => {
-              (images.artists as any)[name] = image;
+              (this.images.artists as any)[name] = image;
+              this.$store.dispatch('setImages', this.images); // save
               resolve(image);
-              this.images = Object.assign({}, images);
             });
           } else {
             resolve((this.images.artists as any)[name]);
           }
         } else if (this.selected === 'albums') {
           const id = artist + name;
-          if (!images.albums.hasOwnProperty(id)) {
-            (images.albums as any)[id] = '';
+          if (!this.images.albums.hasOwnProperty(id)) {
+            (this.images.albums as any)[id] = '';
             LastFm.album().getImage(name, artist).then((image: any) => {
-              (images.albums as any)[id] = image;
+              (this.images.albums as any)[id] = image;
+              this.$store.dispatch('setImages', this.images); // save
               resolve(image);
-              this.images = Object.assign({}, images);
             });
           } else {
             resolve((this.images.albums as any)[id]);
@@ -379,23 +383,23 @@ export default Vue.extend({
       const n = this.items[index].name;
       const c = this.selected === 'albums' ? 'albums' : 'artists';
       const id = (c === 'albums') ? a + n : (this.selected === 'artists') ? n : a;
-      const p = new Promise((resolve) => {
+      return new Promise((resolve) => {
         if (this.images[c].hasOwnProperty(id)) {
           resolve((this.images as any)[c][id]);
         } else {
           setTimeout(() => {
-            this.loadImage(index).then((image) => resolve(image));
+            this.loadImage(index).then((image) => {
+              resolve(image);
+            });
           }, 1000 + index * 100);
         }
       });
-      return p;
     },
   },
   data() {
     return {
       index: getUserChartLength(this.user, this.chartType) - 1,
       selected: 'artists',
-      images: {artists: {}, albums: {}},
     };
   },
   watch: {
@@ -434,6 +438,12 @@ td img.w-cover {
 }
 small.text-secondary {
   font-size: 70%;
+}
+.table th, .table td {
+  vertical-align: middle;
+}
+table {
+  line-height: 1;
 }
 </style>
 

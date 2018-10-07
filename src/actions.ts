@@ -27,4 +27,12 @@ export default {
   setTable: (context: any, table: object) => {
     context.commit('SET_TABLE', table);
   },
+  setImages: (context: any, images: object) => {
+    context.commit('SET_IMAGES', images);
+  },
+  cleanImages: (context: any) => {
+    const expire = new Date();
+    expire.setDate(expire.getDate() + 15);
+    context.commit('SET_IMAGES', {artists: {}, albums: {}, expire});
+  },
 };

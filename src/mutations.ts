@@ -27,4 +27,7 @@ export default {
     SET_TABLE(state: any, table: object) {
         state.table = table;
     },
+    SET_IMAGES(state: any, images: object) {
+        state.images = images;
+    },
 };

@@ -12,6 +12,12 @@
       <b-btn type="submit" variant="outline-success"><i class="far fa-save"></i></b-btn>
     </b-col>
   </b-row>
+  <hr/>
+  <b-row>
+    <b-col>
+      <b-btn type="submit" variant="danger" @click="clean">Remove cached images</b-btn>
+    </b-col>
+  </b-row>
 </b-form>
 </template>
 
@@ -32,6 +38,9 @@ export default Vue.extend({
   methods: {
     onSubmit() {
       this.$store.dispatch('setTimezone', this.$props.timezone);
+    },
+    clean() {
+      this.$store.dispatch('cleanImages');
     },
   },
 });

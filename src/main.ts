@@ -45,6 +45,9 @@ const persistPlugin = (store: any) => {
   });
 };
 
+const expire = new Date();
+expire.setDate(expire.getDate() + 15);
+
 const initialState = {
   users: [],
   lang: 'en',
@@ -69,6 +72,11 @@ const initialState = {
     colored: [true],
     times: [],
     images: [true],
+  },
+  images: {
+    artists: {},
+    albums: {},
+    expire,
   },
 };
 
