@@ -10,7 +10,7 @@
           <b-form-checkbox v-model="table.images" class="d-block">Image</b-form-checkbox>
         </b-col>
         <b-col>
-          <b-form-checkbox v-model="table.onChart" class="d-block">On Chart</b-form-checkbox>
+          <b-form-checkbox v-model="table.onChart" class="d-block">Total {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}s</b-form-checkbox>
           <b-form-checkbox v-model="table.previousPlaycount" class="d-block">Previous Plays</b-form-checkbox>
         </b-col>
       </b-row>
@@ -62,6 +62,9 @@ import { User } from '@/charts';
 
 export default Vue.extend({
   name: 'SettingsTable',
+  props: {
+    chartType: String,
+  },
   computed: {
     ...mapGetters({
       table: 'getTable',

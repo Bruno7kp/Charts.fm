@@ -62,7 +62,7 @@
         <template slot="row-details" slot-scope="row">
           <b-card>
             <b-row class="mb-2">
-              <b-col sm="12" md="3">
+              <b-col cols="5" md="3">
                 <Promised :promise="getImage(row.index)">
                   <div>...</div>
                   <span slot-scope="data">
@@ -73,7 +73,7 @@
                   </span>
                 </Promised>
               </b-col>
-              <b-col>
+              <b-col cols="12" md="9">
                 <b-list-group>
                   <b-list-group-item>
                     <span class="font-weight-bold">{{ items[row.index].name }}</span>
@@ -82,20 +82,22 @@
                     <span class="font-weight-bold">{{ items[row.index].artist }}</span>
                   </b-list-group-item>
                   <b-list-group-item>
-                    <span class="font-weight-bold">
-                      #{{ resumes[row.index].peak.rank }}
-                    </span>
-                    Peak
+                    <b-row>
+                      <b-col md="1" cols="3" class="font-weight-bold p-0 text-center">#{{ resumes[row.index].peak.rank }}</b-col>
+                      <b-col>Peak</b-col>
+                    </b-row>
                   </b-list-group-item>
                   <b-list-group-item>
-                    <span class="font-weight-bold">
-                      #{{ resumes[row.index].current.rank }}
-                    </span>
-                    Current Rank
+                    <b-row>
+                      <b-col md="1" cols="3" class="font-weight-bold p-0 text-center">{{ resumes[row.index].total }}</b-col>
+                      <b-col class="text-capitalize">{{ chartType }}s</b-col>
+                    </b-row>
                   </b-list-group-item>
                   <b-list-group-item>
-                    <span class="font-weight-bold">{{ resumes[row.index].current.playcount }}</span>
-                    Current Playcount
+                    <b-row>
+                      <b-col md="1" cols="3" class="font-weight-bold text-center p-0">{{ resumes[row.index].peak.points }}</b-col>
+                      <b-col class="text-capitalize">Chart Points</b-col>
+                    </b-row>
                   </b-list-group-item>
                 </b-list-group>
               </b-col>
@@ -136,7 +138,7 @@
                 <b-col><strong>PP</strong> Previous Playcount</b-col>
               </b-row>
               <b-row>
-                <b-col class="text-capitalize"><strong>OC</strong> {{ chartType }}s On Chart</b-col>
+                <b-col class="text-capitalize"><strong>{{ 'T' + chartType.charAt(0).toUpperCase() }}</strong> Total {{ chartType }}s On Chart</b-col>
               </b-row>
             </b-col>
             <b-col sm="12" md="4">
@@ -204,7 +206,7 @@ export default Vue.extend({
         i++;
       }
       if (this.table.onChart.length > 0) {
-        fields[i] = { key: 'on_chart', label: 'OC', class: 'text-center' };
+        fields[i] = { key: 'on_chart', label: 'T' + this.chartType.charAt(0).toUpperCase(), class: 'text-center' };
         i++;
       }
       if (this.table.images.length > 0) {
@@ -447,13 +449,13 @@ export default Vue.extend({
 td img.w-cover:before {
   content: " ";
   position: absolute;
-  height: 50px;
-  width: 50px;
+  height: 65px;
+  width: 65px;
   background-color: #ddd;
 }
 td img.w-cover {
-  width: 50px;
-  height: 50px;
+  width: 65px;
+  height: 65px;
 }
 .table-sm td img.w-cover:before {
   width: 35px;
@@ -469,8 +471,15 @@ small.text-secondary {
 .table th, .table td {
   vertical-align: middle;
 }
-table {
+table td {
   line-height: 1;
+  font-size: 1.25rem;
+}
+.table-sm td {
+  font-size: 1.1rem;
+}
+.table tr:first-child td:first-child {
+  color: #007bff;
 }
 </style>
 

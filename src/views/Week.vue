@@ -49,7 +49,7 @@
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.settingsTable" class="float-right pt-1" />
             </h6>
             <b-card-body :class="cardOpen.settingsTable ? '' : 'd-none'">
-              <SettingsTable />
+              <SettingsTable chart-type="week" />
             </b-card-body>
           </b-card>
         </b-col>

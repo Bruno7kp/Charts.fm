@@ -82,19 +82,23 @@ class Stats {
             rank: 0,
             times: 0,
             playcount: 0,
+            rank_sum: 0,
+            playcount_sum: 0,
+            points: 0,
         };
-        let cur = 0;
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < e.length; i++) {
+            const index = e[i];
+            const cr = this.run[index].rank as number;
+            const cp = this.run[index].playcount as number;
+            peak.rank_sum += cr;
+            peak.playcount_sum += cp;
+            peak.points += (101 - cr);
             if (i === 0) {
-                cur = e[i];
-                peak.rank = this.run[cur].rank as number;
+                peak.rank = cr;
                 peak.times = 1;
-                peak.playcount = this.run[cur].playcount as number;
+                peak.playcount = cp;
             } else {
-                const index = e[i];
-                const cr = this.run[index].rank as number;
-                const cp = this.run[index].playcount as number;
                 if (cr < peak.rank) {
                     peak.rank = cr;
                     peak.times = 1;
