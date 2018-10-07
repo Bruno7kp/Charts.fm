@@ -10,8 +10,9 @@
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleSettings">
-              <i class="fa fa-cog"></i> Settings
-              <i :class="cardOpen.settingsWeek ? upClass : downClass"></i>
+              <font-awesome-icon :icon="['fa', 'cog']" /> Settings
+              <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.settingsWeek" class="float-right pt-1" />
+              <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.settingsWeek" class="float-right pt-1" />
             </h6>
             <b-card-body :class="cardOpen.settingsWeek ? '' : 'd-none'">
               <WeeklyForm v-bind:user.sync="user" v-bind:loading.sync="loading" />
@@ -26,8 +27,9 @@
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleWidget">
-              <i class="fas fa-sync-alt"></i> Update Charts
-              <i :class="cardOpen.updateWeek ? upClass : downClass"></i>
+              <font-awesome-icon :icon="['fa', 'sync-alt']" /> Update Charts
+              <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.updateWeek" class="float-right pt-1" />
+              <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.updateWeek" class="float-right pt-1" />
             </h6>
             <b-card-body :class="cardOpen.updateWeek ? '' : 'd-none'">
               <WeeklyWidget v-bind:user.sync="user" v-bind:loading.sync="loading" @updateLoading="setLoading" />
@@ -42,8 +44,9 @@
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleTableSettings">
-              <i class="fa fa-table"></i> Table Settings
-              <i :class="cardOpen.settingsTable ? upClass : downClass"></i>
+              <font-awesome-icon :icon="['fa', 'table']" /> Table Settings
+              <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.settingsTable" class="float-right pt-1" />
+              <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.settingsTable" class="float-right pt-1" />
             </h6>
             <b-card-body :class="cardOpen.settingsTable ? '' : 'd-none'">
               <SettingsTable />
@@ -98,8 +101,6 @@ export default Vue.extend({
   },
   data() {
     return {
-      upClass: 'fa fa-chevron-up float-right pt-1',
-      downClass: 'fa fa-chevron-down float-right pt-1',
       loading: false,
     };
   },

@@ -9,7 +9,7 @@
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="outline-success"><i class="far fa-save"></i></b-btn>
+      <b-btn type="submit" variant="outline-success"><font-awesome-icon :icon="['far', 'save']" /></b-btn>
     </b-col>
   </b-row>
   <hr/>

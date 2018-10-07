@@ -12,10 +12,10 @@
                   class="mb-2"></b-progress>
       <b-btn type="button" variant="outline-dark" :disabled="loading" v-on:click="load">
         <div v-if="loading">
-          <i class="fas fa-sync-alt fa-spin"></i> Loading
+          <font-awesome-icon :icon="['fa', 'sync-alt']" spin /> Loading
         </div>
         <div v-else>
-          <i class="fas fa-sync-alt"></i> Load charts
+          <font-awesome-icon :icon="['fa', 'sync-alt']" /> Load charts
         </div>
       </b-btn>
     </b-col>

@@ -5,7 +5,7 @@
       <b-input-group>
         <b-input-group-prepend>
           <b-btn href="https://last.fm" target="_blank" variant="danger">
-            <i class="fab fa-lastfm"></i>
+            <font-awesome-icon :icon="['fab', 'lastfm']" />
           </b-btn>
         </b-input-group-prepend>
         <b-form-input id="userName"

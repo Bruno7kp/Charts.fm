@@ -22,6 +22,9 @@ export default class App extends Vue {}
 body {
   background-color: #f5f6f8;
 }
+.t-dark {
+  background-color: #0c1219;
+}
 </style>
 
 

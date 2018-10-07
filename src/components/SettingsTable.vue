@@ -47,7 +47,7 @@
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="outline-success" class="mt-2"><i class="far fa-save"></i></b-btn>
+      <b-btn type="submit" variant="outline-success" class="mt-2"><font-awesome-icon :icon="['far', 'save']" /></b-btn>
     </b-col>
   </b-row>
 </b-form>

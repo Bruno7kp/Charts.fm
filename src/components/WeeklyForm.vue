@@ -27,7 +27,7 @@
 	<b-row>
     <b-col>
       <b-btn type="submit" variant="outline-success" :disabled="loading">
-        <i class="far fa-save"></i>
+        <font-awesome-icon :icon="['far', 'save']" />
       </b-btn>
       <p v-if="user.weeklyCharts.weeks.length" class="text-danger m-0">If you change your settings, your data will be reset.
       </p>

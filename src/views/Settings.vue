@@ -9,7 +9,7 @@
                   header-text-variant="light"
                   class="mt-3 shadow border-0"
           >
-          <h6 slot="header" class="mb-0"><i class="fab fa-lastfm"></i> Users</h6>
+          <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fab', 'lastfm']" /> Users</h6>
           <AddUser />
           <hr/>
           <UsersList />
@@ -21,7 +21,7 @@
                   border-variant="dark" 
                   class="mt-3 shadow border-0"
           >
-            <h6 slot="header" class="mb-0"><i class="fa fa-cog"></i>  Settings</h6>
+            <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fa', 'cog']" /> Settings</h6>
             <SettingsForm v-bind:user-name="userName" v-bind:timezone="timezone" v-bind:timezones="timezones" />
           </b-card>
         </b-col>

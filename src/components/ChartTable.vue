@@ -13,21 +13,21 @@
       <b-row>
         <b-col sm="12" md="6" lg="4">
           <b-nav pills fill class="nav-danger mb-2">
-            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><i class="fa fa-user"></i> Artists</b-nav-item>
-            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><i class="fa fa-compact-disc"></i> Albums</b-nav-item>
-            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><i class="fa fa-music"></i> Tracks</b-nav-item>
+            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><font-awesome-icon icon="user" /> Artists</b-nav-item>
+            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><font-awesome-icon :icon="['fa', 'compact-disc']" /> Albums</b-nav-item>
+            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><font-awesome-icon :icon="['fa', 'music']" /> Tracks</b-nav-item>
           </b-nav>
         </b-col>
         <b-col sm="12" lg="5" offset-lg="3" md="6">
           <b-input-group>
             <b-input-group-prepend>
-              <b-button variant="danger" @click="setIndex(0)"><i class="fa fa-angle-double-left"></i></b-button>
-              <b-button variant="danger" @click="decrement"><i class="fa fa-angle-left"></i></b-button>
+              <b-button variant="danger" @click="setIndex(0)"><font-awesome-icon :icon="['fa', 'angle-double-left']" /></b-button>
+              <b-button variant="danger" @click="decrement"><font-awesome-icon :icon="['fa', 'angle-left']" /></b-button>
             </b-input-group-prepend>
             <b-form-input class="border-danger" type="date" @change="setChart" :min="minDate" :max="maxDate" :value="currentDate"></b-form-input>
             <b-input-group-append>
-              <b-btn variant="danger" @click="increment"><i class="fa fa-angle-right"></i></b-btn>
-              <b-btn variant="danger" @click="setIndex(totalCharts - 1)"><i class="fa fa-angle-double-right"></i></b-btn>
+              <b-btn variant="danger" @click="increment"><font-awesome-icon :icon="['fa', 'angle-right']" /></b-btn>
+              <b-btn variant="danger" @click="setIndex(totalCharts - 1)"><font-awesome-icon :icon="['fa', 'angle-double-right']" /></b-btn>
             </b-input-group-append>
           </b-input-group>
         </b-col>
@@ -44,8 +44,8 @@
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" variant="outline-dark" @click.stop="row.toggleDetails" class="p-0 px-1">
-            <i class="fa fa-chevron-up" v-if="row.detailsShowing"></i>
-            <i class="fa fa-chevron-down" v-if="!row.detailsShowing"></i>
+            <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="row.detailsShowing"/>
+            <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!row.detailsShowing"/>
           </b-button>
         </template>
         <template slot="image" slot-scope="row">
