@@ -82,6 +82,11 @@ export default Vue.extend({
       this.user.weeklyCharts.startDay = this.mStartDay;
       this.user.weeklyCharts.limit = this.mLimit;
       this.$store.dispatch('updateUser', this.user);
+      this.$notify({
+        group: 'app',
+        type: 'success',
+        text: 'Settings updated successfully.',
+      });
     },
     dateFormat(value: string, event: any) {
       const date = moment(value);

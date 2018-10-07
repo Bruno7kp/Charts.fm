@@ -9,6 +9,7 @@
           </b-btn>
         </b-input-group-prepend>
         <b-form-input id="userName"
+            class="border-danger"
             type="text"
             v-model.trim="multableUserName"
             :formatter="format"
@@ -56,13 +57,20 @@ export default Vue.extend({
             );
             const user = new User($this.multableUserName, date);
             $this.$store.dispatch('addUser', user);
-            // console.log(user);
             if (this.redirect) {
               this.$router.push({ name: 'weekly' });
             }
           })
           .catch((error) => {
-            // console.log(error);
+            this.$notify({
+              group: 'app',
+              type: 'error',
+              duration: 10000,
+              title: 'Oops, something went wrong. Possible problems:',
+              text: '<ul>' +
+              '<li>You are not connected to the internet.</li>' +
+              '<li>Your Last.fm username is incorrect</li></ul>',
+            });
           });
       }
     },

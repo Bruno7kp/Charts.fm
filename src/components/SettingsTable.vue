@@ -70,6 +70,11 @@ export default Vue.extend({
   methods: {
     onSubmit() {
       this.$store.dispatch('setTable', this.table);
+      this.$notify({
+        group: 'app',
+        type: 'success',
+        text: 'Settings updated successfully.',
+      });
     },
   },
 });

@@ -14,6 +14,7 @@ import 'localforage-setitems';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import Notifications from 'vue-notification';
 
 import App from './App.vue';
 
@@ -22,17 +23,15 @@ import 'moment-timezone';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLastfm, faGithub } from '@fortawesome/free-brands-svg-icons';
-import { faUser, faCog, faTrash, faTable,
-  faSyncAlt, faChevronUp, faChevronDown, faChevronRight,
-  faMusic, faCompactDisc, faAngleDoubleLeft, faAngleDoubleRight,
-  faAngleRight, faAngleLeft } from '@fortawesome/free-solid-svg-icons';
+import {
+  faUser, faCog, faTrash, faTable, faSyncAlt, faChevronUp, faChevronDown, faChevronRight, faMusic, faCompactDisc,
+  faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft,
+} from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt, faSave } from '@fortawesome/free-regular-svg-icons';
 
-library.add(faUser, faLastfm, faGithub, faCommentAlt,
-  faCog, faSave, faTrash, faTable, faSyncAlt,
-  faChevronUp, faChevronDown, faChevronRight, faMusic,
-  faCompactDisc, faAngleDoubleLeft, faAngleDoubleRight,
-  faAngleRight, faAngleLeft);
+library.add(
+  faUser, faLastfm, faGithub, faCommentAlt, faCog, faSave, faTrash, faTable, faSyncAlt, faChevronUp, faChevronDown,
+  faChevronRight, faMusic, faCompactDisc, faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft);
 
 /* tslint:disable:no-var-requires */
 const fontawesome = require('@fortawesome/vue-fontawesome');
@@ -42,13 +41,20 @@ Vue.component('font-awesome-icon', fontawesome.FontAwesomeIcon);
 const Promised = require('vue-promised').default;
 // tslint:disable-next-line:no-var-requires
 const VueAnalytics = require('vue-analytics').default;
+// tslint:disable-next-line:no-var-requires
+const VueScrollTo = require('vue-scrollto');
 
+Vue.use(VueScrollTo, {
+  duration: 1000,
+  easing: 'ease-in-out',
+});
 Vue.use(Vuex);
 Vue.use(VueAnalytics, {
   id: 'UA-126624153-2',
   router,
 });
 Vue.component('Promised', Promised);
+Vue.use(Notifications);
 
 LocalForage.config({
   driver      : LocalForage.INDEXEDDB,

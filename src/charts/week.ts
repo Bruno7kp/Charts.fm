@@ -29,6 +29,8 @@ class Week {
                 this.albums = fixAlbumChart(args[1].data, this.limit);
                 this.tracks = fixTrackChart(args[2].data, this.limit);
                 resolve(this);
+            }).catch((e) => {
+                reject(e);
             });
         });
     }

@@ -394,7 +394,6 @@ export default Vue.extend({
           setTimeout(() => {
             this.loadImage(index).then((image) => {
               solve(image);
-              console.log(image);
             });
           }, 1000 + index * 100);
         }
@@ -411,7 +410,19 @@ export default Vue.extend({
     totalCharts() {
       if (this.totalCharts === 1) {
         this.setIndex(0);
+        // @ts-ignore
+        this.$scrollTo('#chart');
+        this.$notify({
+          group: 'app',
+          type: 'success',
+          duration: 10000,
+          title: 'First chart done!',
+          text: 'Now you can browse your charts while the rest is loading.',
+        });
       }
+    },
+    user() {
+      this.index = getUserChartLength(this.user, this.chartType) - 1;
     },
   },
 });
@@ -433,13 +444,24 @@ export default Vue.extend({
 .w-65 {
     width: 65% !important;
 }
+td img.w-cover:before {
+  content: " ";
+  position: absolute;
+  height: 50px;
+  width: 50px;
+  background-color: #ddd;
+}
 td img.w-cover {
-  width: 50px !important;
-  height: 50px !important;
+  width: 50px;
+  height: 50px;
+}
+.table-sm td img.w-cover:before {
+  width: 35px;
+  height: 35px;
 }
 .table-sm td img.w-cover {
-  width: 35px !important;
-  height: 35px !important; 
+  width: 35px;
+  height: 35px;
 }
 small.text-secondary {
   font-size: 70%;

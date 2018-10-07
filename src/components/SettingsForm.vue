@@ -15,7 +15,7 @@
   <hr/>
   <b-row>
     <b-col>
-      <b-btn type="submit" variant="danger" @click="clean">Remove cached images</b-btn>
+      <b-btn type="button" variant="danger" @click="clean">Remove cached images</b-btn>
     </b-col>
   </b-row>
 </b-form>
@@ -38,9 +38,19 @@ export default Vue.extend({
   methods: {
     onSubmit() {
       this.$store.dispatch('setTimezone', this.$props.timezone);
+      this.$notify({
+        group: 'app',
+        type: 'success',
+        text: 'Settings updated successfully.',
+      });
     },
     clean() {
       this.$store.dispatch('cleanImages');
+      this.$notify({
+        group: 'app',
+        type: 'success',
+        text: 'Images removed from cache.',
+      });
     },
   },
 });

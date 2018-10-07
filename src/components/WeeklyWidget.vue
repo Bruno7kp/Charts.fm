@@ -61,14 +61,24 @@ export default Vue.extend({
           const last = this.weeklyList.length === (i + 1);
           // @ts-ignore
           p = p.then(() => new Promise((resolve) => {
-            week.load(this.user.login).then((response) => {
-              this.user.weeklyCharts.weeks.push(week);
-              if (last) {
+            week.load(this.user.login)
+              .then((response) => {
+                this.user.weeklyCharts.weeks.push(week);
+                if (last) {
+                  this.$emit('updateLoading', false);
+                }
+                this.$store.dispatch('updateUser', this.user);
+                resolve();
+              })
+              .catch((e) => {
                 this.$emit('updateLoading', false);
-              }
-              this.$store.dispatch('updateUser', this.user);
-              resolve();
-            });
+                this.$notify({
+                  group: 'app',
+                  type: 'error',
+                  title: 'Oops, something went wrong.',
+                  text: 'Make sure you are connected to the internet and try again.',
+                });
+              });
           }));
         }
       }
