@@ -54,6 +54,9 @@
             <span slot-scope="data">
               <b-img center class="w-cover" :src="data" />
             </span>
+            <span slot="catch" slot-scope="error">
+              <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" />
+            </span>
           </Promised>
         </template>  
         <template slot="row-details" slot-scope="row">
@@ -64,6 +67,9 @@
                   <div>...</div>
                   <span slot-scope="data">
                     <b-img center fluid :src="data" />
+                  </span>
+                  <span slot="catch" slot-scope="error">
+                    <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" />
                   </span>
                 </Promised>
               </b-col>
@@ -354,10 +360,9 @@ export default Vue.extend({
         if (this.selected === 'artists' || this.selected === 'tracks') {
           name = this.selected === 'tracks' ? artist : name;
           if (!this.images.artists.hasOwnProperty(name)) {
-            (this.images.artists as any)[name] = '';
             LastFm.artist().getImage(name).then((image: any) => {
               (this.images.artists as any)[name] = image;
-              this.$store.dispatch('setImages', this.images); // save
+              this.$store.dispatch('setImages', this.images);
               resolve(image);
             });
           } else {
@@ -366,7 +371,6 @@ export default Vue.extend({
         } else if (this.selected === 'albums') {
           const id = artist + name;
           if (!this.images.albums.hasOwnProperty(id)) {
-            (this.images.albums as any)[id] = '';
             LastFm.album().getImage(name, artist).then((image: any) => {
               (this.images.albums as any)[id] = image;
               this.$store.dispatch('setImages', this.images); // save
@@ -383,13 +387,14 @@ export default Vue.extend({
       const n = this.items[index].name;
       const c = this.selected === 'albums' ? 'albums' : 'artists';
       const id = (c === 'albums') ? a + n : (this.selected === 'artists') ? n : a;
-      return new Promise((resolve) => {
+      return new Promise((solve) => {
         if (this.images[c].hasOwnProperty(id)) {
-          resolve((this.images as any)[c][id]);
+          solve((this.images as any)[c][id]);
         } else {
           setTimeout(() => {
             this.loadImage(index).then((image) => {
-              resolve(image);
+              solve(image);
+              console.log(image);
             });
           }, 1000 + index * 100);
         }
