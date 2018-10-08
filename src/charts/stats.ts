@@ -76,42 +76,52 @@ class Stats {
         return {rank: null, playcount: null};
     }
 
-    public getPeak() {
+    public extract() {
         const e = this.getEntries();
-        const peak = {
-            rank: 0,
-            times: 0,
-            playcount: 0,
+        const run: Entry[][] = [];
+        const x = {
+            peak: 0,
+            peak_times: 0,
+            peak_playcount: 0,
             rank_sum: 0,
             playcount_sum: 0,
             points: 0,
+            run,
         };
+        let seq: Entry[] = [];
         // tslint:disable-next-line:prefer-for-of
         for (let i = 0; i < e.length; i++) {
             const index = e[i];
             const cr = this.run[index].rank as number;
             const cp = this.run[index].playcount as number;
-            peak.rank_sum += cr;
-            peak.playcount_sum += cp;
-            peak.points += (101 - cr);
-            if (i === 0) {
-                peak.rank = cr;
-                peak.times = 1;
-                peak.playcount = cp;
+            if (i > 0 && (index - e[i - 1]) > 1) {
+                x.run.push(seq);
+                seq = [ this.run[index] ];
             } else {
-                if (cr < peak.rank) {
-                    peak.rank = cr;
-                    peak.times = 1;
-                } else if (cr === peak.rank) {
-                    peak.times++;
+                seq.push(this.run[index]);
+            }
+            x.rank_sum += cr;
+            x.playcount_sum += cp;
+            x.points += (101 - cr);
+            if (i === 0) {
+                x.peak = cr;
+                x.peak_times = 1;
+                x.peak_playcount = cp;
+            } else {
+                if (cr < x.peak) {
+                    x.peak = cr;
+                    x.peak_times = 1;
+                } else if (cr === x.peak) {
+                    x.peak_times++;
                 }
-                if (cp > peak.playcount) {
-                    peak.playcount = cp;
+                if (cp > x.peak_playcount) {
+                    x.peak_playcount = cp;
                 }
             }
         }
+        x.run.push(seq);
 
-        return peak;
+        return x;
     }
 
     public getVariantion() {
@@ -154,7 +164,7 @@ class Stats {
                 rank: this.getCurrent().rank,
                 playcount: this.getCurrent().playcount,
             },
-            peak: this.getPeak(),
+            stats: this.extract(),
             variation: this.getVariantion(),
             debut: this.getDebut(),
         };

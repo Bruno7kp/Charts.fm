@@ -19,7 +19,7 @@
       <h6>Rank / Playcount Variation:</h6>
       <b-form-group>
         <b-form-radio-group id="previous" v-model="table.previous" name="previous">
-          <b-form-radio value="previous" class="d-block">Value <span class="text-secondary">(Ex: 20 plays)</span></b-form-radio>
+          <b-form-radio value="previous" class="d-block">Previous Value <span class="text-secondary">(Ex: 20 plays)</span></b-form-radio>
           <b-form-radio value="diff" class="d-block">Difference <span class="text-secondary">(Ex: +10 plays)</span></b-form-radio>
           <b-form-radio value="percent" class="d-block">Percent <span class="text-secondary">(Ex: +50%)</span></b-form-radio>
         </b-form-radio-group>

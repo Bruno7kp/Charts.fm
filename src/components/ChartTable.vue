@@ -65,7 +65,7 @@
         </template>
         <template slot="row-details" slot-scope="row">
           <b-card>
-            <b-row class=" border rounded">
+            <b-row class="border rounded">
               <b-col cols="6" md="3" class="text-center border-right">
                 <b-row class="border-bottom py-2">
                   <b-col>
@@ -110,7 +110,7 @@
                 </b-row>
                 <b-row class="border-bottom">
                   <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
-                    {{ resumes[row.index].peak.rank }}
+                    {{ resumes[row.index].stats.peak }}
                   </b-col>
                   <b-col class="my-auto">
                     Peak
@@ -126,7 +126,7 @@
                 </b-row>
                 <b-row class="border-bottom">
                   <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
-                    {{ resumes[row.index].peak.points }}
+                    {{ resumes[row.index].stats.points }}
                   </b-col>
                   <b-col class="my-auto">
                     Chart Points
@@ -134,10 +134,41 @@
                 </b-row>
                 <b-row class="border-bottom">
                   <b-col cols="4" md="3" lg="2" class="my-auto py-2 text-center font-weight-bold">
-                    {{ resumes[row.index].peak.playcount_sum }}
+                    {{ resumes[row.index].stats.playcount_sum }}
                   </b-col>
                   <b-col class="my-auto">
                     Total Playcount (while on the chart)
+                  </b-col>
+                </b-row>
+              </b-col>
+            </b-row>
+            <b-row class="border rounded mt-3">
+              <b-col>
+                <b-row>
+                  <b-col cols="12" class="border-bottom pb-2" 
+                    v-for="(runs, k) in resumes[row.index].stats.run" :key="k">
+                    <h6 class="mt-2">
+                      Chart-run: {{ runs.length }} {{ chartType }}s
+                      <small>({{ dateFormatter(runs[0].chart.start) + ' / ' + dateFormatter(runs[runs.length - 1].chart.end) }})</small>
+                    </h6>
+                    <hr class="m-1"/>
+                    <b-button
+                      v-for="(entry, key) in runs"
+                      :key="k + 'b' + key" 
+                      :variant="entry.rank === resumes[row.index].stats.peak ? 'outline-primary' : 'outline-dark'" 
+                      class="rounded-0 m-1 p-0 b-run"
+                      :id="k + 'i' + key">
+                      {{ entry.rank }}
+                    </b-button>
+                    <b-popover
+                      v-for="(entry, key) in runs"
+                      :key="k + 'p' + key" 
+                      :target="k + 'i' + key"
+                      placement="top"
+                      :title="chartType + entry.chart.index"
+                      triggers="focus"
+                      :content="`${entry.playcount} plays`">
+                    </b-popover>
                   </b-col>
                 </b-row>
               </b-col>
@@ -149,7 +180,7 @@
         </template>
         <span slot="peak" 
               slot-scope="row" 
-              v-html="peakFormatter(resumes[row.index].peak.rank, resumes[row.index].peak.times)"></span>
+              v-html="peakFormatter(resumes[row.index].stats.peak, resumes[row.index].stats.peak_times)"></span>
         <span slot="previous_rank" 
               slot-scope="row" 
               v-html="formatter(resumes[row.index].variation[table.previous].rank)"></span>
@@ -532,7 +563,7 @@ table td.title-both {
   line-height: 1.1;
 }
 .table-sm td {
-  font-size: 1.1rem;
+  font-size: 1rem;
 }
 @media (max-width: 767px) { 
   .border-on-info {
@@ -559,6 +590,12 @@ td.title {
 td.title .sub {
   font-weight: 400;
 }
-
+td:first-child {
+  font-weight: 500;
+}
+.b-run {
+  width: 2.2em;
+  height: 2.2em;
+  font-size: 0.9rem;
+}
 </style>
-
