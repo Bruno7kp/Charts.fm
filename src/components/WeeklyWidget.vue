@@ -66,6 +66,15 @@ export default Vue.extend({
                 this.user.weeklyCharts.weeks.push(week);
                 if (last) {
                   this.$emit('updateLoading', false);
+                  if (i > 0) {
+                    this.$notify({
+                      group: 'app',
+                      type: 'success',
+                      duration: 10000,
+                      title: 'Update completed!',
+                      text: 'Click the button with two arrows to the right to see the most recent chart.',
+                    });
+                  }
                 }
                 this.$store.dispatch('updateUser', this.user);
                 resolve();

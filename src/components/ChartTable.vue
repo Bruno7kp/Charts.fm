@@ -154,20 +154,30 @@
                     <hr class="m-1"/>
                     <b-button
                       v-for="(entry, key) in runs"
-                      :key="k + 'b' + key" 
+                      :key="k + 'b' + key + row.index" 
                       :variant="entry.rank === resumes[row.index].stats.peak ? 'outline-primary' : 'outline-dark'" 
                       class="rounded-0 m-1 p-0 b-run"
-                      :id="k + 'i' + key">
+                      :id="k + 'i' + key + row.index">
                       {{ entry.rank }}
                     </b-button>
                     <b-popover
                       v-for="(entry, key) in runs"
-                      :key="k + 'p' + key" 
-                      :target="k + 'i' + key"
+                      :key="k + 'p' + key + row.index" 
+                      :target="k + 'i' + key + row.index"
                       placement="top"
-                      :title="chartType + entry.chart.index"
-                      triggers="focus"
-                      :content="`${entry.playcount} plays`">
+                      triggers="focus">
+                      <template slot="title">{{ chartType + ' ' + entry.chart.index }}</template>
+                      <b-row>
+                        <b-col cols="12" class="border-bottom py-0">
+                          <strong>#{{ entry.rank }}</strong> rank
+                        </b-col>
+                        <b-col cols="12" class="border-bottom py-0">
+                          <strong>{{ entry.playcount }}</strong> plays
+                        </b-col>
+                        <b-col cols="12" class="pt-2">
+                          <b-button variant="primary" size="sm" @click="setIndex(entry.chart.index)">Go to chart</b-button>
+                        </b-col>
+                      </b-row>
                     </b-popover>
                   </b-col>
                 </b-row>
@@ -353,6 +363,8 @@ export default Vue.extend({
     setIndex(index: number) {
       if (index >= 0 && index < getUserChartLength(this.user, this.chartType)) {
         this.index = index;
+        // @ts-ignore
+        this.$scrollTo('#chart');
       }
     },
     setChart(newValue: string) {
@@ -527,23 +539,13 @@ export default Vue.extend({
 td img.w-cover {
   width: 65px;
   height: 65px;
+  background-color: #ddd;
 }
 .table-sm td img.w-cover {
   width: 35px;
   height: 35px;
 }
-/* Not found image placeholder */
-td img.w-cover:before {
-  content: " ";
-  position: absolute;
-  height: 65px;
-  width: 65px;
-  background-color: #ddd;
-}
-.table-sm td img.w-cover:before {
-  width: 35px;
-  height: 35px;
-}
+
 small.text-secondary {
   font-size: 70%;
 }
@@ -597,5 +599,14 @@ td:first-child {
   width: 2.2em;
   height: 2.2em;
   font-size: 0.9rem;
+}
+.popover-header {
+  text-transform: capitalize;
+}
+.popover {
+  max-width: 115px;
+}
+.popover-body {
+  padding-top: 0;
 }
 </style>

@@ -28,6 +28,7 @@
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleWidget">
               <font-awesome-icon :icon="['fa', 'sync-alt']" /> Update Charts
+              <b-badge variant="warning" v-if="chartsToUpdate() > 0">UPDATE NOW!</b-badge>
               <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.updateWeek" class="float-right pt-1" />
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.updateWeek" class="float-right pt-1" />
             </h6>
@@ -73,7 +74,7 @@ import WeeklyForm from '@/components/WeeklyForm.vue';
 import WeeklyWidget from '@/components/WeeklyWidget.vue';
 import SettingsTable from '@/components/SettingsTable.vue';
 import ChartTable from '@/components/ChartTable.vue';
-import { User } from '@/charts';
+import { User, fixedStartDate, getWeeklyList } from '@/charts';
 
 export default Vue.extend({
   name: 'Week',
@@ -119,6 +120,12 @@ export default Vue.extend({
     },
     setLoading(value: boolean) {
       this.loading = value;
+    },
+    chartsToUpdate() {
+      const limit = this.user.weeklyCharts.limit;
+      const realStart = fixedStartDate(this.user.weeklyCharts.startDate, this.user.weeklyCharts.startDay);
+      const list = getWeeklyList(realStart, new Date(), limit);
+      return list.length - this.user.weeklyCharts.weeks.length;
     },
   },
 });

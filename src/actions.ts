@@ -17,6 +17,7 @@ export default {
   },
   removeUser: (context: any, user: string) => {
     context.commit('DELETE_USER', { login: user });
+    context.commit('SET_CURRENT_USER', { login: '' });
   },
   setTimezone: (context: any, timezone: string) => {
     context.commit('SET_TIMEZONE', timezone);

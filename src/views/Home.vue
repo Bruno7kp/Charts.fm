@@ -53,7 +53,8 @@ import User from '@/charts/user';
   data() {
     let userName = '';
     if (this.$store.state.users.length) {
-      userName = this.$store.state.currentUser;
+      const user = this.$store.getters.getDefaultUser;
+      userName = user.login;
     }
 
     let timezone = this.$store.state.timezone;
