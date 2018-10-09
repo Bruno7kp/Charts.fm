@@ -148,7 +148,7 @@
                   <b-col cols="12" class="border-bottom pb-2" 
                     v-for="(runs, k) in resumes[row.index].stats.run" :key="k">
                     <h6 class="mt-2">
-                      Chart-run: {{ runs.length }} {{ chartType }}s
+                      Chart-run: {{ runs.length }} {{ $tc('word.' + chartType, runs.length) }}
                       <small>({{ dateFormatter(runs[0].chart.start) + ' / ' + dateFormatter(runs[runs.length - 1].chart.end) }})</small>
                     </h6>
                     <hr class="m-1"/>

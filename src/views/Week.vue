@@ -50,7 +50,7 @@
           <b-card 
             header-bg-variant="dark" 
             header-text-variant="white"
-            class="my-3 border-0 shadow"
+            class="mb-4 border-0 shadow"
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleTableSettings">

@@ -81,6 +81,13 @@ const pt = {
         track: 'Música | Músicas',
         user: 'Usuário | Usuários',
         week: 'Semana | Semanas',
+        sunday: 'Domingo',
+        monday: 'Segunda',
+        tuesday: 'Terça',
+        wednesday: 'Quarta',
+        thursday: 'Quinta',
+        friday: 'Sexta',
+        saturday: 'Sábado',
     },
 };
 

@@ -54,7 +54,6 @@ export default Vue.extend({
   },
   computed: {
     ...mapGetters({
-      weekDays: 'getWeekDays',
       users: 'getUsersAsOptions',
     }),
   },
@@ -64,6 +63,15 @@ export default Vue.extend({
       mStartDate: this.user.weeklyCharts.startDate,
       mStartDay: this.user.weeklyCharts.startDay,
       mLimit: this.user.weeklyCharts.limit,
+      weekDays: {
+        0: this.$t('word.sunday'),
+        1: this.$t('word.monday'),
+        2: this.$t('word.tuesday'),
+        3: this.$t('word.wednesday'),
+        4: this.$t('word.thursday'),
+        5: this.$t('word.friday'),
+        6: this.$t('word.saturday'),
+      },
     };
   },
   watch: {

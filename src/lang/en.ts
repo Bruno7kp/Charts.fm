@@ -81,6 +81,13 @@ const en = {
         track: 'Track | Tracks',
         user: 'User | Users',
         week: 'Week | Weeks',
+        sunday: 'Sunday',
+        monday: 'Monday',
+        tuesday: 'Tuesday',
+        wednesday: 'Wednesday',
+        thursday: 'Thursday',
+        friday: 'Friday',
+        saturday: 'Saturday',
     },
 };
 
