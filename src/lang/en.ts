@@ -51,7 +51,8 @@ const en = {
     },
     messages: {
         first_week: 'First chart done!',
-        first_week_sub: 'Now you can browse your charts while the rest is loading.',
+        first_week_sub: 'Attention: While loading, the page may suffer slowly,' +
+        ' you may already browse your charts, but we recommend wait until loading is complete.',
         settings_warning: 'If you change your settings, your data will be reset.',
         settings_updated: 'Settings updated successfully.',
         images_removed: 'Images removed from cache.',

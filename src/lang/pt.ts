@@ -51,7 +51,8 @@ const pt = {
     },
     messages: {
         first_week: 'Primeira semana pronta!',
-        first_week_sub: 'Agora você já pode navegar pelos seus charts enquanto terminamos de carregar.',
+        first_week_sub: 'Atenção: Enquanto estiver carregando, a página pode sofrer com lentidão,' +
+        ' você já pode navegar pelos seus charts agora, mas recomendamos aguardar até o fim do carregamento.',
         settings_warning: 'Se você alterar estas configurações, seu chart precisará ser carregado novamente.',
         settings_updated: 'Configurações atualizadas com sucesso.',
         images_removed: 'Imagens removidas do cache.',
