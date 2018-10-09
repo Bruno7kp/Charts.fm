@@ -302,7 +302,8 @@ export default Vue.extend({
           i++;
           fields[i] = { key: 'artist', label: this.$t('word.artist'), class: 'w-25 min-artists' };
         } else {
-          fields[i] = { key: 'name_artist', label: this.$t('word.title_artist'), class: 'w-65 title title-both min-artists' };
+          fields[i] = { key: 'name_artist', label: this.$t('word.title_artist'),
+          class: 'w-65 title title-both min-artists' };
         }
       }
       i++;
