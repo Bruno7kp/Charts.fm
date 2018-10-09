@@ -11,15 +11,18 @@ import LocalForage from 'localforage';
 import 'localforage-getitems';
 import 'localforage-setitems';
 
+import moment from 'moment';
+import 'moment-timezone';
+
+import VueI18n from 'vue-i18n';
+import messages from './lang';
+
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
 import Notifications from 'vue-notification';
 
 import App from './App.vue';
-
-import moment from 'moment';
-import 'moment-timezone';
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLastfm, faGithub } from '@fortawesome/free-brands-svg-icons';
@@ -55,6 +58,7 @@ Vue.use(VueAnalytics, {
 });
 Vue.component('Promised', Promised);
 Vue.use(Notifications);
+Vue.use(VueI18n);
 
 LocalForage.config({
   driver      : LocalForage.INDEXEDDB,
@@ -75,7 +79,7 @@ expire.setDate(expire.getDate() + 15);
 
 const initialState = {
   users: [],
-  lang: 'en',
+  lang: navigator.language.substring(0, 2),
   timezone: moment.tz.guess(),
   currentUser: '',
   cardOpen: {
@@ -135,9 +139,16 @@ async function initializeApp() {
   Vue.config.productionTip = false;
   Vue.use(BootstrapVue);
 
+  const i18n = new VueI18n({
+    locale: store.state.lang, // set locale
+    fallbackLocale: 'en',
+    messages, // set locale messages
+  });
+
   new Vue({
       router,
       store,
+      i18n,
       render: (h) => h(App),
   }).$mount('#app');
 }

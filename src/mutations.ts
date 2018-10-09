@@ -21,6 +21,9 @@ export default {
     SET_TIMEZONE(state: any, timezone: string) {
         state.timezone = timezone;
     },
+    SET_LANG(state: any, lang: string) {
+        state.lang = lang;
+    },
     SET_CARD_OPEN(state: any, cardOpen: object) {
         state.cardOpen = cardOpen;
     },

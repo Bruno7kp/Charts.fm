@@ -2,24 +2,24 @@
 <b-form v-on:submit.prevent="onSubmit">
   <b-row>
     <b-col>
-      <b-form-group label="User" label-for="user">
+      <b-form-group :label="$tc('word.user', 1)" label-for="user">
 		    <b-select id="user" name="user" v-model="mUserName" :options="users" :disabled="loading" required></b-select>
 	    </b-form-group>
     </b-col>
     <b-col>
-      <b-form-group label="Week Day">
+      <b-form-group :label="$t('chart.week_day')">
         <b-select v-model="mStartDay" name="weekDay" :options="weekDays" required></b-select>
       </b-form-group>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
-      <b-form-group label="Start date">
+      <b-form-group :label="$t('chart.start_date')">
         <b-input v-model="mStartDate" name="startDate" type="date" :formatter="dateFormat" required></b-input>
       </b-form-group>
     </b-col>
     <b-col>
-      <b-form-group label="Limit">
+      <b-form-group :label="$t('word.limit')">
         <b-input v-model="mLimit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
@@ -29,7 +29,8 @@
       <b-btn type="submit" variant="outline-success" :disabled="loading">
         <font-awesome-icon :icon="['far', 'save']" />
       </b-btn>
-      <p v-if="user.weeklyCharts.weeks.length" class="text-danger m-0">If you change your settings, your data will be reset.
+      <p v-if="user.weeklyCharts.weeks.length" class="text-danger m-0">
+        {{ $t('messages.settings_warning') }}
       </p>
     </b-col>
   </b-row>
@@ -85,7 +86,7 @@ export default Vue.extend({
       this.$notify({
         group: 'app',
         type: 'success',
-        text: 'Settings updated successfully.',
+        text: this.$t('messages.settings_updated') + '',
       });
     },
     dateFormat(value: string, event: any) {

@@ -4,7 +4,7 @@
       <div class="display-4 text-center">
         {{ user.weeklyCharts.weeks.length + '/' + weeklyList.length }}
       </div>
-      <div class="text-muted text-center">weeks loaded</div>
+      <div class="text-muted text-center">{{ $t('messages.weeks_loaded') }}</div>
       <b-progress :value="user.weeklyCharts.weeks.length / weeklyList.length * 100"
                   variant="danger"
                   :striped="loading"
@@ -12,10 +12,10 @@
                   class="mb-2"></b-progress>
       <b-btn type="button" variant="outline-dark" :disabled="loading" v-on:click="load">
         <div v-if="loading">
-          <font-awesome-icon :icon="['fa', 'sync-alt']" spin /> Loading
+          <font-awesome-icon :icon="['fa', 'sync-alt']" spin /> {{ $t('chart.loading') }}
         </div>
         <div v-else>
-          <font-awesome-icon :icon="['fa', 'sync-alt']" /> Load charts
+          <font-awesome-icon :icon="['fa', 'sync-alt']" /> {{ $t('word.update') }}
         </div>
       </b-btn>
     </b-col>
@@ -71,8 +71,8 @@ export default Vue.extend({
                       group: 'app',
                       type: 'success',
                       duration: 10000,
-                      title: 'Update completed!',
-                      text: 'Click the button with two arrows to the right to see the most recent chart.',
+                      title: this.$t('messages.update_complete') + '',
+                      text: this.$t('messages.update_complete_sub') + '',
                     });
                   }
                 }
@@ -84,8 +84,8 @@ export default Vue.extend({
                 this.$notify({
                   group: 'app',
                   type: 'error',
-                  title: 'Oops, something went wrong.',
-                  text: 'Make sure you are connected to the internet and try again.',
+                  title: this.$t('messages.error') + '',
+                  text: this.$t('messages.error_connection') + '',
                 });
               });
           }));

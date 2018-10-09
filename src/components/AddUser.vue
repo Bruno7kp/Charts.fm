@@ -15,10 +15,10 @@
             :formatter="format"
             required
             aria-describedby="inputLiveFeedback"
-            placeholder="Enter your Last.fm username">
+            :placeholder="$t('lastfm.username')">
         </b-form-input>
         <b-input-group-append>
-          <b-btn type="submit" variant="outline-danger">Continue</b-btn>
+          <b-btn type="submit" variant="outline-danger">{{ $t("word.continue") }}</b-btn>
         </b-input-group-append>
       </b-input-group>
     </b-col>

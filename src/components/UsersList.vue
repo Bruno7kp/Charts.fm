@@ -19,12 +19,12 @@ export default Vue.extend({
     return {
       fields: {
         login: {
-          label: 'User',
+          label: this.$tc('word.user', 2),
           sortable: true,
           class: 'w-75',
         },
         actions: {
-          label: 'Remove',
+          label: this.$t('word.remove'),
         },
       },
       // currentUser: this.$store.state.currentUser,

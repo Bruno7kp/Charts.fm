@@ -2,7 +2,7 @@
   <div>
     <b-container>
       <b-row>
-        <b-col sm="12" md="4">
+        <b-col sm="12" md="6">
           <b-card 
             header-bg-variant="dark" 
             header-text-variant="white"
@@ -10,7 +10,7 @@
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleSettings">
-              <font-awesome-icon :icon="['fa', 'cog']" /> Settings
+              <font-awesome-icon :icon="['fa', 'cog']" /> {{ $t("word.settings") }}
               <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.settingsWeek" class="float-right pt-1" />
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.settingsWeek" class="float-right pt-1" />
             </h6>
@@ -19,7 +19,7 @@
             </b-card-body>
           </b-card>
         </b-col>
-        <b-col sm="12" md="4">
+        <b-col sm="12" md="6">
           <b-card 
             header-bg-variant="danger"
             header-text-variant="white"
@@ -27,8 +27,8 @@
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleWidget">
-              <font-awesome-icon :icon="['fa', 'sync-alt']" /> Update Charts
-              <b-badge variant="warning" v-if="chartsToUpdate() > 0">UPDATE NOW!</b-badge>
+              <font-awesome-icon :icon="['fa', 'sync-alt']" /> {{ $t("chart.update") }}
+              <b-badge variant="warning" v-if="chartsToUpdate() > 0">{{ $t("chart.update_now") }}</b-badge>
               <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.updateWeek" class="float-right pt-1" />
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.updateWeek" class="float-right pt-1" />
             </h6>
@@ -37,28 +37,30 @@
             </b-card-body>
           </b-card>
         </b-col>
-        <b-col sm="12" md="4">
+      </b-row>
+      <b-row>
+        <b-col class="px-0 px-sm-3">
+          <b-card class="my-4 shadow border-0">
+            <ChartTable id="chart" chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" />
+          </b-card>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col sm="12">
           <b-card 
-            header-bg-variant="secondary" 
+            header-bg-variant="dark" 
             header-text-variant="white"
-            class="mt-3 border-0 shadow"
+            class="my-3 border-0 shadow"
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleTableSettings">
-              <font-awesome-icon :icon="['fa', 'table']" /> Table Settings
+              <font-awesome-icon :icon="['fa', 'table']" /> {{ $t('chart.table') }}
               <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.settingsTable" class="float-right pt-1" />
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.settingsTable" class="float-right pt-1" />
             </h6>
             <b-card-body :class="cardOpen.settingsTable ? '' : 'd-none'">
               <SettingsTable chart-type="week" />
             </b-card-body>
-          </b-card>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col class="px-0 px-sm-3">
-          <b-card class="my-4 shadow border-0">
-            <ChartTable id="chart" chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" />
           </b-card>
         </b-col>
       </b-row>

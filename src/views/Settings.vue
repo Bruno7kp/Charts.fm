@@ -9,7 +9,7 @@
                   header-text-variant="light"
                   class="mt-3 shadow border-0"
           >
-          <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fab', 'lastfm']" /> Users</h6>
+          <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fab', 'lastfm']" /> {{ $tc('word.user', 2) }}</h6>
           <AddUser />
           <hr/>
           <UsersList />
@@ -21,8 +21,12 @@
                   border-variant="dark" 
                   class="mt-3 shadow border-0"
           >
-            <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fa', 'cog']" /> Settings</h6>
-            <SettingsForm v-bind:user-name="userName" v-bind:timezone="timezone" v-bind:timezones="timezones" />
+            <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fa', 'cog']" /> {{ $t('word.settings') }}</h6>
+            <SettingsForm v-bind:user-name="userName" 
+              v-bind:timezone="timezone" 
+              v-bind:timezones="timezones"
+              v-bind:language="language"
+              v-bind:languages="languages" />
           </b-card>
         </b-col>
       </b-row>
@@ -52,10 +56,13 @@ import User from '@/charts/user';
     if (!timezone) {
       timezone = moment.tz.guess();
     }
+    const language = this.$store.state.lang;
     return {
       userName,
       timezone,
       timezones: moment.tz.names(),
+      language,
+      languages: ['en', 'pt'],
     };
   },
 })

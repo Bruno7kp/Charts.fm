@@ -6,16 +6,16 @@
           <div class="h3">{{ user.login }}</div>
         </b-col>
         <b-col sm="12" md="6" lg="5" class="mt-3 text-center">
-          <div class="h5 text-capitalize" v-if="totalCharts > 0">{{ chartType + ' ' + (index + 1) }}</div>
+          <div class="h5 text-capitalize" v-if="totalCharts > 0">{{ $tc('word.' + chartType, 1) + ' ' + (index + 1) }}</div>
           <div class="h6" v-if="totalCharts > 0">{{ currentDate + ' - ' + currentEndDate }}</div>
         </b-col>
       </b-row>
       <b-row>
         <b-col sm="12" md="6" lg="4">
           <b-nav pills fill class="nav-danger mb-2">
-            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><font-awesome-icon icon="user" /> Artists</b-nav-item>
-            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><font-awesome-icon :icon="['fa', 'compact-disc']" /> Albums</b-nav-item>
-            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><font-awesome-icon :icon="['fa', 'music']" /> Tracks</b-nav-item>
+            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><font-awesome-icon icon="user" /> {{ $tc("word.artist", 2) }}</b-nav-item>
+            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><font-awesome-icon :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-nav-item>
+            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><font-awesome-icon :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-nav-item>
           </b-nav>
         </b-col>
         <b-col sm="12" lg="5" offset-lg="3" md="6">
@@ -69,19 +69,19 @@
               <b-col cols="6" md="3" class="text-center border-right">
                 <b-row class="border-bottom py-2">
                   <b-col>
-                    <small class="text-secondary">CURRENT RANK</small>
+                    <small class="text-secondary text-uppercase">{{ $t("chart.current_rank") }}</small>
                     <h4 class="font-weight-bold pt-2">{{ resumes[row.index].current.rank }}</h4>
                   </b-col>
                 </b-row>
                 <b-row class="border-bottom py-2">
                   <b-col>
-                    <small class="text-secondary">PREVIOUS RANK</small>
+                    <small class="text-secondary text-uppercase">{{ $t("chart.previous_rank") }}</small>
                     <h5 class="font-weight-bold pt-2">{{ resumes[row.index].variation.previous.rank }}</h5>
                   </b-col>
                 </b-row>
                 <b-row class="py-2">
                   <b-col>
-                    <small class="text-secondary text-uppercase">{{ chartType }}s</small>
+                    <small class="text-secondary text-uppercase">{{ $tc("word." + chartType, 2) }}</small>
                     <h5 class="font-weight-bold pt-2">{{ resumes[row.index].total }}</h5>
                   </b-col>
                 </b-row>
@@ -113,7 +113,7 @@
                     {{ resumes[row.index].stats.peak }}
                   </b-col>
                   <b-col class="my-auto">
-                    Peak
+                    {{ $t("chart.peak") }}
                   </b-col>
                 </b-row>
                 <b-row class="border-bottom">
@@ -121,7 +121,7 @@
                     {{ resumes[row.index].debut.rank }}
                   </b-col>
                   <b-col class="my-auto">
-                    Debut
+                    {{ $t("chart.debut") }}
                   </b-col>
                 </b-row>
                 <b-row class="border-bottom">
@@ -129,7 +129,7 @@
                     {{ resumes[row.index].stats.points }}
                   </b-col>
                   <b-col class="my-auto">
-                    Chart Points
+                    {{ $t("chart.chart_points") }}
                   </b-col>
                 </b-row>
                 <b-row class="border-bottom">
@@ -137,7 +137,7 @@
                     {{ resumes[row.index].stats.playcount_sum }}
                   </b-col>
                   <b-col class="my-auto">
-                    Total Playcount (while on the chart)
+                    {{ $t("chart.total_playcount") }}
                   </b-col>
                 </b-row>
               </b-col>
@@ -169,13 +169,13 @@
                       <template slot="title">{{ chartType + ' ' + entry.chart.index }}</template>
                       <b-row>
                         <b-col cols="12" class="border-bottom py-0">
-                          <strong>#{{ entry.rank }}</strong> rank
+                          <strong>#{{ entry.rank }}</strong> {{ $t("chart.rank") }}
                         </b-col>
                         <b-col cols="12" class="border-bottom py-0">
-                          <strong>{{ entry.playcount }}</strong> plays
+                          <strong>{{ entry.playcount }}</strong> {{ $t("chart.plays") }}
                         </b-col>
                         <b-col cols="12" class="pt-2">
-                          <b-button variant="primary" size="sm" @click="setIndex(entry.chart.index, true)">Go to chart</b-button>
+                          <b-button variant="primary" size="sm" @click="setIndex(entry.chart.index, true)">{{ $t("chart.goto") }}</b-button>
                         </b-col>
                       </b-row>
                     </b-popover>
@@ -198,39 +198,39 @@
               slot-scope="row" 
               v-html="formatter(resumes[row.index].variation[table.previous].playcount, '%')"></span>
         <template slot="table-caption">
-          <h6>Legend</h6>
+          <h6>{{ $t("word.legend") }}</h6>
           <b-row>
             <b-col sm="12" md="4">
               <b-row>
-                <b-col><strong>CR</strong> Current Rank</b-col>
+                <b-col><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</b-col>
               </b-row>
               <b-row>
-                <b-col><strong>PR</strong> Previous Rank</b-col>
+                <b-col><strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</b-col>
               </b-row>
               <b-row>
-                <b-col><strong>PK</strong> Peak Position</b-col>
-              </b-row>
-            </b-col>
-            <b-col sm="12" md="4">
-              <b-row>
-                <b-col><strong>CP</strong> Current Playcount</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>PP</strong> Previous Playcount</b-col>
-              </b-row>
-              <b-row>
-                <b-col class="text-capitalize"><strong>{{ 'T' + chartType.charAt(0).toUpperCase() }}</strong> Total {{ chartType }}s On Chart</b-col>
+                <b-col><strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</b-col>
               </b-row>
             </b-col>
             <b-col sm="12" md="4">
               <b-row>
-                <b-col><strong>RE</strong> Re-Entry</b-col>
+                <b-col><strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</b-col>
               </b-row>
               <b-row>
-                <b-col><strong>NE</strong> New Entry</b-col>
+                <b-col><strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</b-col>
               </b-row>
               <b-row>
-                <b-col><strong>=</strong> No Variation</b-col>
+                <b-col><strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</b-col>
+              </b-row>
+            </b-col>
+            <b-col sm="12" md="4">
+              <b-row>
+                <b-col><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }}</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }}</b-col>
+              </b-row>
+              <b-row>
+                <b-col><strong>=</strong> {{ $t("chart.no_variation") }}</b-col>
               </b-row>
             </b-col>
           </b-row>
@@ -276,18 +276,18 @@ export default Vue.extend({
     fields(): object[] {
       const fields = [];
       let i = 0;
-      fields[i] = { key: 'rank', label: 'CR', class: 'text-center' };
+      fields[i] = { key: 'rank', label: this.$t('chart.abbr.cr'), class: 'text-center' };
       i++;
       if (this.table.previousRank.length > 0) {
-        fields[i] = { key: 'previous_rank', label: 'PR', class: 'text-center' };
+        fields[i] = { key: 'previous_rank', label: this.$t('chart.abbr.pr'), class: 'text-center' };
         i++;
       }
       if (this.table.peak.length > 0) {
-        fields[i] = { key: 'peak', label: 'PK', class: 'text-center px-0' };
+        fields[i] = { key: 'peak', label: this.$t('chart.abbr.pk'), class: 'text-center px-0' };
         i++;
       }
       if (this.table.onChart.length > 0) {
-        fields[i] = { key: 'on_chart', label: 'T' + this.chartType.charAt(0).toUpperCase(), class: 'text-center' };
+        fields[i] = { key: 'on_chart', label: this.$t('chart.abbr.to'), class: 'text-center' };
         i++;
       }
       if (this.table.images.length > 0) {
@@ -295,21 +295,21 @@ export default Vue.extend({
         i++;
       }
       if (this.selected === 'artists') {
-        fields[i] = { key: 'name', label: 'Artist', class: 'w-65 title' };
+        fields[i] = { key: 'name', label: this.$tc('word.artist', 1), class: 'w-65 title' };
       } else {
         if (this.table.separateArtist.length > 0) {
-          fields[i] = { key: 'name', label: 'Title', class: 'w-40 title min-' + this.selected };
+          fields[i] = { key: 'name', label: this.$t('word.title'), class: 'w-40 title min-' + this.selected };
           i++;
-          fields[i] = { key: 'artist', class: 'w-25 min-artists' };
+          fields[i] = { key: 'artist', label: this.$t('word.artist'), class: 'w-25 min-artists' };
         } else {
-          fields[i] = { key: 'name_artist', label: 'Title, Artist', class: 'w-65 title title-both min-artists' };
+          fields[i] = { key: 'name_artist', label: this.$t('word.title_artist'), class: 'w-65 title title-both min-artists' };
         }
       }
       i++;
-      fields[i] = { key: 'playcount', label: 'CP', class: 'text-center' };
+      fields[i] = { key: 'playcount', label: this.$t('chart.abbr.cp'), class: 'text-center' };
       i++;
       if (this.table.previousPlaycount.length > 0) {
-        fields[i] = { key: 'previous_playcount', label: 'PP', class: 'text-center' };
+        fields[i] = { key: 'previous_playcount', label: this.$t('chart.abbr.pp'), class: 'text-center' };
         i++;
       }
       fields[i] = { key: 'show_details', label: '+', class: 'text-center' };
@@ -418,9 +418,9 @@ export default Vue.extend({
       if (value === 0) {
         return '=';
       } else if (value === 'RE') {
-        return '<span class="' + prefix + 'warning">RE</span>';
+        return '<span class="' + prefix + 'warning">' + this.$t('chart.abbr.re') + '</span>';
       } else if (value === 'NEW') {
-        return '<span class="' + prefix + 'primary">NE</span>';
+        return '<span class="' + prefix + 'primary">' + this.$t('chart.abbr.ne') + '</span>';
       } else {
         if (this.table.previous !== 'previous') {
           suffix = this.table.previous === 'percent' ? suffix : '';
@@ -507,8 +507,8 @@ export default Vue.extend({
           group: 'app',
           type: 'success',
           duration: 10000,
-          title: 'First chart done!',
-          text: 'Now you can browse your charts while the rest is loading.',
+          title: this.$t('messages.first_week') + '',
+          text: this.$t('messages.first_week_sub') + '',
         });
       }
     },

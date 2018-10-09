@@ -1,47 +1,39 @@
 <template>
 <b-form v-on:submit.prevent="onSubmit">
   <b-row>
-    <b-col>
-      <h6>Show Columns:</h6>
+    <b-col cols="12" md="4" class="mb-3">
+      <h6>{{ $t('chart.show_cols') }}:</h6>
       <b-row>
         <b-col>
-          <b-form-checkbox v-model="table.previousRank" class="d-block">Previous Rank</b-form-checkbox>
-          <b-form-checkbox v-model="table.peak" class="d-block">Peak</b-form-checkbox>
-          <b-form-checkbox v-model="table.images" class="d-block">Image</b-form-checkbox>
-        </b-col>
-        <b-col>
-          <b-form-checkbox v-model="table.onChart" class="d-block">Total {{ chartType.charAt(0).toUpperCase() + chartType.slice(1) }}s</b-form-checkbox>
-          <b-form-checkbox v-model="table.previousPlaycount" class="d-block">Previous Plays</b-form-checkbox>
-          <b-form-checkbox v-model="table.separateArtist" class="d-block m-0">Artist (separate)</b-form-checkbox>
+          <b-form-checkbox v-model="table.previousRank" class="d-block">{{ $t('chart.previous_rank') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.peak" class="d-block">{{ $t('chart.peak') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.images" class="d-block">{{ $t('word.image') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.onChart" class="d-block">{{ $t('chart.total_' + chartType) }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.previousPlaycount" class="d-block">{{ $t('chart.previous_playcount') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.separateArtist" class="d-block m-0">{{ $tc('word.artist', 1) }} ({{ $t('word.separate') }})</b-form-checkbox>
         </b-col>
       </b-row>
-      <hr/>
-      <h6>Rank / Playcount Variation:</h6>
+    </b-col>
+    <b-col cols="12" md="4"  class="mb-3">
+      <h6>{{ $t('chart.variation') }}:</h6>
       <b-form-group>
         <b-form-radio-group id="previous" v-model="table.previous" name="previous">
-          <b-form-radio value="previous" class="d-block">Previous Value <span class="text-secondary">(Ex: 20 plays)</span></b-form-radio>
-          <b-form-radio value="diff" class="d-block">Difference <span class="text-secondary">(Ex: +10 plays)</span></b-form-radio>
-          <b-form-radio value="percent" class="d-block">Percent <span class="text-secondary">(Ex: +50%)</span></b-form-radio>
+          <b-form-radio value="previous" class="d-block">{{ $t('chart.previous') }} <span class="text-secondary">(Ex: 20 {{ $t('chart.plays') }})</span></b-form-radio>
+          <b-form-radio value="diff" class="d-block">{{ $t('chart.diff') }} <span class="text-secondary">(Ex: +10 {{ $t('chart.plays') }})</span></b-form-radio>
+          <b-form-radio value="percent" class="d-block">{{ $t('chart.percent') }} <span class="text-secondary">(Ex: +50%)</span></b-form-radio>
         </b-form-radio-group>
       </b-form-group>
-      <hr/>
-      <h6>Table Style:</h6>
+    </b-col>
+    <b-col cols="12" md="4">
+      <h6>{{ $t('chart.table_style') }}:</h6>
       <b-row>
         <b-col>
-          <b-form-checkbox v-model="table.small" class="d-block">Compact</b-form-checkbox>
-          <b-form-checkbox v-model="table.striped" class="d-block">Striped</b-form-checkbox>
-        </b-col>
-        <b-col>
-          <b-form-checkbox v-model="table.bordered" class="d-block">Border</b-form-checkbox>
-          <b-form-checkbox v-model="table.hover" class="d-block">Hover</b-form-checkbox>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col>
-          <b-form-checkbox v-model="table.colored" class="d-block">Color Variat.</b-form-checkbox>
-        </b-col>
-        <b-col>
-          <b-form-checkbox v-model="table.times" class="d-block">Times at #1</b-form-checkbox>
+          <b-form-checkbox v-model="table.small" class="d-block">{{ $t('chart.compact') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.striped" class="d-block">{{ $t('chart.striped') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.bordered" class="d-block">{{ $t('chart.border') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.colored" class="d-block">{{ $t('chart.color') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.times" class="d-block">{{ $t('chart.times') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.hover" class="d-block">{{ $t('chart.hover') }}</b-form-checkbox>
         </b-col>
       </b-row>
     </b-col>

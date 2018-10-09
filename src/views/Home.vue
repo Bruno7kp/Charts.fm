@@ -9,9 +9,9 @@
                   header-tag="header"
                   header-text-variant="light"
                   class="mt-3 shadow-lg border-0">
-                <h6 slot="header" class="mb-0">{{ userName }}'s Charts</h6>
+                <h6 slot="header" class="mb-0">Charts</h6>
               <b-link to="/weekly" class="btn btn-outline-danger">
-                Weekly Charts <font-awesome-icon :icon="['fa', 'chevron-right']" />
+                {{ $t("chart.weekly") }} <font-awesome-icon :icon="['fa', 'chevron-right']" />
               </b-link>
             </b-card>
           </b-col>
@@ -22,7 +22,7 @@
                   header-tag="header"
                   header-text-variant="light"
                   class="mt-3 shadow-lg border-0">
-                <h6 slot="header" class="mb-0">Enter your last.fm username</h6>
+                <h6 slot="header" class="mb-0">{{ $t("lastfm.username") }}</h6>
               <AddUser redirect />
             </b-card>
           </b-col>
