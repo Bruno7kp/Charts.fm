@@ -23,15 +23,16 @@
         <b-input v-model="mLimit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
+    <b-col cols="12">
+      <p v-if="mLimit >= 40" class="text-danger m-0 mb-4">{{ $t('messages.limit_warning') }}</p>
+    </b-col>
   </b-row>
 	<b-row>
     <b-col>
       <b-btn type="submit" variant="outline-success" :disabled="loading">
-        <font-awesome-icon :icon="['far', 'save']" />
+        <font-awesome-icon :icon="['far', 'save']" /> {{ $t('word.save') }}
       </b-btn>
-      <p v-if="user.weeklyCharts.weeks.length" class="text-danger m-0">
-        {{ $t('messages.settings_warning') }}
-      </p>
+      <p v-if="user.weeklyCharts.weeks.length" class="text-danger m-0">{{ $t('messages.settings_warning') }}</p>
     </b-col>
   </b-row>
 </b-form>

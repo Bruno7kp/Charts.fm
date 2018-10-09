@@ -608,7 +608,7 @@ td:first-child {
 }
 .popover {
   text-align: center;
-  max-width: 125px;
+  max-width: 135px;
 }
 .popover-body {
   padding-top: 0;
