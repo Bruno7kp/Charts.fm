@@ -175,7 +175,7 @@
                           <strong>{{ entry.playcount }}</strong> plays
                         </b-col>
                         <b-col cols="12" class="pt-2">
-                          <b-button variant="primary" size="sm" @click="setIndex(entry.chart.index)">Go to chart</b-button>
+                          <b-button variant="primary" size="sm" @click="setIndex(entry.chart.index, true)">Go to chart</b-button>
                         </b-col>
                       </b-row>
                     </b-popover>
@@ -360,11 +360,13 @@ export default Vue.extend({
     decrement() {
       this.setIndex(this.index - 1);
     },
-    setIndex(index: number) {
+    setIndex(index: number, scroll: boolean = false) {
       if (index >= 0 && index < getUserChartLength(this.user, this.chartType)) {
         this.index = index;
-        // @ts-ignore
-        this.$scrollTo('#chart');
+        if (scroll) {
+          // @ts-ignore
+          this.$scrollTo('#chart');
+        }
       }
     },
     setChart(newValue: string) {
