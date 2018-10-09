@@ -507,7 +507,7 @@ export default Vue.extend({
         this.$notify({
           group: 'app',
           type: 'success',
-          duration: 10000,
+          duration: 20000,
           title: this.$t('messages.first_week') + '',
           text: this.$t('messages.first_week_sub') + '',
         });
@@ -607,7 +607,8 @@ td:first-child {
   text-transform: capitalize;
 }
 .popover {
-  max-width: 115px;
+  text-align: center;
+  max-width: 125px;
 }
 .popover-body {
   padding-top: 0;
