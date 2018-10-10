@@ -622,7 +622,7 @@ td:first-child {
   padding-top: 0;
 }
 .no-line td {
-  border-top: 0;
+  border-top: 0 !important;
 }
 .t-dark .table th, .t-dark .table td {
   border-top: 1px solid #343a40;
