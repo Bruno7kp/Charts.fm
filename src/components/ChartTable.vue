@@ -374,7 +374,7 @@ export default Vue.extend({
       }
     },
     toggleDetails(item: any, index: any, event: any) {
-      item._showDetails = !item._showDetails;
+      // item._showDetails = !item._showDetails;
     },
     setChart(newValue: string) {
       const m = moment(newValue);
