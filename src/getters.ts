@@ -74,4 +74,7 @@ export default {
     getImages: (state: any) => {
         return state.images;
     },
+    getTheme: (state: any) => {
+        return state.theme;
+    },
 };

@@ -28,7 +28,7 @@ export default Vue.extend({
 </script>
 <style>
 footer {
-    background-color: #0F2027;
+    background-color: #0c1219;
 }
 footer a {
     font-weight: bold;

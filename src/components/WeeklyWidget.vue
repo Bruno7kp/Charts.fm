@@ -1,16 +1,16 @@
 <template>
   <b-row>
-    <b-col>
-      <div class="display-4 text-center">
+    <b-col class="text-center">
+      <div class="display-4">
         {{ user.weeklyCharts.weeks.length + '/' + weeklyList.length }}
       </div>
-      <div class="text-muted text-center">{{ $t('messages.weeks_loaded') }}</div>
+      <div class="text-muted">{{ $t('messages.weeks_loaded') }}</div>
       <b-progress :value="user.weeklyCharts.weeks.length / weeklyList.length * 100"
                   variant="danger"
                   :striped="loading"
                   :animated="loading"
                   class="mb-2"></b-progress>
-      <b-btn type="button" variant="outline-dark" :disabled="loading" v-on:click="load">
+      <b-btn type="button" :variant="theme === 'light' ? 'outline-dark' : 'outline-light'" :disabled="loading" v-on:click="load">
         <div v-if="loading">
           <font-awesome-icon :icon="['fa', 'sync-alt']" spin /> {{ $t('chart.loading') }}
         </div>
@@ -34,6 +34,7 @@ export default Vue.extend({
   props: {
     user: Object,
     loading: Boolean,
+    theme: String,
   },
   computed: {
     ...mapGetters({

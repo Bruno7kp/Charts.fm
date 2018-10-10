@@ -31,6 +31,7 @@
           <b-form-checkbox v-model="table.small" class="d-block">{{ $t('chart.compact') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.striped" class="d-block">{{ $t('chart.striped') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.bordered" class="d-block">{{ $t('chart.border') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.separateLine" class="d-block">{{ $t('chart.line') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.colored" class="d-block">{{ $t('chart.color') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.times" class="d-block">{{ $t('chart.times') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.hover" class="d-block">{{ $t('chart.hover') }}</b-form-checkbox>
@@ -40,7 +41,7 @@
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="outline-success" class="mt-2"><font-awesome-icon :icon="['far', 'save']" /></b-btn>
+      <b-btn type="submit" variant="outline-success" class="mt-2"><font-awesome-icon :icon="['far', 'save']" /> {{ $t('word.save') }}</b-btn>
     </b-col>
   </b-row>
 </b-form>
@@ -69,7 +70,7 @@ export default Vue.extend({
       this.$notify({
         group: 'app',
         type: 'success',
-        text: 'Settings updated successfully.',
+        text: this.$t('messages.settings_updated') + '',
       });
     },
   },

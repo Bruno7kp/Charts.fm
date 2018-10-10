@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" :class="'t-' + theme">
     <Menu />
     <router-view/>
     <Footer />
@@ -11,19 +11,39 @@
 import { Component, Vue } from 'vue-property-decorator';
 import Menu from '@/components/Menu.vue';
 import Footer from '@/components/Footer.vue';
-@Component({
+import Theme from './charts/theme';
+import { mapGetters } from 'vuex';
+
+export default Vue.extend({
+  name: 'App',
   components: {
     Menu,
     Footer,
   },
-})
-export default class App extends Vue {}
+  computed: {
+    ...mapGetters({
+      theme: 'getTheme',
+    }),
+  },
+});
 </script>
 <style>
 body {
   background-color: #f5f6f8;
 }
+.bg-dark {
+  background-color: #0c1219 !important;
+}
 .t-dark {
+  background-color: #343a40;
+}
+.t-dark .form-control {
+  color: white;
+}
+.form-control, .form-control:focus {
+  background-color: transparent;
+}
+.t-dark .form-control option {
   background-color: #0c1219;
 }
 .vue-notification {

@@ -45,6 +45,7 @@ const en = {
         hover: 'Hover',
         color: 'Color Variation',
         times: 'Times at #1',
+        line: 'Row Separator',
     },
     lastfm: {
         username: 'Enter your last.fm username',
@@ -91,6 +92,8 @@ const en = {
         thursday: 'Thursday',
         friday: 'Friday',
         saturday: 'Saturday',
+        theme: 'Theme',
+        action: 'Action | Actions',
     },
 };
 

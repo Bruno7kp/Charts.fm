@@ -5,9 +5,11 @@
       <b-container class="my-3">
         <b-row v-if="userName.length">
           <b-col sm="12" md="6" offset-md="3">
-            <b-card header-bg-variant="dark"
-                  header-tag="header"
-                  header-text-variant="light"
+            <b-card header-tag="header"
+                  :header-bg-variant="theme === 'light' ? 'dark' : 'white'" 
+                  :header-text-variant="theme === 'light' ? 'white' : 'dark'"
+                  :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                  :text-variant="theme === 'light' ? 'dark' : 'white'"
                   class="mt-3 shadow-lg border-0">
                 <h6 slot="header" class="mb-0">Charts</h6>
               <b-link to="/weekly" class="btn btn-outline-danger">
@@ -20,7 +22,8 @@
           <b-col sm="12" md="6" offset-md="3">
             <b-card header-bg-variant="danger"
                   header-tag="header"
-                  header-text-variant="light"
+                  :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                  :text-variant="theme === 'light' ? 'dark' : 'white'"
                   class="mt-3 shadow-lg border-0">
                 <h6 slot="header" class="mb-0">{{ $t("lastfm.username") }}</h6>
               <AddUser redirect />
@@ -50,6 +53,11 @@ import User from '@/charts/user';
     AddUser,
     Carousel,
   },
+  computed: {
+    theme() {
+      return this.$store.getters.getTheme;
+    },
+  },
   data() {
     let userName = '';
     if (this.$store.state.users.length) {
@@ -74,6 +82,9 @@ export default class Home extends Vue {}
 div.jumbotron {
   background-image: linear-gradient(to left top, #711222, #8b1a2b, #a52334, #c02c3c, #dc3545);
   background-color: #a52334;
+}
+.t-dark div.jumbotron {
+  background: #343a40;
 }
 </style>
 

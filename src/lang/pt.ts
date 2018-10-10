@@ -45,6 +45,7 @@ const pt = {
         hover: 'Hover (destacar linha ao selecionar/passar mouse sobre)',
         color: 'Mostrar cores nas variações',
         times: 'Mostrar número de vezes em #1',
+        line: 'Borda separando linhas',
     },
     lastfm: {
         username: 'Digite seu nome de usuário no Last.fm',
@@ -91,6 +92,8 @@ const pt = {
         thursday: 'Quinta',
         friday: 'Sexta',
         saturday: 'Sábado',
+        theme: 'Tema',
+        action: 'Ação | Ações',
     },
 };
 

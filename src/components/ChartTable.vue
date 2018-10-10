@@ -35,7 +35,7 @@
       <b-table 
         :items="items"
         :fields="fields"
-        class="mt-3"
+        :class="'mt-3 ' + (this.table.separateLine.length > 0 ? '': 'no-line')"
         responsive="lg"
         :small="this.table.small.length > 0"
         :bordered="this.table.bordered.length > 0"
@@ -43,7 +43,7 @@
         :striped="this.table.striped.length > 0">
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
-          <b-button size="sm" variant="outline-dark" @click.stop="row.toggleDetails" class="p-0 px-1">
+          <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
             <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="row.detailsShowing"/>
             <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!row.detailsShowing"/>
           </b-button>
@@ -64,7 +64,8 @@
           <span class="d-block sub">{{ items[row.index].artist }}</span>
         </template>
         <template slot="row-details" slot-scope="row">
-          <b-card>
+          <b-card :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                  :text-variant="theme === 'light' ? 'dark' : 'white'">
             <b-row class="border rounded">
               <b-col cols="6" md="3" class="text-center border-right">
                 <b-row class="border-bottom py-2">
@@ -155,7 +156,7 @@
                     <b-button
                       v-for="(entry, key) in runs"
                       :key="k + 'b' + key + row.index" 
-                      :variant="entry.rank === resumes[row.index].stats.peak ? 'outline-primary' : 'outline-dark'" 
+                      :variant="entry.rank === resumes[row.index].stats.peak ? 'outline-primary' : (theme === 'dark' ? 'outline-secondary' : 'outline-dark')" 
                       class="rounded-0 m-1 p-0 b-run"
                       :id="k + 'i' + key + row.index">
                       {{ entry.rank }}
@@ -258,6 +259,7 @@ export default Vue.extend({
     user: Object,
     loading: Boolean,
     chartType: String,
+    theme: String,
   },
   computed: {
     items(): any[] {
@@ -526,7 +528,13 @@ export default Vue.extend({
   background-color: #dc3545;
 }
 .nav-danger a {
-  color: #212529;
+  color: #7c7c7c;
+}
+.bg-dark .nav-danger a {
+  color: #ddd;
+}
+.bg-dark .table-striped tbody tr:nth-of-type(odd) {
+  background-color: rgba(255, 255, 255, 0.05);
 }
 /* Columns Helpers */
 .w-10 {
@@ -612,5 +620,8 @@ td:first-child {
 }
 .popover-body {
   padding-top: 0;
+}
+.no-line td {
+  border-top: 0;
 }
 </style>

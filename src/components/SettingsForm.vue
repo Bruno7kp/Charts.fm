@@ -3,20 +3,27 @@
   <b-row>
     <b-col>
       <b-form-group :label="$t('word.timezone')" label-for="timezone">
-		    <b-select id="timezone" v-model="timezone" :options="timezones"></b-select>
+		    <b-select id="timezone" v-model="tz" :options="timezones"></b-select>
 	    </b-form-group>
     </b-col>
   </b-row>
   <b-row>
     <b-col>
       <b-form-group :label="$t('word.language')" label-for="language">
-		    <b-select id="language" v-model="language" :options="languages"></b-select>
+		    <b-select id="language" v-model="lang" :options="languages"></b-select>
+	    </b-form-group>
+    </b-col>
+  </b-row>
+  <b-row>
+    <b-col>
+      <b-form-group :label="$t('word.theme')" label-for="theme">
+		    <b-select id="theme" v-model="th" :options="themes"></b-select>
 	    </b-form-group>
     </b-col>
   </b-row>
 	<b-row>
     <b-col>
-      <b-btn type="submit" variant="outline-success"><font-awesome-icon :icon="['far', 'save']" /></b-btn>
+      <b-btn type="submit" variant="outline-success"><font-awesome-icon :icon="['far', 'save']" /> {{ $t('word.save') }}</b-btn>
     </b-col>
   </b-row>
   <hr/>
@@ -43,12 +50,22 @@ export default Vue.extend({
     timezones: Array,
     language: String,
     languages: Array,
+    theme: String,
+    themes: Array,
+  },
+  data() {
+    return {
+      tz: this.$props.timezone,
+      lang: this.$props.language,
+      th: this.$props.theme,
+    };
   },
   methods: {
     onSubmit() {
-      this.$store.dispatch('setTimezone', this.$props.timezone);
-      this.$store.dispatch('setLang', this.$props.language);
-      this.$i18n.locale = this.$props.language;
+      this.$store.dispatch('setTimezone', this.$data.tz);
+      this.$store.dispatch('setLang', this.$data.lang);
+      this.$i18n.locale = this.$data.lang;
+      this.$store.dispatch('setTheme', this.$data.th);
       this.$notify({
         group: 'app',
         type: 'success',

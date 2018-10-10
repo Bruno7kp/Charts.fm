@@ -21,6 +21,9 @@ export default {
     SET_TIMEZONE(state: any, timezone: string) {
         state.timezone = timezone;
     },
+    SET_THEME(state: any, theme: string) {
+        state.theme = theme;
+    },
     SET_LANG(state: any, lang: string) {
         state.lang = lang;
     },

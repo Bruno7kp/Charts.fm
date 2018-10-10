@@ -1,7 +1,10 @@
 <template>
   <b-table outlined :items="items" :fields="fields">
     <template slot="actions" slot-scope="data">
-      <b-button size="sm" class="mr-2" variant="outline-danger" @click="removeUser(data.item.login)">
+      <b-button size="sm" class="mr-2" variant="primary" @click="changeUser(data.item.login)">
+        {{ $t("chart.weekly") }}
+      </b-button>
+      <b-button size="sm" class="mr-2" variant="outline-danger" @click="changeUser(data.item.login)">
         <font-awesome-icon :icon="['fa', 'trash']" />
       </b-button>
     </template>
@@ -21,10 +24,10 @@ export default Vue.extend({
         login: {
           label: this.$tc('word.user', 2),
           sortable: true,
-          class: 'w-75',
+          class: 'w-50',
         },
         actions: {
-          label: this.$t('word.remove'),
+          label: this.$tc('word.action', 2),
         },
       },
       // currentUser: this.$store.state.currentUser,
@@ -39,6 +42,7 @@ export default Vue.extend({
   methods: {
     changeUser(login) {
       this.$store.dispatch('setCurrentUser', login);
+      this.$router.push({ name: 'weekly' });
     },
     removeUser(login) {
       this.$store.dispatch('removeUser', login);

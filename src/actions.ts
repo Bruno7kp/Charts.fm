@@ -22,6 +22,9 @@ export default {
   setTimezone: (context: any, timezone: string) => {
     context.commit('SET_TIMEZONE', timezone);
   },
+  setTheme: (context: any, theme: string) => {
+    context.commit('SET_THEME', theme);
+  },
   setLang: (context: any, lang: string) => {
     context.commit('SET_LANG', lang);
   },

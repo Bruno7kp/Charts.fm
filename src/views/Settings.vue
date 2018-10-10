@@ -7,6 +7,8 @@
                   header-bg-variant="danger"
                   header-tag="header"
                   header-text-variant="light"
+                  :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                  :text-variant="theme === 'light' ? 'dark' : 'white'"
                   class="mt-3 shadow border-0"
           >
           <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fab', 'lastfm']" /> {{ $tc('word.user', 2) }}</h6>
@@ -16,9 +18,11 @@
           </b-card>
         </b-col>
         <b-col sm="12" md="6">
-          <b-card header-bg-variant="dark" 
-                  header-text-variant="white"
+          <b-card :header-bg-variant="theme === 'light' ? 'dark' : 'white'" 
+                  :header-text-variant="theme === 'light' ? 'white' : 'dark'"
                   border-variant="dark" 
+                  :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                  :text-variant="theme === 'light' ? 'dark' : 'white'"
                   class="mt-3 shadow border-0"
           >
             <h6 slot="header" class="mb-0"><font-awesome-icon :icon="['fa', 'cog']" /> {{ $t('word.settings') }}</h6>
@@ -26,7 +30,9 @@
               v-bind:timezone="timezone" 
               v-bind:timezones="timezones"
               v-bind:language="language"
-              v-bind:languages="languages" />
+              v-bind:languages="languages"
+              v-bind:theme="theme"
+              v-bind:themes="themes" />
           </b-card>
         </b-col>
       </b-row>
@@ -42,13 +48,19 @@ import AddUser from '@/components/AddUser.vue';
 import * as moment from 'moment';
 import 'moment-timezone';
 import User from '@/charts/user';
+import { mapGetters } from 'vuex';
 
-
-@Component({
+export default Vue.extend({
+  name: 'Settings',
   components: {
     SettingsForm,
     UsersList,
     AddUser,
+  },
+  computed: {
+    ...mapGetters({
+      theme: 'getTheme',
+    }),
   },
   data() {
     const userName = this.$store.state.currentUser;
@@ -63,8 +75,9 @@ import User from '@/charts/user';
       timezones: moment.tz.names(),
       language,
       languages: ['en', 'pt'],
+      themes: ['light', 'dark'],
     };
   },
-})
-export default class Settings extends Vue {}
+
+});
 </script>
