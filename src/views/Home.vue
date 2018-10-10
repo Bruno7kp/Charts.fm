@@ -23,7 +23,7 @@
             <b-card header-bg-variant="danger"
                   header-tag="header"
                   :bg-variant="theme === 'light' ? 'white' : 'dark'"
-                  :text-variant="theme === 'light' ? 'dark' : 'white'"
+                  text-variant="white"
                   class="mt-3 shadow-lg border-0">
                 <h6 slot="header" class="mb-0">{{ $t("lastfm.username") }}</h6>
               <AddUser redirect />

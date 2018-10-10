@@ -33,7 +33,6 @@
         </b-col>
       </b-row>
       <b-table 
-        @row-dblclicked="toggleDetails"
         :items="items"
         :fields="fields"
         :class="'mt-3 ' + (this.table.separateLine.length > 0 ? '': 'no-line')"
@@ -168,7 +167,7 @@
                       :target="k + 'i' + key + row.index"
                       placement="top"
                       triggers="focus">
-                      <template slot="title">{{ chartType + ' ' + entry.chart.index }}</template>
+                      <template slot="title">{{ $tc('word.' + chartType, 1) + ' ' + entry.chart.index }}</template>
                       <b-row>
                         <b-col cols="12" class="border-bottom py-0">
                           <strong>#{{ entry.rank }}</strong> {{ $t("chart.rank") }}
@@ -303,7 +302,7 @@ export default Vue.extend({
         if (this.table.separateArtist.length > 0) {
           fields[i] = { key: 'name', label: this.$t('word.title'), class: 'w-40 title min-' + this.selected };
           i++;
-          fields[i] = { key: 'artist', label: this.$t('word.artist'), class: 'w-25 min-artists' };
+          fields[i] = { key: 'artist', label: this.$tc('word.artist'), class: 'w-25 min-artists' };
         } else {
           fields[i] = { key: 'name_artist', label: this.$t('word.title_artist'),
           class: 'w-65 title title-both min-artists' };
@@ -372,9 +371,6 @@ export default Vue.extend({
           this.$scrollTo('#chart');
         }
       }
-    },
-    toggleDetails(item: any, index: any, event: any) {
-      // item._showDetails = !item._showDetails;
     },
     setChart(newValue: string) {
       const m = moment(newValue);
@@ -627,5 +623,8 @@ td:first-child {
 }
 .no-line td {
   border-top: 0;
+}
+.t-dark .table th, .t-dark .table td {
+  border-top: 1px solid #343a40;
 }
 </style>
