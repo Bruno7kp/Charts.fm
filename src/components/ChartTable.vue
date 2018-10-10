@@ -33,6 +33,7 @@
         </b-col>
       </b-row>
       <b-table 
+        @row-dblclicked="toggleDetails"
         :items="items"
         :fields="fields"
         :class="'mt-3 ' + (this.table.separateLine.length > 0 ? '': 'no-line')"
@@ -371,6 +372,9 @@ export default Vue.extend({
           this.$scrollTo('#chart');
         }
       }
+    },
+    toggleDetails(item: any, index: any, event: any) {
+      item._showDetails = !item._showDetails;
     },
     setChart(newValue: string) {
       const m = moment(newValue);
