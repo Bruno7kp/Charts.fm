@@ -35,11 +35,11 @@
       <b-row>
         <b-col class="small-legend text-md-right">
           <span><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</span>
-          <span v-if="this.table.previousRank.length > 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
-          <span v-if="this.table.peak.length > 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
+          <span v-if="this.table.opts.indexOf('previousRank') >= 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
+          <span v-if="this.table.opts.indexOf('peak') >= 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
           <span> | <strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</span>
-          <span v-if="this.table.previousPlaycount.length > 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
-          <span v-if="this.table.onChart.length > 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
+          <span v-if="this.table.opts.indexOf('previousPlaycount') >= 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
+          <span v-if="this.table.opts.indexOf('onChart') >= 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
           <br/>
           <span><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }} | </span>
           <span><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }} | </span>
@@ -49,12 +49,12 @@
       <b-table 
         :items="items"
         :fields="fields"
-        :class="'bg-' + theme + ' chart-table ' + (this.table.separateLine.length > 0 ? '': 'no-line')"
+        :class="'bg-' + theme + ' chart-table ' + (this.table.opts.indexOf('separateLine') >= 0 ? '': 'no-line')"
         responsive="lg"
-        :small="this.table.small.length > 0"
-        :bordered="this.table.bordered.length > 0"
-        :hover="this.table.hover.length > 0"
-        :striped="this.table.striped.length > 0">
+        :small="this.table.opts.indexOf('small') >= 0"
+        :bordered="this.table.opts.indexOf('bordered') >= 0"
+        :hover="this.table.opts.indexOf('hover') >= 0"
+        :striped="this.table.opts.indexOf('striped') >= 0">
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
@@ -256,26 +256,26 @@ export default Vue.extend({
       let i = 0;
       fields[i] = { key: 'rank', label: this.$t('chart.abbr.cr'), class: 'text-center' };
       i++;
-      if (this.table.previousRank.length > 0) {
+      if (this.table.opts.indexOf('previousRank') >= 0) {
         fields[i] = { key: 'previous_rank', label: this.$t('chart.abbr.pr'), class: 'text-center' };
         i++;
       }
-      if (this.table.peak.length > 0) {
+      if (this.table.opts.indexOf('peak') >= 0) {
         fields[i] = { key: 'peak', label: this.$t('chart.abbr.pk'), class: 'text-center px-0' };
         i++;
       }
-      if (this.table.onChart.length > 0) {
+      if (this.table.opts.indexOf('onChart') >= 0) {
         fields[i] = { key: 'on_chart', label: this.$t('chart.abbr.to'), class: 'text-center' };
         i++;
       }
-      if (this.table.images.length > 0) {
+      if (this.table.opts.indexOf('images') >= 0) {
         fields[i] = { key: 'image', label: '', class: 'text-center p-0' };
         i++;
       }
       if (this.selected === 'artists') {
         fields[i] = { key: 'name', label: this.$tc('word.artist', 1), class: 'w-65 title' };
       } else {
-        if (this.table.separateArtist.length > 0) {
+        if (this.table.opts.indexOf('separateArtist') >= 0) {
           fields[i] = { key: 'name', label: this.$t('word.title'), class: 'w-40 title min-' + this.selected };
           i++;
           fields[i] = { key: 'artist', label: this.$tc('word.artist'), class: 'w-25 min-artists' };
@@ -287,7 +287,7 @@ export default Vue.extend({
       i++;
       fields[i] = { key: 'playcount', label: this.$t('chart.abbr.cp'), class: 'text-center' };
       i++;
-      if (this.table.previousPlaycount.length > 0) {
+      if (this.table.opts.indexOf('previousPlaycount') >= 0) {
         fields[i] = { key: 'previous_playcount', label: this.$t('chart.abbr.pp'), class: 'text-center' };
         i++;
       }
@@ -393,7 +393,7 @@ export default Vue.extend({
       return this.getStats(this.selected, this.items[i].name, this.items[i].artist).until(this.index);
     },
     formatter(value: number|string, suffix: string = ''): any {
-      const prefix = this.table.colored.length > 0 ? 'text-' : '';
+      const prefix = this.table.opts.indexOf('colored') >= 0 ? 'text-' : '';
       if (value === 0) {
         return '=';
       } else if (value === 'RE') {
@@ -413,8 +413,8 @@ export default Vue.extend({
       return value;
     },
     peakFormatter(value: number, times: number): any {
-      const prefix = this.table.colored.length > 0 ? 'text-' : '';
-      const suffix = this.table.times.length > 0 ? ' <small class="text-secondary">' + times + 'x</small>' : '';
+      const prefix = this.table.opts.indexOf('colored') >= 0 ? 'text-' : '';
+      const suffix = this.table.opts.indexOf('times') >= 0 ? ' <small class="text-secondary">' + times + 'x</small>' : '';
       if (value === 1) {
         return '<span class="' + prefix + 'primary">' + value + suffix + '</span>';
       }

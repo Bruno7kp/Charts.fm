@@ -5,12 +5,12 @@
       <h6>{{ $t('chart.show_cols') }}:</h6>
       <b-row>
         <b-col>
-          <b-form-checkbox v-model="table.previousRank" class="d-block">{{ $t('chart.previous_rank') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.peak" class="d-block">{{ $t('chart.peak') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.images" class="d-block">{{ $t('word.image') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.onChart" class="d-block">{{ $t('chart.total_' + chartType) }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.previousPlaycount" class="d-block">{{ $t('chart.previous_playcount') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.separateArtist" class="d-block m-0">{{ $tc('word.artist', 1) }} ({{ $t('word.separate') }})</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="previousRank" class="d-block">{{ $t('chart.previous_rank') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="peak" class="d-block">{{ $t('chart.peak') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="images" class="d-block">{{ $t('word.image') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="onChart" class="d-block">{{ $t('chart.total_' + chartType) }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="previousPlaycount" class="d-block">{{ $t('chart.previous_playcount') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="separateArtist" class="d-block m-0">{{ $tc('word.artist', 1) }} ({{ $t('word.separate') }})</b-form-checkbox>
         </b-col>
       </b-row>
     </b-col>
@@ -28,13 +28,13 @@
       <h6>{{ $t('chart.table_style') }}:</h6>
       <b-row>
         <b-col>
-          <b-form-checkbox v-model="table.small" class="d-block">{{ $t('chart.compact') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.striped" class="d-block">{{ $t('chart.striped') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.bordered" class="d-block">{{ $t('chart.border') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.separateLine" class="d-block">{{ $t('chart.line') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.colored" class="d-block">{{ $t('chart.color') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.times" class="d-block">{{ $t('chart.times') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.hover" class="d-block">{{ $t('chart.hover') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="small" class="d-block">{{ $t('chart.compact') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="striped" class="d-block">{{ $t('chart.striped') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="bordered" class="d-block">{{ $t('chart.border') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="separateLine" class="d-block">{{ $t('chart.line') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="colored" class="d-block">{{ $t('chart.color') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="times" class="d-block">{{ $t('chart.times') }}</b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="hover" class="d-block">{{ $t('chart.hover') }}</b-form-checkbox>
         </b-col>
       </b-row>
     </b-col>
