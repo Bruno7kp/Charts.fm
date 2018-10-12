@@ -32,15 +32,30 @@
           </b-input-group>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col class="small-legend text-md-right">
+          <span><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</span>
+          <span v-if="this.table.previousRank.length > 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
+          <span v-if="this.table.peak.length > 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
+          <span> | <strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</span>
+          <span v-if="this.table.previousPlaycount.length > 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
+          <span v-if="this.table.onChart.length > 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
+          <br/>
+          <span><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }} | </span>
+          <span><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }} | </span>
+          <span><strong>=</strong> {{ $t("chart.no_variation") }}</span>
+        </b-col>
+      </b-row>
       <b-table 
         :items="items"
         :fields="fields"
-        :class="'mt-3 ' + (this.table.separateLine.length > 0 ? '': 'no-line')"
+        :class="(this.table.separateLine.length > 0 ? '': 'no-line')"
         responsive="lg"
         :small="this.table.small.length > 0"
         :bordered="this.table.bordered.length > 0"
         :hover="this.table.hover.length > 0"
-        :striped="this.table.striped.length > 0">
+        :striped="this.table.striped.length > 0"
+        id="chart-table">
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
@@ -198,44 +213,6 @@
         <span slot="previous_playcount" 
               slot-scope="row" 
               v-html="formatter(resumes[row.index].variation[table.previous].playcount, '%')"></span>
-        <template slot="table-caption">
-          <h6>{{ $t("word.legend") }}</h6>
-          <b-row>
-            <b-col sm="12" md="4">
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</b-col>
-              </b-row>
-            </b-col>
-            <b-col sm="12" md="4">
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</b-col>
-              </b-row>
-            </b-col>
-            <b-col sm="12" md="4">
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }}</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }}</b-col>
-              </b-row>
-              <b-row>
-                <b-col><strong>=</strong> {{ $t("chart.no_variation") }}</b-col>
-              </b-row>
-            </b-col>
-          </b-row>
-        </template>
       </b-table>
     </b-col>
   </b-row>
@@ -243,6 +220,7 @@
 
 <script lang="ts">
 import * as _ from 'lodash';
+import html2canvas from 'html2canvas';
 import LastFm from '@/lastfm';
 import { User, fixedStartDate, Stats } from '@/charts';
 import { mapGetters } from 'vuex';
@@ -315,7 +293,7 @@ export default Vue.extend({
         fields[i] = { key: 'previous_playcount', label: this.$t('chart.abbr.pp'), class: 'text-center' };
         i++;
       }
-      fields[i] = { key: 'show_details', label: '+', class: 'text-center' };
+      fields[i] = { key: 'show_details', label: '', class: 'text-center' };
       return fields;
     },
     currentDate(): string {
@@ -357,6 +335,14 @@ export default Vue.extend({
     },
   },
   methods: {
+    toImage() {
+      html2canvas(document.querySelector('#chart-table') as HTMLElement, {
+        letterRendering: true,
+        allowTaint: true })
+      .then((canvas: any) => {
+        document.body.appendChild(canvas);
+      });
+    },
     increment() {
       this.setIndex(this.index + 1);
     },
@@ -626,5 +612,8 @@ td:first-child {
 }
 .t-dark .table th, .t-dark .table td {
   border-top: 1px solid #343a40;
+}
+.small-legend {
+  font-size: 0.8em;
 }
 </style>
