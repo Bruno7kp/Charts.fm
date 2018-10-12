@@ -13,21 +13,21 @@
       <b-row>
         <b-col sm="12" md="6" lg="4">
           <b-nav pills fill class="nav-danger mb-2">
-            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><font-awesome-icon icon="user" /> {{ $tc("word.artist", 2) }}</b-nav-item>
-            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><font-awesome-icon :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-nav-item>
-            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><font-awesome-icon :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-nav-item>
+            <b-nav-item :active="selected == 'artists'" @click="selectArtists"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-nav-item>
+            <b-nav-item :active="selected == 'albums'" @click="selectAlbums"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-nav-item>
+            <b-nav-item :active="selected == 'tracks'" @click="selectTracks"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-nav-item>
           </b-nav>
         </b-col>
         <b-col sm="12" lg="5" offset-lg="3" md="6">
           <b-input-group>
             <b-input-group-prepend>
-              <b-button variant="danger" @click="setIndex(0)"><font-awesome-icon :icon="['fa', 'angle-double-left']" /></b-button>
-              <b-button variant="danger" @click="decrement"><font-awesome-icon :icon="['fa', 'angle-left']" /></b-button>
+              <b-button variant="danger" class="chart-nav" @click="setIndex(0)">&laquo;</b-button>
+              <b-button variant="danger" class="chart-nav" @click="decrement">&lsaquo;</b-button>
             </b-input-group-prepend>
             <b-form-input class="border-danger" type="date" @change="setChart" :min="minDate" :max="maxDate" :value="currentDate"></b-form-input>
             <b-input-group-append>
-              <b-btn variant="danger" @click="increment"><font-awesome-icon :icon="['fa', 'angle-right']" /></b-btn>
-              <b-btn variant="danger" @click="setIndex(totalCharts - 1)"><font-awesome-icon :icon="['fa', 'angle-double-right']" /></b-btn>
+              <b-btn variant="danger" class="chart-nav" @click="increment">&rsaquo;</b-btn>
+              <b-btn variant="danger" class="chart-nav" @click="setIndex(totalCharts - 1)">&raquo;</b-btn>
             </b-input-group-append>
           </b-input-group>
         </b-col>
@@ -49,13 +49,12 @@
       <b-table 
         :items="items"
         :fields="fields"
-        :class="(this.table.separateLine.length > 0 ? '': 'no-line')"
+        :class="'bg-' + theme + ' chart-table ' + (this.table.separateLine.length > 0 ? '': 'no-line')"
         responsive="lg"
         :small="this.table.small.length > 0"
         :bordered="this.table.bordered.length > 0"
         :hover="this.table.hover.length > 0"
-        :striped="this.table.striped.length > 0"
-        id="chart-table">
+        :striped="this.table.striped.length > 0">
         <template slot="show_details" slot-scope="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
@@ -220,7 +219,6 @@
 
 <script lang="ts">
 import * as _ from 'lodash';
-import html2canvas from 'html2canvas';
 import LastFm from '@/lastfm';
 import { User, fixedStartDate, Stats } from '@/charts';
 import { mapGetters } from 'vuex';
@@ -335,14 +333,6 @@ export default Vue.extend({
     },
   },
   methods: {
-    toImage() {
-      html2canvas(document.querySelector('#chart-table') as HTMLElement, {
-        letterRendering: true,
-        allowTaint: true })
-      .then((canvas: any) => {
-        document.body.appendChild(canvas);
-      });
-    },
     increment() {
       this.setIndex(this.index + 1);
     },
@@ -610,10 +600,18 @@ td:first-child {
 .no-line td {
   border-top: 0 !important;
 }
-.t-dark .table th, .t-dark .table td {
+.bg-dark .table th, .bg-dark .table td {
   border-top: 1px solid #343a40;
 }
 .small-legend {
   font-size: 0.8em;
+}
+.chart-nav {
+  line-height: 1;
+  font-size: 1.4em;
+  padding-top: 0;
+}
+.bg-light.chart-table {
+  background-color: white !important;
 }
 </style>

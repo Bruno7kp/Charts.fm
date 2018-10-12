@@ -43,11 +43,17 @@
         </b-col>
       </b-row>
       <b-row>
+        <b-col cols="12 mt-3" class="text-right">
+          <b-dropdown size="sm" right :text="$t('word.share')" :variant="theme === 'light' ? 'outline-dark' : 'outline-light'">
+            <b-dropdown-item @click="shareImage()">{{ $t('word.image') }}</b-dropdown-item>
+          </b-dropdown>
+        </b-col>
         <b-col class="px-0 px-sm-3">
-          <b-card class="my-4 shadow border-0"
+          <b-card class="mb-4 mt-3 shadow border-0"
             :bg-variant="theme === 'light' ? 'white' : 'dark'"
-            :text-variant="theme === 'light' ? 'dark' : 'white'">
-            <ChartTable id="chart" chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" :theme="theme" />
+            :text-variant="theme === 'light' ? 'dark' : 'white'" 
+            id="chart">
+            <ChartTable chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" :theme="theme" />
           </b-card>
         </b-col>
       </b-row>
@@ -85,6 +91,7 @@ import WeeklyWidget from '@/components/WeeklyWidget.vue';
 import SettingsTable from '@/components/SettingsTable.vue';
 import ChartTable from '@/components/ChartTable.vue';
 import { User, fixedStartDate, getWeeklyList } from '@/charts';
+import html2canvas from 'html2canvas';
 
 export default Vue.extend({
   name: 'Week',
@@ -119,6 +126,14 @@ export default Vue.extend({
     };
   },
   methods: {
+    shareImage() {
+      html2canvas(document.querySelector('#chart') as HTMLElement, {
+        letterRendering: true,
+        allowTaint: true })
+      .then((canvas: any) => {
+        document.body.appendChild(canvas);
+      });
+    },
     toggleSettings() {
       this.cardOpen.settingsWeek = !this.cardOpen.settingsWeek;
       this.$store.dispatch('setCardOpen', this.cardOpen);

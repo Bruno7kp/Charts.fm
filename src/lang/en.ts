@@ -94,6 +94,7 @@ const en = {
         saturday: 'Saturday',
         theme: 'Theme',
         action: 'Action | Actions',
+        share: 'Share',
     },
 };
 

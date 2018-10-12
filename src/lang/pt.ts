@@ -94,6 +94,7 @@ const pt = {
         saturday: 'Sábado',
         theme: 'Tema',
         action: 'Ação | Ações',
+        share: 'Compartilhar',
     },
 };
 
