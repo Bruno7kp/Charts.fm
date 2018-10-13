@@ -64,12 +64,12 @@
         </template>
         <template slot="image" slot-scope="row">
           <Promised :promise="getImage(row.index)">
-            <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" />
+            <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
             <span slot-scope="data">
-              <b-img center class="w-cover" :src="data" />
+              <b-img center class="w-cover" :src="data" crossorigin="anonymous" />
             </span>
             <span slot="catch" slot-scope="error">
-              <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" />
+              <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
             </span>
           </Promised>
         </template>
@@ -103,12 +103,12 @@
               </b-col>
               <b-col cols="6" md="3" class="my-auto">
                 <Promised :promise="getImage(row.index)">
-                  <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" />
+                  <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
                   <span slot-scope="data">
-                    <b-img center fluid :src="data" />
+                    <b-img center fluid :src="data" crossorigin="anonymous" />
                   </span>
                   <span slot="catch" slot-scope="error">
-                    <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" />
+                    <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
                   </span>
                 </Promised>
               </b-col>
@@ -414,7 +414,8 @@ export default Vue.extend({
     },
     peakFormatter(value: number, times: number): any {
       const prefix = this.table.opts.indexOf('colored') >= 0 ? 'text-' : '';
-      const suffix = this.table.opts.indexOf('times') >= 0 ? ' <small class="text-secondary">' + times + 'x</small>' : '';
+      const suffix = this.table.opts.indexOf('times') >= 0 ? ' <small class="text-secondary">' + times +
+        'x</small>' : '';
       if (value === 1) {
         return '<span class="' + prefix + 'primary">' + value + suffix + '</span>';
       }
