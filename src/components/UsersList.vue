@@ -1,6 +1,6 @@
 <template>
-  <b-table outlined :items="items" :fields="fields">
-    <template slot="actions" slot-scope="data">
+  <b-table outlined :items="items" :fields="fields" :dark="theme === 'dark'" :bordered="true">
+    <template #cell(actions)="data">
       <b-button size="sm" class="mr-2" variant="primary" @click="changeUser(data.item.login)">
         {{ $t("chart.weekly") }}
       </b-button>
@@ -20,16 +20,18 @@ export default Vue.extend({
   name: 'UsersList',
   data() {
     return {
-      fields: {
-        login: {
+      fields: [
+        {
+          key: 'login',
           label: this.$tc('word.user', 2),
           sortable: true,
           class: 'w-50',
         },
-        actions: {
+        {
+          key: 'actions',
           label: this.$tc('word.action', 2),
         },
-      },
+      ],
       // currentUser: this.$store.state.currentUser,
     };
   },
@@ -38,6 +40,9 @@ export default Vue.extend({
       items: 'getUsers',
       currentUser: 'getDefaultUserName',
     }),
+    theme() {
+      return this.$store.getters.getTheme;
+    },
   },
   methods: {
     changeUser(login) {

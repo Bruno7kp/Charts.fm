@@ -20,11 +20,12 @@
     </b-col>
     <b-col>
       <b-form-group :label="$t('word.limit')">
-        <b-input v-model="mLimit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
+        <b-input v-model="mLimit" name="limit" type="number" min="0" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
+        <span class="smaller">{{ $t('messages.zero_warning') }}</span>
       </b-form-group>
     </b-col>
     <b-col cols="12">
-      <p v-if="mLimit >= 40" class="text-danger m-0 mb-4">{{ $t('messages.limit_warning') }}</p>
+      <p v-if="mLimit >= 40 || mLimit == 0" class="text-danger m-0 mb-4">{{ $t('messages.limit_warning') }}</p>
     </b-col>
   </b-row>
 	<b-row>
@@ -59,9 +60,11 @@ export default Vue.extend({
     }),
   },
   data() {
+    let date = moment(this.user.weeklyCharts.startDate);
+    let dates = date.format('YYYY-MM-DD');
     return {
       mUserName: this.user.login,
-      mStartDate: this.user.weeklyCharts.startDate,
+      mStartDate: dates,
       mStartDay: this.user.weeklyCharts.startDay,
       mLimit: this.user.weeklyCharts.limit,
       weekDays: {
@@ -76,10 +79,10 @@ export default Vue.extend({
     };
   },
   watch: {
-    mUserName(newUser, oldUser) {
+    mUserName(newUser: string, oldUser: any) {
       this.$emit('update:user', newUser);
     },
-    user(newUser, oldUser) {
+    user(newUser: string, oldUser: any) {
       this.mStartDate = this.user.weeklyCharts.startDate;
       this.mStartDay = this.user.weeklyCharts.startDay;
       this.mLimit = this.user.weeklyCharts.limit;
@@ -104,9 +107,7 @@ export default Vue.extend({
     },
     numberFormat(value: string, event: any) {
       const limit = parseInt(value, 10);
-      if (limit < 5) {
-        return 5;
-      } else if (limit > 100) {
+      if (limit > 100) {
         return 100;
       } else {
         return limit;
@@ -115,3 +116,9 @@ export default Vue.extend({
   },
 });
 </script>
+
+<style>
+.smaller {
+  font-size: 0.750em;
+}
+</style>

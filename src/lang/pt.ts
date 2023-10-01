@@ -63,7 +63,8 @@ const pt = {
         update_complete_sub: 'Clique na seta dupla para direita para ver o último chart atualizado.',
         error: 'Oops, ocorreu algum problema.',
         error_connection: 'Tenha certeza que está conectado a internet e tente novamente.',
-        limit_warning: 'Um limite alto pode afetar o desempenho do site. Recomendado: entre 10 e 30.',
+        limit_warning: 'Um limite alto pode afetar o desempenho do site. Recomendado: entre 20 e 40.',
+        zero_warning: 'Coloque 0 para incluir tudo sem limitações.',
     },
     word: {
         album: 'Álbum | Álbuns',

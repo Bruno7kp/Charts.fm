@@ -1,15 +1,30 @@
 <template>
   <div>
     <b-container>
+      <b-row v-if="user.weeklyCharts?.weeks?.length">
+        <!--
+        <b-col cols="12 mt-3" class="text-right">
+          <ShareModal />
+        </b-col>
+        -->
+        <b-col class="px-0 px-sm-3">
+          <b-card class="mb-4 mt-3 shadow border-0"
+            :bg-variant="theme === 'light' ? 'white' : 'dark'"
+            :text-variant="theme === 'light' ? 'dark' : 'white'" 
+            id="chart">
+            <ChartTable chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" :theme="theme" />
+          </b-card>
+        </b-col>
+      </b-row>
       <b-row>
         <b-col sm="12" md="6">
-          <b-card 
-            :header-bg-variant="theme === 'light' ? 'dark' : 'white'" 
-            :header-text-variant="theme === 'light' ? 'white' : 'dark'"
-            :bg-variant="theme === 'light' ? 'white' : 'dark'"
-            :text-variant="theme === 'light' ? 'dark' : 'white'"
-            class="mt-3 border-0 shadow"
-            no-body
+          <b-card
+              :header-bg-variant="theme === 'light' ? 'dark' : 'white'"
+              :header-text-variant="theme === 'light' ? 'white' : 'dark'"
+              :bg-variant="theme === 'light' ? 'white' : 'dark'"
+              :text-variant="theme === 'light' ? 'dark' : 'white'"
+              class="mt-3 border-0 shadow"
+              no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleSettings">
               <font-awesome-icon :icon="['fa', 'cog']" /> {{ $t("word.settings") }}
@@ -22,13 +37,13 @@
           </b-card>
         </b-col>
         <b-col sm="12" md="6">
-          <b-card 
-            header-bg-variant="danger"
-            header-text-variant="white"
-            :bg-variant="theme === 'light' ? 'white' : 'dark'"
-            :text-variant="theme === 'light' ? 'dark' : 'white'"
-            class="mt-3 border-0 shadow"
-            no-body
+          <b-card
+              header-bg-variant="danger"
+              header-text-variant="white"
+              :bg-variant="theme === 'light' ? 'white' : 'dark'"
+              :text-variant="theme === 'light' ? 'dark' : 'white'"
+              class="mt-3 border-0 shadow"
+              no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleWidget">
               <font-awesome-icon :icon="['fa', 'sync-alt']" /> {{ $t("chart.update") }}
@@ -43,26 +58,13 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col cols="12 mt-3" class="text-right">
-          <ShareModal />
-        </b-col>
-        <b-col class="px-0 px-sm-3">
-          <b-card class="mb-4 mt-3 shadow border-0"
-            :bg-variant="theme === 'light' ? 'white' : 'dark'"
-            :text-variant="theme === 'light' ? 'dark' : 'white'" 
-            id="chart">
-            <ChartTable chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" :theme="theme" />
-          </b-card>
-        </b-col>
-      </b-row>
-      <b-row>
         <b-col sm="12">
           <b-card 
             :header-bg-variant="theme === 'light' ? 'dark' : 'white'" 
             :header-text-variant="theme === 'light' ? 'white' : 'dark'"
             :bg-variant="theme === 'light' ? 'white' : 'dark'"
             :text-variant="theme === 'light' ? 'dark' : 'white'"
-            class="mb-4 border-0 shadow"
+            class="mt-3 mb-4 border-0 shadow"
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleTableSettings">

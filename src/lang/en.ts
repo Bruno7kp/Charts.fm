@@ -63,7 +63,8 @@ const en = {
         update_complete_sub: 'Click the button with two arrows to the right to see the most recent chart.',
         error: 'Oops, something went wrong.',
         error_connection: 'Make sure you are connected to the internet and try again.',
-        limit_warning: 'High limit number can affect site performance. Recommended: between 10 and 30.',
+        limit_warning: 'High limit number can affect site performance. Recommended: between 20 and 40.',
+        zero_warning: 'Enter 0 to include everything without limitations.',
     },
     word: {
         album: 'Album | Albums',

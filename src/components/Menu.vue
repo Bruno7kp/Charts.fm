@@ -16,9 +16,6 @@
             <b-nav-item target="_blank" href="https://github.com/Bruno7kp/Charts.fm">
                 <font-awesome-icon :icon="['fab', 'github']" fixed-width /><span class="d-md-none pl-2">GitHub</span>
             </b-nav-item>
-            <b-nav-item target="_blank" href="https://forum.zero.b7kp.com">
-                <font-awesome-icon :icon="['far', 'comment-alt']" fixed-width /><span class="d-md-none pl-2">{{ $t('word.forum') }}</span>
-            </b-nav-item>
             <b-nav-item to="/settings"><font-awesome-icon :icon="['fa', 'cog']" fixed-width /><span class="d-md-none pl-2">{{ $t('word.settings') }}</span></b-nav-item>
             
             <!--

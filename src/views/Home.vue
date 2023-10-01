@@ -1,7 +1,6 @@
 <template>
   <div>
-    <Carousel />
-    <div class="jumbotron jumbotron-fluid m-0 pt-4">
+    <div class="jumbotron jumbotron-fluid jumbo m-0 pt-4">
       <b-container class="my-3">
         <b-row v-if="userName.length">
           <b-col sm="12" md="6" offset-md="3">
@@ -83,8 +82,14 @@ div.jumbotron {
   background-image: linear-gradient(to left top, #711222, #8b1a2b, #a52334, #c02c3c, #dc3545);
   background-color: #a52334;
 }
+.jumbo {
+  min-height: 75vh;
+}
 .t-dark div.jumbotron {
   background: #343a40;
+}
+#app {
+  min-height: 100vh;
 }
 </style>
 

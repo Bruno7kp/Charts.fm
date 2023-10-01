@@ -51,33 +51,36 @@
         :fields="fields"
         :class="'bg-' + theme + ' chart-table ' + (this.table.opts.indexOf('separateLine') >= 0 ? '': 'no-line')"
         responsive="lg"
+        :dark="theme === 'dark'"
         :small="this.table.opts.indexOf('small') >= 0"
         :bordered="this.table.opts.indexOf('bordered') >= 0"
         :hover="this.table.opts.indexOf('hover') >= 0"
         :striped="this.table.opts.indexOf('striped') >= 0">
-        <template slot="show_details" slot-scope="row">
+        <template #cell(show_details)="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
             <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="row.detailsShowing"/>
             <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!row.detailsShowing"/>
           </b-button>
         </template>
-        <template slot="image" slot-scope="row">
+        <!--
+        <template #cell(image)="row">
           <Promised :promise="getImage(row.index)">
             <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
-            <span slot-scope="data">
+            <template v-slot="data">
               <b-img center class="w-cover" :src="data" crossorigin="anonymous" />
-            </span>
-            <span slot="catch" slot-scope="error">
+            </template>
+            <template v-slot:rejected="error">
               <b-img blank :width="35" :height="35" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
-            </span>
+            </template>
           </Promised>
         </template>
-        <template slot="name_artist" slot-scope="row">
+        -->
+        <template #cell(name_artist)="row">
           <span class="d-block">{{ items[row.index].name }}</span> 
           <span class="d-block sub">{{ items[row.index].artist }}</span>
         </template>
-        <template slot="row-details" slot-scope="row">
+        <template v-slot:row-details="row">
           <b-card :bg-variant="theme === 'light' ? 'white' : 'dark'"
                   :text-variant="theme === 'light' ? 'dark' : 'white'">
             <b-row class="border rounded">
@@ -101,6 +104,7 @@
                   </b-col>
                 </b-row>
               </b-col>
+              <!--
               <b-col cols="6" md="3" class="my-auto">
                 <Promised :promise="getImage(row.index)">
                   <b-img blank :width="200" :height="200" blank-color="#ddd" class="w-cover" crossorigin="anonymous" />
@@ -112,7 +116,8 @@
                   </span>
                 </Promised>
               </b-col>
-              <b-col cols="12" md="6" class="border-left border-on-info">
+              -->
+              <b-col cols="12" md="9" class="border-left border-on-info">
                 <b-row class="border-bottom">
                   <b-col>
                     <h4 class="font-weight-bold pt-1 text-center text-md-left">{{ items[row.index].name }}</h4>
@@ -200,18 +205,18 @@
             </b-row>
           </b-card>
         </template>
-        <template slot="on_chart" slot-scope="row">
+        <template #cell(on_chart)="row">
           {{ resumes[row.index].total }}
         </template>
-        <span slot="peak" 
-              slot-scope="row" 
-              v-html="peakFormatter(resumes[row.index].stats.peak, resumes[row.index].stats.peak_times)"></span>
-        <span slot="previous_rank" 
-              slot-scope="row" 
-              v-html="formatter(resumes[row.index].variation[table.previous].rank)"></span>
-        <span slot="previous_playcount" 
-              slot-scope="row" 
-              v-html="formatter(resumes[row.index].variation[table.previous].playcount, '%')"></span>
+        <template #cell(peak)="row">
+          <span v-html="peakFormatter(resumes[row.index].stats.peak, resumes[row.index].stats.peak_times)"></span>
+        </template>
+        <template #cell(previous_rank)="row">
+          <span v-html="formatter(resumes[row.index].variation[table.previous].rank)"></span>
+        </template>
+        <template #cell(previous_playcount)="row">
+          <span v-html="formatter(resumes[row.index].variation[table.previous].playcount, '%')"></span>
+        </template>
       </b-table>
     </b-col>
   </b-row>
@@ -269,8 +274,8 @@ export default Vue.extend({
         i++;
       }
       if (this.table.opts.indexOf('images') >= 0) {
-        fields[i] = { key: 'image', label: '', class: 'text-center p-0' };
-        i++;
+        //fields[i] = { key: 'image', label: '', class: 'text-center p-0' };
+        //i++;
       }
       if (this.selected === 'artists') {
         fields[i] = { key: 'name', label: this.$tc('word.artist', 1), class: 'w-65 title' };
@@ -353,7 +358,7 @@ export default Vue.extend({
       m.tz(this.user.timezone);
       const date = fixedStartDate(m.toDate(), getUserChart(this.user, this.chartType).startDay);
       const found = getUserChartList(this.user, this.chartType)
-        .findIndex((chart: any) => date >= chart.start && date < chart.end);
+          .findIndex((chart: any) => date >= chart.start && date < chart.end);
       this.setIndex(found);
     },
     selectArtists() {
@@ -614,5 +619,8 @@ td:first-child {
 }
 .bg-light.chart-table {
   background-color: white !important;
+}
+.bg-dark table {
+  background-color: #0c1219;
 }
 </style>

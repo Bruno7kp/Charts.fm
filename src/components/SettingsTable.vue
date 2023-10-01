@@ -7,7 +7,7 @@
         <b-col>
           <b-form-checkbox v-model="table.opts" value="previousRank" class="d-block">{{ $t('chart.previous_rank') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.opts" value="peak" class="d-block">{{ $t('chart.peak') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.opts" value="images" class="d-block">{{ $t('word.image') }}</b-form-checkbox>
+          <!--<b-form-checkbox v-model="table.opts" value="images" class="d-block">{{ $t('word.image') }}</b-form-checkbox>-->
           <b-form-checkbox v-model="table.opts" value="onChart" class="d-block">{{ $t('chart.total_' + chartType) }}</b-form-checkbox>
           <b-form-checkbox v-model="table.opts" value="previousPlaycount" class="d-block">{{ $t('chart.previous_playcount') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.opts" value="separateArtist" class="d-block m-0">{{ $tc('word.artist', 1) }} ({{ $t('word.separate') }})</b-form-checkbox>

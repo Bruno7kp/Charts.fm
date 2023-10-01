@@ -25,7 +25,7 @@ const getWeeklyList = (start: Date, end: Date, limit: number) => {
 const fixArtistChart = (data: any, limit: number) => {
     const chart: Artist[] = [];
     const list = data.weeklyartistchart.artist;
-    if (list.length < limit) {
+    if (list.length < limit || limit < 1) {
         limit = list.length;
     }
     for (let i = 0; i < limit; i++) {
@@ -37,7 +37,7 @@ const fixArtistChart = (data: any, limit: number) => {
 const fixAlbumChart = (data: any, limit: number) => {
     const chart: Album[] = [];
     const list = data.weeklyalbumchart.album;
-    if (list.length < limit) {
+    if (list.length < limit || limit < 1) {
         limit = list.length;
     }
     for (let i = 0; i < limit; i++) {
@@ -54,7 +54,7 @@ const fixAlbumChart = (data: any, limit: number) => {
 const fixTrackChart = (data: any, limit: number) => {
     const chart: Track[] = [];
     const list = data.weeklytrackchart.track;
-    if (list.length < limit) {
+    if (list.length < limit || limit < 1) {
         limit = list.length;
     }
     for (let i = 0; i < limit; i++) {

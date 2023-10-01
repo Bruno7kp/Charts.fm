@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import router from './router';
-import _ from 'lodash';
+import _ from 'lodash-es';
 import './registerServiceWorker';
 import appMutations from './mutations';
 import appGetters from './getters';
@@ -31,6 +31,7 @@ import {
   faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft, faShareAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt, faSave } from '@fortawesome/free-regular-svg-icons';
+import { Promised, usePromise } from 'vue-promised';
 
 library.add(
   faUser, faLastfm, faGithub, faCommentAlt, faCog, faSave, faTrash, faTable, faSyncAlt, faChevronUp, faChevronDown,
@@ -41,7 +42,7 @@ const fontawesome = require('@fortawesome/vue-fontawesome');
 Vue.component('font-awesome-icon', fontawesome.FontAwesomeIcon);
 
 // tslint:disable-next-line:no-var-requires
-const Promised = require('vue-promised').default;
+//const Promised = require('vue-promised').default;
 // tslint:disable-next-line:no-var-requires
 const VueAnalytics = require('vue-analytics').default;
 // tslint:disable-next-line:no-var-requires
