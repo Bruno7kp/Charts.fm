@@ -1,6 +1,6 @@
 {
   "name": "charts.fm",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -39,7 +39,6 @@
     "vue-class-component": "^6.0.0",
     "vue-i18n": "^8.1.0",
     "vue-notification": "^1.3.13",
-    "vue-promised": "^2.2.0",
     "vue-property-decorator": "^7.0.0",
     "vue-router": "^3.0.1",
     "vue-scrollto": "^2.13.0",
@@ -47,7 +46,7 @@
   },
   "devDependencies": {
     "@types/chai": "^4.3.6",
-    "@types/lodash": "^4.14.199",
+    "@types/lodash": "4.14.195",
     "@types/mocha": "^10.0.2",
     "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-e2e-cypress": "^5.0.8",
@@ -56,11 +55,10 @@
     "@vue/cli-plugin-unit-mocha": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "^1.0.0-beta.25",
-    "@vue/composition-api": "^1.7.2",
     "chai": "^4.3.6",
     "sass": "^1.68.0",
     "sass-loader": "^13.3.2",
-    "typescript": "^3.1.1",
+    "typescript": "^5.2.2",
     "vue-template-compiler": "^2.7.14"
   }
 }

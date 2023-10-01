@@ -31,7 +31,7 @@ import {
   faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft, faShareAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt, faSave } from '@fortawesome/free-regular-svg-icons';
-import { Promised, usePromise } from 'vue-promised';
+//import { Promised, usePromise } from 'vue-promised';
 
 library.add(
   faUser, faLastfm, faGithub, faCommentAlt, faCog, faSave, faTrash, faTable, faSyncAlt, faChevronUp, faChevronDown,
@@ -57,7 +57,7 @@ Vue.use(VueAnalytics, {
   id: 'UA-126624153-2',
   router,
 });
-Vue.component('Promised', Promised);
+//Vue.component('Promised', Promised);
 Vue.use(Notifications);
 Vue.use(VueI18n);
 

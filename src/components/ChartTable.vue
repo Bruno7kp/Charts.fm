@@ -408,7 +408,7 @@ export default Vue.extend({
       } else {
         if (this.table.previous !== 'previous') {
           suffix = this.table.previous === 'percent' ? suffix : '';
-          if (value > 0) {
+          if (Number(value) > 0) {
             return '<span class="' + prefix + 'success">+' + value + suffix + '</span>';
           } else {
             return '<span class="' + prefix + 'danger">' + value + suffix + '</span>';
