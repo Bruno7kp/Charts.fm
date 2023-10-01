@@ -19,7 +19,6 @@
     "@types/lodash-es": "^4.17.9",
     "@types/moment-timezone": "^0.5.8",
     "@types/node": "^10.11.3",
-    "@vue/composition-api": "^1.7.2",
     "axios": "0.21.2",
     "bootstrap": "^4.6.2",
     "bootstrap-vue": "^2.23.1",
