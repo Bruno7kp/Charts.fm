@@ -6,7 +6,9 @@
         <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
             <b-nav-item v-if="users.length" to="/weekly">Weekly.fm</b-nav-item>
-            <!--<b-nav-item v-if="users.length">Monthly.fm</b-nav-item>-->
+            <b-nav-item v-if="users.length" to="/weekly/stats">Weekly.stats</b-nav-item>
+            <b-nav-item v-if="users.length" to="/weekly/live">Weekly.live</b-nav-item>
+            <!--<b-nav-item v-if="users.length" to="/weekly">Library.fm</b-nav-item>-->
             <!--<b-nav-item v-if="users.length">Yearly.fm</b-nav-item>-->
             <!--<b-nav-item to="/about">About</b-nav-item>-->
         </b-navbar-nav>

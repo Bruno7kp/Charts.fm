@@ -20,8 +20,7 @@
     </b-col>
     <b-col>
       <b-form-group :label="$t('word.limit')">
-        <b-input v-model="mLimit" name="limit" type="number" min="0" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
-        <span class="smaller">{{ $t('messages.zero_warning') }}</span>
+        <b-input v-model="mLimit" name="limit" type="number" min="5" max="100" lazy-formatter :formatter="numberFormat" required></b-input>
       </b-form-group>
     </b-col>
     <b-col cols="12">

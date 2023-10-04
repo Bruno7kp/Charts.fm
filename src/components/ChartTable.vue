@@ -2,15 +2,6 @@
   <b-row>
     <b-col>
       <b-row>
-        <b-col sm="12" md="6" lg="7" class="mt-3 text-center text-md-left">
-          <div class="h3">{{ user.login }}</div>
-        </b-col>
-        <b-col sm="12" md="6" lg="5" class="mt-3 text-center">
-          <div class="h5 text-capitalize" v-if="totalCharts > 0">{{ $tc('word.' + chartType, 1) + ' ' + (index + 1) }}</div>
-          <div class="h6" v-if="totalCharts > 0">{{ currentDate + ' - ' + currentEndDate }}</div>
-        </b-col>
-      </b-row>
-      <b-row>
         <b-col sm="12" md="6" lg="4">
           <b-nav pills fill class="nav-danger mb-2">
             <b-nav-item :active="selected == 'artists'" @click="selectArtists"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-nav-item>
@@ -33,17 +24,10 @@
         </b-col>
       </b-row>
       <b-row>
-        <b-col class="small-legend text-md-right">
-          <span><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</span>
-          <span v-if="this.table.opts.indexOf('previousRank') >= 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
-          <span v-if="this.table.opts.indexOf('peak') >= 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
-          <span> | <strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</span>
-          <span v-if="this.table.opts.indexOf('previousPlaycount') >= 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
-          <span v-if="this.table.opts.indexOf('onChart') >= 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
-          <br/>
-          <span><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }} | </span>
-          <span><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }} | </span>
-          <span><strong>=</strong> {{ $t("chart.no_variation") }}</span>
+        <b-col sm="12" class="text-center mb-2">
+          <span class="h5">{{ user.login }}</span>
+          <span v-if="totalCharts > 0"> | {{ $tc('word.' + chartType, 1) + ' ' + (index + 1) }}</span>
+          <span v-if="totalCharts > 0"> ({{ currentDate + ' - ' + currentEndDate }})</span>
         </b-col>
       </b-row>
       <b-table 
@@ -218,6 +202,20 @@
           <span v-html="formatter(resumes[row.index].variation[table.previous].playcount, '%')"></span>
         </template>
       </b-table>
+      <b-row>
+        <b-col class="small-legend text-md-right">
+          <span><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</span>
+          <span v-if="this.table.opts.indexOf('previousRank') >= 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
+          <span v-if="this.table.opts.indexOf('peak') >= 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
+          <span> | <strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</span>
+          <span v-if="this.table.opts.indexOf('previousPlaycount') >= 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
+          <span v-if="this.table.opts.indexOf('onChart') >= 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
+          <br/>
+          <span><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }} | </span>
+          <span><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }} | </span>
+          <span><strong>=</strong> {{ $t("chart.no_variation") }}</span>
+        </b-col>
+      </b-row>
     </b-col>
   </b-row>
 </template>

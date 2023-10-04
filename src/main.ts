@@ -28,14 +28,15 @@ import { library } from '@fortawesome/fontawesome-svg-core';
 import { faLastfm, faGithub } from '@fortawesome/free-brands-svg-icons';
 import {
   faUser, faCog, faTrash, faTable, faSyncAlt, faChevronUp, faChevronDown, faChevronRight, faMusic, faCompactDisc,
-  faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft, faShareAlt,
+  faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft, faShareAlt, faSync
 } from '@fortawesome/free-solid-svg-icons';
 import { faCommentAlt, faSave } from '@fortawesome/free-regular-svg-icons';
 //import { Promised, usePromise } from 'vue-promised';
 
 library.add(
   faUser, faLastfm, faGithub, faCommentAlt, faCog, faSave, faTrash, faTable, faSyncAlt, faChevronUp, faChevronDown,
-  faChevronRight, faMusic, faCompactDisc, faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft, faShareAlt);
+  faChevronRight, faMusic, faCompactDisc, faAngleDoubleLeft, faAngleDoubleRight, faAngleRight, faAngleLeft, faShareAlt,
+  faSync);
 
 /* tslint:disable:no-var-requires */
 const fontawesome = require('@fortawesome/vue-fontawesome');

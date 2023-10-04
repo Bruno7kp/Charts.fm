@@ -85,12 +85,11 @@
 <script lang="ts">
 import moment from 'moment';
 import { Component, Vue } from 'vue-property-decorator';
-import { mapGetters } from 'vuex';
 import WeeklyForm from '@/components/WeeklyForm.vue';
 import WeeklyWidget from '@/components/WeeklyWidget.vue';
 import SettingsTable from '@/components/SettingsTable.vue';
 import ChartTable from '@/components/ChartTable.vue';
-import { User, fixedStartDate, getWeeklyList } from '@/charts';
+import { fixedStartDate, getWeeklyList } from '@/charts';
 import ShareModal from '@/components/ShareModal.vue';
 
 export default Vue.extend({

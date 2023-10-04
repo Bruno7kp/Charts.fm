@@ -27,6 +27,18 @@ export default new Router({
       component: () => import('./views/Week.vue'),
       meta: { requiresUser: true },
     },
+    {
+      path: '/weekly/stats',
+      name: 'weekly.stats',
+      component: () => import('./views/WeekStats.vue'),
+      meta: { requiresUser: true },
+    },
+    {
+      path: '/weekly/live',
+      name: 'weekly.live',
+      component: () => import('./views/WeekLive.vue'),
+      meta: { requiresUser: true },
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };
