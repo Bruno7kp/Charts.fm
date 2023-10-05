@@ -20,6 +20,7 @@ import messages from './lang';
 import BootstrapVue from 'bootstrap-vue';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+import './assets/main.css';
 import Notifications from 'vue-notification';
 
 import App from './App.vue';

@@ -14,7 +14,7 @@
               </b-button>
               {{ startDate }} - {{ endDate }}
             </p>
-            <live-table :week="week" v-if="week"></live-table>
+            <live-table :week="week" :theme="theme" v-if="week"></live-table>
           </b-card>
         </b-col>
       </b-row>
@@ -70,7 +70,7 @@ export default Vue.extend({
   },
   methods: {
     load() {
-      let list = getWeeklyList(this.start, this.end, this.user.weeklyCharts.limit);
+      let list = getWeeklyList(this.start, this.end, this.user.weeklyCharts.limit + 10);
       list[0].load(this.user.login)
           .then((response) => {
             this.week = response;

@@ -11,7 +11,17 @@
       <b-table
         :fields="fields"
         :items="items"
-      ></b-table>
+        :class="'bg-' + theme + ' chart-table '"
+        responsive="lg"
+        :dark="theme === 'dark'"
+        :striped="true"
+        :small="true"
+      >
+        <template #cell(name_artist)="row">
+          <span class="d-block">{{ items[row.index].name }}</span>
+          <span class="d-block sub" v-if="items[row.index].artist">{{ items[row.index].artist }}</span>
+        </template>
+      </b-table>
     </b-col>
   </b-row>
 </template>
@@ -24,6 +34,7 @@ export default Vue.extend({
   name: 'LiveTable',
   props: {
     week: Week,
+    theme: String,
   },
   data() {
     return {
@@ -33,8 +44,8 @@ export default Vue.extend({
   computed: {
     fields() {
       return [
-        { key: 'rank', label: '#', class: 'w-10' },
-        { key: 'name', label: this.$tc('word.title', 1), class: 'w-65 title' },
+        { key: 'rank', label: '#', class: 'text-center w-5' },
+        { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title' },
         { key: 'playcount', label: this.$t('chart.playcount'), class: 'text-center w-10' },
       ];
     },
@@ -56,19 +67,3 @@ export default Vue.extend({
   },
 });
 </script>
-
-<style>
-/* Selector */
-.nav-danger.nav-pills .nav-link.active {
-  background-color: #dc3545;
-}
-.nav-danger a {
-  color: #7c7c7c;
-}
-.bg-dark .nav-danger a {
-  color: #ddd;
-}
-.w-10 {
-  width: 10px;
-}
-</style>
