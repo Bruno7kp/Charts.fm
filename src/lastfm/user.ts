@@ -89,9 +89,11 @@ export default class LastFmUserApi implements LastFmApi {
     public getWeeklyAlbumChart(user: string, from: number|Date, to: number|Date) {
         if (from instanceof Date) {
             from = from.getTime() / 1000;
+            from = Number(from.toFixed(0));
         }
         if (to instanceof Date) {
             to = to.getTime() / 1000;
+            to = Number(to.toFixed(0));
         }
         return axios.get(this.lastfm.getBaseUrl(), {
             params: {
@@ -108,9 +110,11 @@ export default class LastFmUserApi implements LastFmApi {
     public getWeeklyArtistChart(user: string, from: number|Date, to: number|Date) {
         if (from instanceof Date) {
             from = from.getTime() / 1000;
+            from = Number(from.toFixed(0));
         }
         if (to instanceof Date) {
             to = to.getTime() / 1000;
+            to = Number(to.toFixed(0));
         }
         return axios.get(this.lastfm.getBaseUrl(), {
             params: {
@@ -127,9 +131,11 @@ export default class LastFmUserApi implements LastFmApi {
     public getWeeklyTrackChart(user: string, from: number|Date, to: number|Date) {
         if (from instanceof Date) {
             from = from.getTime() / 1000;
+            from = Number(from.toFixed(0));
         }
         if (to instanceof Date) {
             to = to.getTime() / 1000;
+            to = Number(to.toFixed(0));
         }
         return axios.get(this.lastfm.getBaseUrl(), {
             params: {
