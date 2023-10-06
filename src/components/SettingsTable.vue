@@ -34,7 +34,7 @@
           <b-form-checkbox v-model="table.opts" value="separateLine" class="d-block">{{ $t('chart.line') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.opts" value="colored" class="d-block">{{ $t('chart.color') }}</b-form-checkbox>
           <b-form-checkbox v-model="table.opts" value="times" class="d-block">{{ $t('chart.times') }}</b-form-checkbox>
-          <b-form-checkbox v-model="table.opts" value="hover" class="d-block">{{ $t('chart.hover') }}</b-form-checkbox>
+          <!--<b-form-checkbox v-model="table.opts" value="hover" class="d-block">{{ $t('chart.hover') }}</b-form-checkbox>-->
         </b-col>
       </b-row>
     </b-col>

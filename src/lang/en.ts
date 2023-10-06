@@ -65,6 +65,7 @@ const en = {
         error_connection: 'Make sure you are connected to the internet and try again.',
         limit_warning: 'High limit number can affect site performance. Recommended: between 20 and 40.',
         zero_warning: 'Enter 0 to include everything without limitations.',
+        confirm: 'Are you sure?',
     },
     word: {
         album: 'Album | Albums',

@@ -65,6 +65,7 @@ const pt = {
         error_connection: 'Tenha certeza que está conectado a internet e tente novamente.',
         limit_warning: 'Um limite alto pode afetar o desempenho do site. Recomendado: entre 20 e 40.',
         zero_warning: 'Coloque 0 para incluir tudo sem limitações.',
+        confirm: 'Tem certeza?',
     },
     word: {
         album: 'Álbum | Álbuns',

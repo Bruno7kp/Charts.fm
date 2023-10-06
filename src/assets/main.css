@@ -118,3 +118,7 @@ td:first-child {
 .bg-dark table {
     background-color: #0c1219;
 }
+
+.bg-dark .table-striped tbody tr:nth-of-type(2n) {
+    background-color: #292d31;
+}

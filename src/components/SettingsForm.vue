@@ -26,12 +26,14 @@
       <b-btn type="submit" variant="outline-success"><font-awesome-icon :icon="['far', 'save']" /> {{ $t('word.save') }}</b-btn>
     </b-col>
   </b-row>
+  <!--
   <hr/>
   <b-row>
     <b-col>
       <b-btn type="button" variant="danger" @click="clean">{{ $t('messages.remove_images') }}</b-btn>
     </b-col>
   </b-row>
+  -->
 </b-form>
 </template>
 

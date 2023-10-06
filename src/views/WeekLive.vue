@@ -70,7 +70,7 @@ export default Vue.extend({
   },
   methods: {
     load() {
-      let list = getWeeklyList(this.start, this.end, this.user.weeklyCharts.limit + 10);
+      let list = getWeeklyList(this.start, this.end, Number(this.user.weeklyCharts.limit) + 10);
       list[0].load(this.user.login)
           .then((response) => {
             this.week = response;

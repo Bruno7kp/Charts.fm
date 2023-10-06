@@ -4,7 +4,7 @@
       <b-button size="sm" class="mr-2" variant="primary" @click="changeUser(data.item.login)">
         {{ $t("chart.weekly") }}
       </b-button>
-      <b-button size="sm" class="mr-2" variant="outline-danger" @click="changeUser(data.item.login)">
+      <b-button size="sm" class="mr-2" variant="outline-danger" @click="removeUser(data.item.login)">
         <font-awesome-icon :icon="['fa', 'trash']" />
       </b-button>
     </template>
@@ -50,7 +50,10 @@ export default Vue.extend({
       this.$router.push({ name: 'weekly' });
     },
     removeUser(login) {
-      this.$store.dispatch('removeUser', login);
+      let ok = confirm(this.$tc('messages.confirm'));
+      if (ok) {
+        this.$store.dispatch('removeUser', login);
+      }
     },
   },
 });

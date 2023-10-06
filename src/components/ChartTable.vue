@@ -38,7 +38,7 @@
         :dark="theme === 'dark'"
         :small="this.table.opts.indexOf('small') >= 0"
         :bordered="this.table.opts.indexOf('bordered') >= 0"
-        :hover="this.table.opts.indexOf('hover') >= 0"
+        :hover="true"
         :striped="this.table.opts.indexOf('striped') >= 0">
         <template #cell(show_details)="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
