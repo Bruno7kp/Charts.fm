@@ -7,6 +7,7 @@
                     <b-link to="/settings" class="btn btn-outline-light border-0 m-1">{{ $t("word.settings") }}</b-link>
                     <a target="_blank" href="https://last.fm/bruno7kp" class="btn btn-outline-danger border-0 m-1">Last.fm</a>
                     <a target="_blank" href="https://b7kp.com" class="btn btn-outline-danger border-0 m-1">b7kp.com</a>
+                    <a target="_blank" href="https://b7kp.com/privacy" class="btn btn-outline-light border-0 m-1">Política de privacidade</a>
                 </b-col>
             </b-row>
             <b-row>
