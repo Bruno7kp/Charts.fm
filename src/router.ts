@@ -17,9 +17,15 @@ export default new Router({
       component: () => import('./views/Settings.vue'),
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('./views/About.vue'),
+      path: '/blog',
+      name: 'blog',
+      component: () => import('./views/Blog.vue'),
+    },
+    {
+      path: '/blog/:slug',
+      name: 'post',
+      component: () => import('./views/Post.vue'),
+      props: true,
     },
     {
       path: '/weekly',
@@ -38,6 +44,20 @@ export default new Router({
       name: 'weekly.live',
       component: () => import('./views/WeekLive.vue'),
       meta: { requiresUser: true },
+    },
+    {
+      path: '/weekly/stats/number_ones/:type',
+      name: 'weekly.stats.number_ones',
+      component: () => import('./views/Stats/AllNumberOnes.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
+    {
+      path: '/weekly/stats/most_number_ones/:type',
+      name: 'weekly.stats.most_number_ones',
+      component: () => import('./views/Stats/MostNumberOnes.vue'),
+      meta: { requiresUser: true },
+      props: true,
     },
   ],
   scrollBehavior(to, from, savedPosition) {

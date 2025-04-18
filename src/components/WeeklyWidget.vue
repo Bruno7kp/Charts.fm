@@ -35,6 +35,7 @@ export default Vue.extend({
     user: Object,
     loading: Boolean,
     theme: String,
+    update: Number,
   },
   computed: {
     ...mapGetters({
@@ -45,6 +46,12 @@ export default Vue.extend({
       const limit = this.user.weeklyCharts.limit;
       const realStart = fixedStartDate(this.user.weeklyCharts.startDate, this.user.weeklyCharts.startDay);
       return getWeeklyList(realStart, new Date(), limit);
+    },
+  },
+  watch: {
+    update() {
+      if (this.update === 0 || this.loading) return;
+      this.load();
     },
   },
   data() {

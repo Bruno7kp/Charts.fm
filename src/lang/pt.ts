@@ -66,6 +66,10 @@ const pt = {
         limit_warning: 'Um limite alto pode afetar o desempenho do site. Recomendado: entre 20 e 40.',
         zero_warning: 'Coloque 0 para incluir tudo sem limitações.',
         confirm: 'Tem certeza?',
+        privacy: 'Política de Privacidade',
+        intro: 'Crie seus charts semanais baseado no que você escuta pelo Last.fm',
+        read_more: 'Leia mais',
+        require_update: 'Atualize seus charts',
     },
     word: {
         album: 'Álbum | Álbuns',
@@ -97,6 +101,27 @@ const pt = {
         theme: 'Tema',
         action: 'Ação | Ações',
         share: 'Compartilhar',
+        new: 'Novo',
+    },
+    blog: {
+        first_stats_update: {
+            title: 'Primeira atualização de estatísticas',
+            content: 'Its been a long time... <br/>Foram adicionadas as duas primeiras estatíticas do Charts.fm:<br/>A lista de todos os #1s e a lista dos que ficaram mais semanas em #1.<br/>Pretendo trazer mais coisas a partir de agora, pelo menos uma atualização por mês.<br><br>Até mais!',
+            date: '2025-04-18',
+        },
+    },
+    stats: {
+        more: 'Mais estatísticas em breve...',
+        number_xs: 'Todos os #{number}s',
+        number_ones: {
+          title: 'Todos os #1s',
+          content: 'Lista de todos os artistas, álbuns e músicas que pegaram #1 (ou #2, #3, etc) no seu chart semanal',
+        },
+        most_number_xs: 'Mais semanas em #{number}',
+        most_number_ones: {
+            title: 'Mais semanas em #1s',
+            content: 'Descubra os artistas, álbuns e músicas que mais ficaram em #1 no seu chart semanal',
+        },
     },
 };
 

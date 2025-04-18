@@ -6,11 +6,9 @@
         <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
             <b-nav-item v-if="users.length" to="/weekly">Weekly.fm</b-nav-item>
-            <b-nav-item v-if="users.length" to="/weekly/stats">Weekly.stats</b-nav-item>
+          <b-nav-item v-if="users.length" to="/weekly/stats">Weekly.stats <b-badge variant="danger">update</b-badge></b-nav-item>
             <b-nav-item v-if="users.length" to="/weekly/live">Weekly.live</b-nav-item>
-            <!--<b-nav-item v-if="users.length" to="/weekly">Library.fm</b-nav-item>-->
-            <!--<b-nav-item v-if="users.length">Yearly.fm</b-nav-item>-->
-            <!--<b-nav-item to="/about">About</b-nav-item>-->
+            <b-nav-item v-if="users.length" to="/blog">Blog</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         
@@ -18,15 +16,10 @@
             <b-nav-item target="_blank" href="https://github.com/Bruno7kp/Charts.fm">
                 <font-awesome-icon :icon="['fab', 'github']" fixed-width /><span class="d-md-none pl-2">GitHub</span>
             </b-nav-item>
+            <b-nav-item href="#" @click="setTheme">
+                <font-awesome-icon :icon="['fas', theme === 'light' ? 'sun' : 'moon']" fixed-width />
+            </b-nav-item>
             <b-nav-item to="/settings"><font-awesome-icon :icon="['fa', 'cog']" fixed-width /><span class="d-md-none pl-2">{{ $t('word.settings') }}</span></b-nav-item>
-            
-            <!--
-            <b-nav-item-dropdown text="Lang" right>
-                <b-dropdown-item href="#">PT</b-dropdown-item>
-                <b-dropdown-item href="#">EN</b-dropdown-item>
-                <b-dropdown-item href="#">ES</b-dropdown-item>
-            </b-nav-item-dropdown>
-            -->
         </b-navbar-nav>
         
         </b-collapse>
@@ -46,6 +39,11 @@ export default Vue.extend({
             theme: 'getTheme',
         }),
     },
+  methods: {
+    setTheme() {
+      this.$store.dispatch('setTheme', this.theme === 'light' ? 'dark' : 'light');
+    },
+  },
 });
 </script>
 <style>

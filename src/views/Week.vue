@@ -46,13 +46,15 @@
               no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleWidget">
-              <font-awesome-icon :icon="['fa', 'sync-alt']" /> {{ $t("chart.update") }}
+              <b-badge :variant="chartsToUpdate() > 0 ? 'warning' : 'danger'" @click="updateWeeks">
+              <font-awesome-icon :icon="['fa', 'sync-alt']" />
+              </b-badge> {{ $t("chart.update") }}
               <b-badge variant="warning" v-if="chartsToUpdate() > 0">{{ $t("chart.update_now") }}</b-badge>
               <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.updateWeek" class="float-right pt-1" />
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.updateWeek" class="float-right pt-1" />
             </h6>
             <b-card-body :class="cardOpen.updateWeek ? '' : 'd-none'">
-              <WeeklyWidget v-bind:user.sync="user" v-bind:loading.sync="loading" @updateLoading="setLoading" :theme="theme" />
+              <WeeklyWidget v-bind:user.sync="user" v-bind:loading.sync="loading" @updateLoading="setLoading" :theme="theme" :update="cardUpdate" />
             </b-card-body>
           </b-card>
         </b-col>
@@ -123,9 +125,13 @@ export default Vue.extend({
   data() {
     return {
       loading: false,
+      cardUpdate: 0,
     };
   },
   methods: {
+    updateWeeks() {
+      this.cardUpdate++;
+    },
     toggleSettings() {
       this.cardOpen.settingsWeek = !this.cardOpen.settingsWeek;
       this.$store.dispatch('setCardOpen', this.cardOpen);

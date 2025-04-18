@@ -4,6 +4,12 @@
       <b-container class="my-3">
         <b-row>
           <b-col sm="12" md="6" offset-md="3">
+            <h1 class="intro">Charts.fm</h1>
+            <p class="intro">{{ $t("messages.intro") }}</p>
+          </b-col>
+        </b-row>
+        <b-row>
+          <b-col sm="12" md="6" offset-md="3">
             <b-card header-bg-variant="danger"
                   header-tag="header"
                   :bg-variant="theme === 'light' ? 'white' : 'dark'"
@@ -22,7 +28,7 @@
                     :bg-variant="theme === 'light' ? 'white' : 'dark'"
                     :text-variant="theme === 'light' ? 'dark' : 'white'"
                     class="mt-3 shadow-lg border-0">
-              <h6 slot="header" class="mb-0">Charts</h6>
+              <h6 slot="header" class="mb-0">{{ userName }}: Charts</h6>
               <b-link to="/weekly" class="btn btn-outline-danger">
                 {{ $t("chart.weekly") }} <font-awesome-icon :icon="['fa', 'chevron-right']" />
               </b-link>
@@ -79,17 +85,21 @@ export default class Home extends Vue {}
 </script>
 <style>
 div.jumbotron {
-  background-image: linear-gradient(to left top, #711222, #8b1a2b, #a52334, #c02c3c, #dc3545);
+  background-image: url('../assets/background-charts3.png') !important;
   background-color: #a52334;
 }
 .jumbo {
-  min-height: 75vh;
+  min-height: 78vh;
 }
 .t-dark div.jumbotron {
   background: #343a40;
 }
 #app {
   min-height: 100vh;
+}
+h1.intro, p.intro {
+  color: white !important;
+  text-align: center;
 }
 </style>
 

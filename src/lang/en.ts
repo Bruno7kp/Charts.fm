@@ -66,6 +66,10 @@ const en = {
         limit_warning: 'High limit number can affect site performance. Recommended: between 20 and 40.',
         zero_warning: 'Enter 0 to include everything without limitations.',
         confirm: 'Are you sure?',
+        privacy: 'Privacy Policy',
+        intro: 'Create your weekly charts based on what you listen to on Last.fm',
+        read_more: 'Read more',
+        require_update: 'Update required',
     },
     word: {
         album: 'Album | Albums',
@@ -97,6 +101,27 @@ const en = {
         theme: 'Theme',
         action: 'Action | Actions',
         share: 'Share',
+        new: 'New',
+    },
+    blog: {
+        first_stats_update: {
+            title: 'First stats update',
+            content: 'Its been a long time... <br/>The first two statistics have been added to Charts.fm:<br/> The list of all #1s and the list of those that stayed at #1 for the most weeks.<br/>I plan to bring more features from now on, with at least one update per month.<br><br>See you!',
+            date: '2025-04-18',
+        },
+    },
+    stats: {
+        more: 'More stats coming soon...',
+        number_xs: 'All the #{number}s',
+        number_ones: {
+            title: 'All the #1s',
+            content: 'List of all artists, albums, and tracks that reached #1 (or #2, #3, etc) on your weekly chart',
+        },
+        most_number_xs: 'Most weeks at #{number}',
+        most_number_ones: {
+            title: 'Most weeks at number one',
+            content: 'Discover the artists, albums, and tracks that stayed at number one the most in your weekly chart',
+        },
     },
 };
 
