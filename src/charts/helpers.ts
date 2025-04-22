@@ -1,5 +1,5 @@
 import moment, { weekdays } from 'moment';
-import { Week, Artist, Album, Track, User, WeeklyCharts, MonthlyCharts, YearlyCharts } from '@/charts';
+import {Week, Artist, Album, Track, User, WeeklyCharts, MonthlyCharts, YearlyCharts, Stats} from '@/charts';
 
 const fixedStartDate = (start: Date, weekDay: number) => {
     const n = moment(start);
@@ -160,6 +160,40 @@ const getRankListAtRankX = (weeks: any[], type: string, rank: number) => {
     return filter;
 }
 
+const getRankListAtTopX = (weeks: any[], type: string, rank: number) => {
+    let filter = [];
+    let f = 0;
+    let times: Record<string, number> = {};
+    for (let i = 0; i < weeks.length; i++) {
+        for (let j = 0; j < rank; j++) {
+            if (weeks[i][type][j]) {
+                let id = weeks[i][type][j].name;
+                if (type !== 'artists') {
+                    id += ' - ' + weeks[i][type][j].artist;
+                }
+                if (typeof times[id] === 'undefined') {
+                    times[id] = f;
+                    let obj = {
+                        name: weeks[i][type][j].name,
+                        last_week: moment(weeks[i].end).format('YYYY-MM-DD'),
+                        times: 1,
+                    } as any;
+                    if (type !== 'artists') {
+                        obj.artist = weeks[i][type][j].artist;
+                    }
+                    filter.push(obj);
+                    f++;
+                } else {
+                    filter[times[id]].times++;
+                    filter[times[id]].last_week = moment(weeks[i].end).format('YYYY-MM-DD');
+                }
+            }
+        }
+    }
+    filter.sort((a, b) => b.times - a.times || new Date(a.last_week).getTime() - new Date(b.last_week).getTime());
+    return filter;
+}
+
 export {
     fixedStartDate,
     getWeeklyList,
@@ -170,5 +204,6 @@ export {
     getUserChartList,
     getUserChartLength,
     getListAtRankX,
-    getRankListAtRankX
+    getRankListAtRankX,
+    getRankListAtTopX,
 };

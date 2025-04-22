@@ -1,9 +1,10 @@
 {
   "name": "charts.fm",
   "short_name": "charts.fm",
+  "version": "1.0.3",
   "icons": [
     {
-      "src": "/img/logoc.png",
+      "src": "/img/logo.png",
       "sizes": "216x216",
       "type": "image/png"
     }

@@ -59,6 +59,13 @@ export default new Router({
       meta: { requiresUser: true },
       props: true,
     },
+    {
+      path: '/weekly/stats/most_top_xs/:type',
+      name: 'weekly.stats.most_top_xs',
+      component: () => import('./views/Stats/MostTopXs.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };

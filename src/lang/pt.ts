@@ -46,6 +46,7 @@ const pt = {
         color: 'Mostrar cores nas variações',
         times: 'Mostrar número de vezes em #1',
         line: 'Borda separando linhas',
+        top: 'Top',
     },
     lastfm: {
         username: 'Digite seu nome de usuário no Last.fm',
@@ -122,6 +123,12 @@ const pt = {
             title: 'Mais semanas em #1s',
             content: 'Descubra os artistas, álbuns e músicas que mais ficaram em #1 no seu chart semanal',
         },
+        most_top_xs: 'Mais semanas no top {number}',
+        most_weeks: {
+            title: 'Mais semanas no chart',
+            content: 'Descubra os artistas, álbuns e músicas que mais ficaram mais tempo no seu chart semanal',
+        },
+        include_only_peak_at: 'Mostrar apenas os que tiveram pico em #{number}',
     },
 };
 

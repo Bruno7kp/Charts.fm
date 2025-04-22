@@ -8,7 +8,7 @@
                   :text-variant="theme === 'light' ? 'dark' : 'white'"
                   id="chart">
             <b-card-title>
-              {{ $tc('stats.most_number_xs', rank, { number: rank }) }}
+              {{ $tc('stats.most_top_xs', rank, { number: rank }) }}
             </b-card-title>
             <b-card-body>
               <b-row>
@@ -16,21 +16,18 @@
                   <b-input-group class="mb-2">
                     <b-input-group-prepend>
                       <b-btn href="#" variant="danger">
-                        {{ $t('chart.rank') }}:
+                        {{ $t('chart.top') }}:
                       </b-btn>
                     </b-input-group-prepend>
                     <b-select v-model="rank" name="rank" :options="rankings" required></b-select>
                   </b-input-group>
                 </b-col>
-                <b-col order-sm="3" order-md="2" sm="12" md="8" lg="9" class="text-right">
+                <b-col order-sm="2" order-md="2" sm="12" md="8" lg="9" class="text-right">
                   <b-button-group class="d-sm-flex d-md-block">
-                    <b-button variant="danger" :disabled="tp === 'artists'" :to="{ name: 'weekly.stats.most_number_ones', params: { type: 'artists' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
-                    <b-button variant="danger" :disabled="tp === 'albums'" :to="{ name: 'weekly.stats.most_number_ones', params: { type: 'albums' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
-                    <b-button variant="danger" :disabled="tp === 'tracks'" :to="{ name: 'weekly.stats.most_number_ones', params: { type: 'tracks' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'artists'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'artists' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'albums'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'albums' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'tracks'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'tracks' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
                   </b-button-group>
-                </b-col>
-                <b-col order-sm="2" ordem-md="3" sm="12" md="12" v-if="rank > 1">
-                  <b-form-checkbox v-model="peak" name="peak">{{ $tc('stats.include_only_peak_at', rank, { number: rank }) }}</b-form-checkbox>
                 </b-col>
               </b-row>
               <b-table
@@ -70,7 +67,7 @@
 <script lang="ts">
 import moment from 'moment';
 import {Vue} from 'vue-property-decorator';
-import { getRankListAtRankX, getUserChartList} from "@/charts/helpers";
+import { getRankListAtTopX, getUserChartList} from "@/charts/helpers";
 
 export default Vue.extend({
   name: 'MostNumberOnes',
@@ -103,23 +100,15 @@ export default Vue.extend({
     return {
       limit: 1,
       rank: 1,
-      peak: false,
+      loaded: false,
       items: [] as any[],
       rankings: [1],
-      peaks: {} as Record<string, Record<string, any>>,
       tp: '',
     };
   },
   watch: {
     rank(newValue: number) {
       this.loadCharts();
-    },
-    peak(newValue: boolean) {
-      if (newValue) {
-        this.loadPeaks();
-      } else {
-        this.loadCharts();
-      }
     },
   },
   methods: {
@@ -133,38 +122,16 @@ export default Vue.extend({
       const weeks = getUserChartList(this.user, 'week');
       this.limit = weeks && weeks[0].limit ? weeks[0].limit : 1;
       this.setRankings();
-      if (this.rank > this.limit) {
+      if (!this.loaded || this.rank > this.limit) {
+        this.loaded = true;
         this.rank = this.limit;
       }
       if (weeks.length > 0) {
         const type = this.$route.params.type || 'artists';
         this.tp = type;
-        this.items = getRankListAtRankX(weeks, type, this.rank);
-        if (this.peak && this.rank > 1) {
-          this.loadPeaks();
-        }
+        this.items = getRankListAtTopX(weeks, type, this.rank);
       }
     },
-    loadPeaks() {
-      const type = this.$route.params.type || 'artists';
-      let filtered = [];
-      for (let i = 0; i < this.items.length; i++) {
-        let ki = this.items[i].name;
-        if (type !== 'artists') {
-          ki += '-' + this.items[i].artist;
-        }
-        if (!this.peaks[type]) {
-          this.peaks[type] = {};
-        }
-        if (!this.peaks[type][ki]) {
-          this.peaks[type][ki] = this.$store.getters.getStats('week', type, this.items[i].name, this.items[i].artist).getCurrentResume().stats.peak;
-        }
-        if (this.peaks[type][ki] === this.rank) {
-          filtered.push(this.items[i]);
-        }
-      }
-      this.items = filtered;
-    }
   },
   mounted() {
     this.loadCharts();

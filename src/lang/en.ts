@@ -46,6 +46,7 @@ const en = {
         color: 'Color Variation',
         times: 'Times at #1',
         line: 'Row Separator',
+        top: 'Top',
     },
     lastfm: {
         username: 'Enter your last.fm username',
@@ -122,6 +123,12 @@ const en = {
             title: 'Most weeks at number one',
             content: 'Discover the artists, albums, and tracks that stayed at number one the most in your weekly chart',
         },
+        most_top_xs: 'Most weeks in the top {number}',
+        most_weeks: {
+            title: 'Most weeks in the chart',
+            content: 'Discover the artists, albums, and tracks that spent the most time on your weekly chart',
+        },
+        include_only_peak_at: 'Show only those that peaked at #{number}',
     },
 };
 
