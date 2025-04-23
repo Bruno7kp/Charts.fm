@@ -12,7 +12,7 @@
             :bg-variant="theme === 'light' ? 'white' : 'dark'"
             :text-variant="theme === 'light' ? 'dark' : 'white'" 
             id="chart">
-            <ChartTable chart-type="week" v-bind:user.sync="user" v-bind:loading.sync="loading" :theme="theme" />
+            <ChartTable chart-type="week" :type="type" v-bind:user.sync="user" v-bind:loading.sync="loading" :theme="theme" />
           </b-card>
         </b-col>
       </b-row>
@@ -70,7 +70,7 @@
             no-body
           >
             <h6 slot="header" class="mb-0 c-pointer" @click="toggleTableSettings">
-              <font-awesome-icon :icon="['fa', 'table']" /> {{ $t('chart.table') }}
+              <font-awesome-icon :icon="['fa', 'table']" /> {{ $t('chart.table') }} <span class="badge badge-danger">{{ $t('word.new') }}</span>
               <font-awesome-icon :icon="['fa', 'chevron-up']" v-if="cardOpen.settingsTable" class="float-right pt-1" />
               <font-awesome-icon :icon="['fa', 'chevron-down']" v-if="!cardOpen.settingsTable" class="float-right pt-1" />
             </h6>
@@ -96,6 +96,12 @@ import ShareModal from '@/components/ShareModal.vue';
 
 export default Vue.extend({
   name: 'Week',
+  props: {
+    type: {
+      type: String,
+      default: 'artists',
+    },
+  },
   components: {
     WeeklyForm,
     WeeklyWidget,

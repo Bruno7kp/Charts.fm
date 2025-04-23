@@ -3,7 +3,7 @@
     <b-container class="my-3">
       <b-row>
         <b-col>
-          <h1 class="post-title">Blog</h1>
+          <h1 :class="['post-title', theme === 'light' ? 'text-dark' : 'text-light']">Blog</h1>
         </b-col>
       </b-row>
       <b-row v-for="post in posts" :key="post">
@@ -38,6 +38,7 @@ export default Vue.extend({
   data() {
     return {
       posts: [
+        'dropouts_and_rank_unties',
         'first_stats_update',
       ],
     };

@@ -47,6 +47,11 @@ const pt = {
         times: 'Mostrar número de vezes em #1',
         line: 'Borda separando linhas',
         top: 'Top',
+        show_dropouts: 'Mostrar saídas do chart',
+        dropout: 'Saídas do chart',
+        out: 'Saiu',
+        untie: 'Alterar posição de empates',
+        untie_description: 'Arraste para alterar as posições empatadas no número de reproduções',
     },
     lastfm: {
         username: 'Digite seu nome de usuário no Last.fm',
@@ -71,6 +76,8 @@ const pt = {
         intro: 'Crie seus charts semanais baseado no que você escuta pelo Last.fm',
         read_more: 'Leia mais',
         require_update: 'Atualize seus charts',
+        untie_complete: 'Chart atualizado!',
+        untie_complete_sub: 'A página irá atualizar para que as alterações tenham efeito no seu chart.',
     },
     word: {
         album: 'Álbum | Álbuns',
@@ -84,6 +91,7 @@ const pt = {
         update: 'Atualizar',
         remove: 'Remover',
         save: 'Salvar',
+        cancel: 'Cancelar',
         separate: 'Separado',
         settings: 'Configurações',
         timezone: 'Fuso horário',
@@ -109,6 +117,11 @@ const pt = {
             title: 'Primeira atualização de estatísticas',
             content: 'Its been a long time... <br/>Foram adicionadas as duas primeiras estatíticas do Charts.fm:<br/>A lista de todos os #1s e a lista dos que ficaram mais semanas em #1.<br/>Pretendo trazer mais coisas a partir de agora, pelo menos uma atualização por mês.<br><br>Até mais!',
             date: '2025-04-18',
+        },
+        dropouts_and_rank_unties: {
+            title: 'Edição de músicas empatadas e saídas do chart',
+            content: 'Uma das funcionalidades mais pedidas do ZeroCharts agora no Charts.fm:<br/>Edição das posições de músicas/álbuns/artistas empatados. No final da tabela semanal agora há um botão chamado \'Alterar posição de empates\', apertando nele você verá a tela de edição do chart, basta arrastar a músicas emptadas e deixar o chart como quiser. ;)<br/><br/><img src="/img/untie.png" alt="Untie" style="border: 3px solid gray; width: 100%;"><br/><br/>Outra funcionalidade adicionada é a de mostrar as músicas que estavam presentes na semana anterior, e que saíram nessa semana, você pode habilitar ou desabilitar essa opção nas configurações de tabela.<br/><br/><img src="/img/dropout.png" style="border: 3px solid gray; width: 100%" alt="dropout">',
+            date: '2025-04-23',
         },
     },
     stats: {

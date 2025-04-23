@@ -31,6 +31,28 @@ export default new Router({
       path: '/weekly',
       name: 'weekly',
       component: () => import('./views/Week.vue'),
+      props: { type: 'artists', week: 0 },
+      meta: { requiresUser: true },
+    },
+    {
+      path: '/weekly/artists/:week?',
+      name: 'weekly.artists',
+      component: () => import('./views/Week.vue'),
+      props: { type: 'artists' },
+      meta: { requiresUser: true },
+    },
+    {
+      path: '/weekly/albums/:week?',
+      name: 'weekly.albums',
+      component: () => import('./views/Week.vue'),
+      props: { type: 'albums' },
+      meta: { requiresUser: true },
+    },
+    {
+      path: '/weekly/tracks/:week?',
+      name: 'weekly.tracks',
+      component: () => import('./views/Week.vue'),
+      props: { type: 'tracks' },
       meta: { requiresUser: true },
     },
     {

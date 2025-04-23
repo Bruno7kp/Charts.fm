@@ -22,24 +22,37 @@ const getWeeklyList = (start: Date, end: Date, limit: number) => {
     return weeks;
 };
 
-const fixArtistChart = (data: any, limit: number) => {
+const fixArtistChart = (data: any, limit: number, untied: boolean = false) => {
     const chart: Artist[] = [];
     const list = data.weeklyartistchart.artist;
     if (list.length < limit || limit < 1) {
         limit = list.length;
     }
+    let maxPlays = 0, plays = 0;
     for (let i = 0; i < limit; i++) {
         chart.push(new Artist(list[i].name, parseInt(list[i]['@attr'].rank, 10), parseInt(list[i].playcount, 10)));
+        maxPlays = parseInt(list[i].playcount, 10);
+    }
+    if (untied && list.length > limit) {
+        for (let i = limit; i < list.length; i++) {
+            plays = parseInt(list[i].playcount, 10);
+            if (plays === maxPlays) {
+                chart.push(new Artist(list[i].name, parseInt(list[i]['@attr'].rank, 10), parseInt(list[i].playcount, 10)));
+            } else {
+                break;
+            }
+        }
     }
     return chart;
 };
 
-const fixAlbumChart = (data: any, limit: number) => {
+const fixAlbumChart = (data: any, limit: number, untied: boolean = false) => {
     const chart: Album[] = [];
     const list = data.weeklyalbumchart.album;
     if (list.length < limit || limit < 1) {
         limit = list.length;
     }
+    let maxPlays = 0, plays = 0;
     for (let i = 0; i < limit; i++) {
         chart.push(
             new Album(
@@ -47,16 +60,33 @@ const fixAlbumChart = (data: any, limit: number) => {
                 list[i].artist['#text'],
                 parseInt(list[i]['@attr'].rank, 10),
                 parseInt(list[i].playcount, 10)));
+        maxPlays = parseInt(list[i].playcount, 10);
+    }
+    if (untied && list.length > limit) {
+        for (let i = limit; i < list.length; i++) {
+            plays = parseInt(list[i].playcount, 10);
+            if (plays === maxPlays) {
+                chart.push(
+                    new Album(
+                        list[i].name,
+                        list[i].artist['#text'],
+                        parseInt(list[i]['@attr'].rank, 10),
+                        parseInt(list[i].playcount, 10)));
+            } else {
+                break;
+            }
+        }
     }
     return chart;
 };
 
-const fixTrackChart = (data: any, limit: number) => {
+const fixTrackChart = (data: any, limit: number, untied: boolean = false) => {
     const chart: Track[] = [];
     const list = data.weeklytrackchart.track;
     if (list.length < limit || limit < 1) {
         limit = list.length;
     }
+    let maxPlays = 0, plays = 0;
     for (let i = 0; i < limit; i++) {
         chart.push(
             new Track(
@@ -64,6 +94,22 @@ const fixTrackChart = (data: any, limit: number) => {
                 list[i].artist['#text'],
                 parseInt(list[i]['@attr'].rank, 10),
                 parseInt(list[i].playcount, 10)));
+        maxPlays = parseInt(list[i].playcount, 10);
+    }
+    if (untied && list.length > limit) {
+        for (let i = limit; i < list.length; i++) {
+            plays = parseInt(list[i].playcount, 10);
+            if (plays === maxPlays) {
+                chart.push(
+                    new Track(
+                        list[i].name,
+                        list[i].artist['#text'],
+                        parseInt(list[i]['@attr'].rank, 10),
+                        parseInt(list[i].playcount, 10)));
+            } else {
+                break;
+            }
+        }
     }
     return chart;
 };
@@ -96,6 +142,22 @@ const getUserChartLength = (user: User, chart: string): number => {
     } else {
         return user.weeklyCharts.weeks.length;
     }
+};
+
+const getDropouts = (chart: string, type: string, previous: any[], current: any[]) => {
+    let dropouts = [];
+    for (let i = 0; i < previous.length; i++) {
+        if (type === 'artists') {
+            if (current.find(x => x.name === previous[i].name) === undefined) {
+                dropouts.push(previous[i]);
+            }
+        } else {
+            if (current.find(x => x.name === previous[i].name && x.artist === previous[i].artist) === undefined) {
+                dropouts.push(previous[i]);
+            }
+        }
+    }
+    return dropouts;
 };
 
 const getListAtRankX = (weeks: any[], type: string, rank: number) => {
@@ -194,6 +256,19 @@ const getRankListAtTopX = (weeks: any[], type: string, rank: number) => {
     return filter;
 }
 
+const moveItem = (array: any[], oldIndex: number, newIndex: number) => {
+    if (oldIndex < 0 || oldIndex >= array.length || newIndex < 0 || newIndex >= array.length) {
+        return array; // Índices inválidos, retorna o array original
+    }
+
+    const itemMovido = array.splice(oldIndex, 1)[0]; // Remove o item do oldIndex e o guarda
+
+    array.splice(newIndex, 0, itemMovido); // Insere o item na newIndex
+
+    return array;
+}
+
+
 export {
     fixedStartDate,
     getWeeklyList,
@@ -206,4 +281,6 @@ export {
     getListAtRankX,
     getRankListAtRankX,
     getRankListAtTopX,
+    getDropouts,
+    moveItem,
 };

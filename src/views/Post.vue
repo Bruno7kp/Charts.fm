@@ -3,7 +3,7 @@
     <b-container class="my-3">
       <b-row>
         <b-col>
-          <h1 class="post-title">{{ $t(`blog.${slug}.title`) }}</h1>
+          <h1 :class="['post-title', theme === 'light' ? 'text-dark' : 'text-light']">{{ $t(`blog.${slug}.title`) }}</h1>
           <span class="small text-danger">
           <font-awesome-icon :icon="['fas', 'calendar']" fixed-width/><time pubdate>{{ $t(`blog.${slug}.date`) }}</time>
           </span>

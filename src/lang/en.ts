@@ -47,6 +47,11 @@ const en = {
         times: 'Times at #1',
         line: 'Row Separator',
         top: 'Top',
+        show_dropouts: 'Show dropouts',
+        dropout: 'Drop outs',
+        out: 'Out',
+        untie: 'Adjust tied positions',
+        untie_description: 'Drag to change the tied positions based on play counts',
     },
     lastfm: {
         username: 'Enter your last.fm username',
@@ -71,6 +76,8 @@ const en = {
         intro: 'Create your weekly charts based on what you listen to on Last.fm',
         read_more: 'Read more',
         require_update: 'Update required',
+        untie_complete: 'Chart updated!',
+        untie_complete_sub: 'The page will refresh so that the changes take effect on your chart.',
     },
     word: {
         album: 'Album | Albums',
@@ -84,6 +91,7 @@ const en = {
         update: 'Update',
         remove: 'Remove',
         save: 'Save',
+        cancel: 'Cancel',
         separate: 'Separate',
         settings: 'Settings',
         timezone: 'Timezone',
@@ -109,6 +117,11 @@ const en = {
             title: 'First stats update',
             content: 'Its been a long time... <br/>The first two statistics have been added to Charts.fm:<br/> The list of all #1s and the list of those that stayed at #1 for the most weeks.<br/>I plan to bring more features from now on, with at least one update per month.<br><br>See you!',
             date: '2025-04-18',
+        },
+        dropouts_and_rank_unties: {
+            title: 'Editing tied songs and chart dropouts',
+            content: 'One of the most requested features from ZeroCharts is now on Charts.fm:<br/>Editing tied positions of songs/albums/artists. At the end of the weekly chart table, there is now a button called \'Adjust tied positions\', clicking it will show you the chart editing screen. Just drag the tied songs and adjust the chart as you wish. ;)<br/><br/><img src="/img/untie.png" alt="Untie" style="border: 3px solid gray; width: 100%;"><br/><br/>Another feature added is the ability to show the songs that were present in the previous week and dropped out this week. You can enable or disable this option in the table settings.<br/><br/><img src="/img/dropout.png" style="border: 3px solid gray; width: 100%" alt="dropout">',
+            date: '2025-04-23',
         },
     },
     stats: {

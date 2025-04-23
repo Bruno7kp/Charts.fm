@@ -8,6 +8,7 @@ class Week {
     public albums: Album[];
     public tracks: Track[];
     public limit: number;
+    public untied: boolean;
 
     public constructor(start: Date, end: Date, limit: number) {
         this.start = start;
@@ -16,6 +17,11 @@ class Week {
         this.artists = [];
         this.albums = [];
         this.tracks = [];
+        this.untied = false;
+    }
+
+    public setUntied(untied: boolean) {
+        this.untied = untied;
     }
 
     public load(login: string) {
@@ -25,9 +31,9 @@ class Week {
             const tracks = LastFm.user().getWeeklyTrackChart(login, this.start, this.end);
             const charts = Promise.all([artists, albums, tracks]);
             charts.then((args) => {
-                this.artists = fixArtistChart(args[0].data, this.limit);
-                this.albums = fixAlbumChart(args[1].data, this.limit);
-                this.tracks = fixTrackChart(args[2].data, this.limit);
+                this.artists = fixArtistChart(args[0].data, this.limit, this.untied);
+                this.albums = fixAlbumChart(args[1].data, this.limit, this.untied);
+                this.tracks = fixTrackChart(args[2].data, this.limit, this.untied);
                 resolve(this);
             }).catch((e) => {
                 reject(e);
