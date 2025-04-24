@@ -63,7 +63,7 @@
           <b-card :bg-variant="theme === 'light' ? 'white' : 'dark'"
                   :text-variant="theme === 'light' ? 'dark' : 'white'">
             <b-row class="border rounded">
-              <b-col cols="6" md="3" class="text-center border-right">
+              <b-col cols="12" md="3" class="text-center border-right">
                 <b-row class="border-bottom py-2">
                   <b-col>
                     <small class="text-secondary text-uppercase">{{ $t("chart.current_rank") }}</small>
@@ -215,7 +215,7 @@
           <b-card :bg-variant="theme === 'light' ? 'white' : 'dark'"
                   :text-variant="theme === 'light' ? 'dark' : 'white'">
             <b-row class="border rounded">
-              <b-col cols="6" md="3" class="text-center border-right">
+              <b-col cols="12" md="3" class="text-center border-right">
                 <b-row class="border-bottom py-2">
                   <b-col>
                     <small class="text-secondary text-uppercase">{{ $t("chart.current_rank") }}</small>
@@ -383,7 +383,7 @@ export default Vue.extend({
       return [];
     },
     dropouts(): any[] {
-      if (typeof getUserChartList(this.user, this.chartType)[this.index - 1] !== 'undefined') {
+      if (this.table.opts.indexOf('dropouts') >= 0 && typeof getUserChartList(this.user, this.chartType)[this.index - 1] !== 'undefined') {
         let previous =  getUserChartList(this.user, this.chartType)[this.index - 1][this.selected];
         let current = getUserChartList(this.user, this.chartType)[this.index][this.selected];
         return getDropouts(this.chartType, this.selected, previous, current);
@@ -399,8 +399,10 @@ export default Vue.extend({
     },
     dropoutsResumes(): any[] {
       const dropoutsResumes: any = [];
-      for (let i = 0; i < this.dropouts.length; i++) {
-        dropoutsResumes[i] = this.dropoutsStats(i).getCurrentResume();
+      if (this.table.opts.indexOf('dropouts') >= 0) {
+        for (let i = 0; i < this.dropouts.length; i++) {
+          dropoutsResumes[i] = this.dropoutsStats(i).getCurrentResume();
+        }
       }
       return dropoutsResumes;
     },

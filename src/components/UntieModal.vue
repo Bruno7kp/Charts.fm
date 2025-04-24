@@ -43,7 +43,8 @@
             :dark="theme === 'dark'"
             :class="{ 'm-0': true }"
             :style="{ 'border': group.length === 1 ? 'none' : '1px solid #dc3545' }"
-            v-for="(group, key) in grouped">
+            v-for="(group, key) in grouped"
+            :key="key">
           <draggable
               :class="{ [`cursor-grabbing`]: drag === true }"
               v-model="grouped[key]"

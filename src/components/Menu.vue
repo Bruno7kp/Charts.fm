@@ -8,7 +8,7 @@
             <b-nav-item v-if="users.length" to="/weekly">Weekly.fm <b-badge variant="danger">update</b-badge></b-nav-item>
           <b-nav-item v-if="users.length" to="/weekly/stats">Weekly.stats <b-badge variant="danger">update</b-badge></b-nav-item>
             <b-nav-item v-if="users.length" to="/weekly/live">Weekly.live</b-nav-item>
-            <b-nav-item v-if="users.length" to="/blog">Blog</b-nav-item>
+            <b-nav-item to="/blog">Blog</b-nav-item>
         </b-navbar-nav>
         <!-- Right aligned nav items -->
         
