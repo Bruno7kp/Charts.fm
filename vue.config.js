@@ -1,7 +1,7 @@
 module.exports = {
     pwa: {
       name: 'Charts.fm',
-      themeColor: '#dc3544',
-      version: '1.0.5',
+      themeColor: '#dc3546',
+      version: '1.0.6',
     },
 }
