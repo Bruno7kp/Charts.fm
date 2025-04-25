@@ -89,6 +89,7 @@ const en = {
         legend: 'Legend',
         limit: 'Number of Tracks',
         update: 'Update',
+        updates: 'Updates',
         remove: 'Remove',
         save: 'Save',
         cancel: 'Cancel',

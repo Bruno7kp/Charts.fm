@@ -89,6 +89,7 @@ const pt = {
         legend: 'Legenda',
         limit: 'Quantidade de músicas',
         update: 'Atualizar',
+        updates: 'Atualizações',
         remove: 'Remover',
         save: 'Salvar',
         cancel: 'Cancelar',
