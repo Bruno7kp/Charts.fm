@@ -153,3 +153,7 @@ async function initializeApp() {
 }
 
 initializeApp();
+
+let adsbygoogle = [];
+// @ts-ignore
+(adsbygoogle = window.adsbygoogle || []).push({});
