@@ -4,9 +4,7 @@
       <b-button size="sm" class="mr-2" variant="primary" @click="changeUser(data.item.login)">
         {{ $t("chart.weekly") }}
       </b-button>
-      <b-button size="sm" class="mr-2" variant="outline-danger" @click="removeUser(data.item.login)">
-        <font-awesome-icon :icon="['fa', 'trash']" />
-      </b-button>
+      <RemoveUserModal :login="data.item.login" />
     </template>
   </b-table>
 </template>
@@ -15,9 +13,13 @@
 import { Component, Prop, Vue } from 'vue-property-decorator';
 import { mapGetters } from 'vuex';
 import User from '@/charts/user';
+import RemoveUserModal from "@/components/RemoveUserModal.vue";
 
 export default Vue.extend({
   name: 'UsersList',
+  components: {
+    RemoveUserModal,
+  },
   data() {
     return {
       fields: [

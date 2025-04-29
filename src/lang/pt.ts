@@ -112,6 +112,7 @@ const pt = {
         action: 'Ação | Ações',
         share: 'Compartilhar',
         new: 'Novo',
+        publicity: 'Publicidade',
     },
     blog: {
         first_stats_update: {

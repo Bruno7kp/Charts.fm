@@ -35,6 +35,25 @@
             </b-card>
           </b-col>
         </b-row>
+        <b-row>
+          <b-col sm="12" md="6" offset-md="3">
+            <b-card header-tag="header"
+                 :header-bg-variant="theme === 'light' ? 'dark' : 'white'"
+                 :header-text-variant="theme === 'light' ? 'white' : 'dark'"
+                 :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                 :text-variant="theme === 'light' ? 'dark' : 'white'"
+                 class="mt-3 shadow-lg border-0">
+              <h6 slot="header" class="mb-0">{{ $t("word.publicity") }}</h6>
+              <!-- Block 01 -->
+              <ins class="adsbygoogle"
+                   style="display:block"
+                   data-ad-client="ca-pub-4738400186838722"
+                   data-ad-slot="2545391375"
+                   data-ad-format="auto"
+                   data-full-width-responsive="true"></ins>
+            </b-card>
+          </b-col>
+        </b-row>
       </b-container>
     </div>
   </div>
@@ -82,6 +101,8 @@ import User from '@/charts/user';
   },
 })
 export default class Home extends Vue {}
+// @ts-ignore
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 <style>
 div.jumbotron {

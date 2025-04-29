@@ -1,6 +1,17 @@
 <template>
   <div>
     <b-container>
+      <b-row class="mt-3">
+        <b-col>
+          <!-- Block H 02 -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4738400186838722"
+               data-ad-slot="7414574676"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </b-col>
+      </b-row>
       <b-row v-if="user.weeklyCharts?.weeks?.length">
         <b-col class="px-0 px-sm-3">
           <b-card class="mb-4 mt-3 shadow border-0"
@@ -26,6 +37,17 @@
                   id="chart">
             <b-link to="/weekly" class="btn btn-outline-danger">{{ $t('chart.update') }}</b-link>
           </b-card>
+        </b-col>
+      </b-row>
+      <b-row class="mt-3">
+        <b-col>
+          <!-- Block H 03 -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4738400186838722"
+               data-ad-slot="5519280327"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
         </b-col>
       </b-row>
     </b-container>
@@ -81,4 +103,6 @@ export default Vue.extend({
     this.load();
   },
 });
+// @ts-ignore
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>

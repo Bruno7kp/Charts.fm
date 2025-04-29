@@ -17,6 +17,15 @@
         </b-col>
       </b-row>
       <b-row>
+        <b-col sm="12" class="mb-2 mt-2">
+          <!-- Block Middle -->
+          <ins class="adsbygoogle"
+               style="display:block"
+               data-ad-client="ca-pub-4738400186838722"
+               data-ad-slot="9849166326"
+               data-ad-format="auto"
+               data-full-width-responsive="true"></ins>
+        </b-col>
         <b-col sm="12" md="6">
           <b-card
               :header-bg-variant="theme === 'light' ? 'dark' : 'white'"
@@ -161,6 +170,9 @@ export default Vue.extend({
     },
   },
 });
+
+// @ts-ignore
+(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 <style>
 .c-pointer {

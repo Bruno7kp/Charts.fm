@@ -112,6 +112,7 @@ const en = {
         action: 'Action | Actions',
         share: 'Share',
         new: 'New',
+        publicity: 'Ads',
     },
     blog: {
         first_stats_update: {
