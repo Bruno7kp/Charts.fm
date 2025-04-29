@@ -103,6 +103,4 @@ export default Vue.extend({
     this.load();
   },
 });
-// @ts-ignore
-(adsbygoogle = window.adsbygoogle || []).push({});
 </script>

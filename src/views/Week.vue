@@ -171,8 +171,6 @@ export default Vue.extend({
   },
 });
 
-// @ts-ignore
-(adsbygoogle = window.adsbygoogle || []).push({});
 </script>
 <style>
 .c-pointer {

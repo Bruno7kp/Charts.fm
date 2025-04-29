@@ -101,8 +101,7 @@ import User from '@/charts/user';
   },
 })
 export default class Home extends Vue {}
-// @ts-ignore
-(adsbygoogle = window.adsbygoogle || []).push({});
+
 </script>
 <style>
 div.jumbotron {
