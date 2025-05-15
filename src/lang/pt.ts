@@ -78,6 +78,7 @@ const pt = {
         require_update: 'Atualize seus charts',
         untie_complete: 'Chart atualizado!',
         untie_complete_sub: 'A página irá atualizar para que as alterações tenham efeito no seu chart.',
+        may_update: 'Att de Maio',
     },
     word: {
         album: 'Álbum | Álbuns',
@@ -113,6 +114,9 @@ const pt = {
         share: 'Compartilhar',
         new: 'Novo',
         publicity: 'Publicidade',
+        year: 'Ano | Anos',
+        all_time: 'Todos',
+        view_week: 'Ver chart',
     },
     blog: {
         first_stats_update: {
@@ -131,19 +135,39 @@ const pt = {
         number_xs: 'Todos os #{number}s',
         number_ones: {
           title: 'Todos os #1s',
-          content: 'Lista de todos os artistas, álbuns e músicas que pegaram #1 (ou #2, #3, etc) no seu chart semanal',
+          content: ' Veja a lista completa de artistas, álbuns e músicas que alcançaram o topo (ou posições como #2, #3, etc.) do seu chart semanal.',
+        },
+        allkill: {
+            title: 'Perfect All Kill',
+            content: 'Artistas que dominaram a semana, ficando simultaneamente em #1 nos três rankings: artista, álbum e música.',
         },
         most_number_xs: 'Mais semanas em #{number}',
         most_number_ones: {
-            title: 'Mais semanas em #1s',
-            content: 'Descubra os artistas, álbuns e músicas que mais ficaram em #1 no seu chart semanal',
+            title: 'Recordistas de semanas em #1',
+            content: 'Conheça quem manteve o primeiro lugar por mais semanas — seja artista, álbum ou música.',
         },
         most_top_xs: 'Mais semanas no top {number}',
         most_weeks: {
-            title: 'Mais semanas no chart',
-            content: 'Descubra os artistas, álbuns e músicas que mais ficaram mais tempo no seu chart semanal',
+            title: 'Presenças mais longas no chart',
+            content: ' Explore quem permaneceu mais tempo entre os mais ouvidos do seu ranking semanal.',
         },
         include_only_peak_at: 'Mostrar apenas os que tiveram pico em #{number}',
+        most_plays: {
+            title: 'Mais reproduzidos',
+            content: 'Confira os artistas, álbuns e músicas que tiveram o maior número de execuções em uma única semana.',
+        },
+        debut: {
+            title: 'Estreias de impacto',
+            content: 'Veja quais faixas, álbuns e artistas tiveram as semanas de estreia mais fortes nas suas paradas.',
+        },
+        points: {
+            title: 'Acumuladores de pontos',
+            content: 'Descubra quem se destacou com consistência e somou mais pontos ao longo do tempo no seu chart.',
+        },
+        artist_tracks: {
+            title: 'Artistas com mais #1s',
+            content: 'Encontre os artistas que lideraram com mais músicas e álbuns no topo do seu ranking.',
+        },
     },
 };
 

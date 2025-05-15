@@ -3,7 +3,7 @@
     <Menu />
     <router-view/>
     <Footer />
-    <notifications group="app" position="bottom left" class="w-100 mb-2" />
+    <notifications group="app" position="bottom left" class="w-100 mb-5" />
   </div>
 </template>
 

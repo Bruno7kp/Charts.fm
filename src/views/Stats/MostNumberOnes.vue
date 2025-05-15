@@ -21,6 +21,14 @@
                     </b-input-group-prepend>
                     <b-select v-model="rank" name="rank" :options="rankings" required></b-select>
                   </b-input-group>
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend>
+                      <b-btn href="#" variant="danger">
+                        {{ $tc('word.year', 1) }}:
+                      </b-btn>
+                    </b-input-group-prepend>
+                    <b-select v-model="year" name="year" :options="years" required></b-select>
+                  </b-input-group>
                 </b-col>
                 <b-col order-sm="3" order-md="2" sm="12" md="8" lg="9" class="text-right">
                   <b-button-group class="d-sm-flex d-md-block">
@@ -74,6 +82,21 @@ import { getRankListAtRankX, getUserChartList} from "@/charts/helpers";
 
 export default Vue.extend({
   name: 'MostNumberOnes',
+  data() {
+    const year = moment().format('YYYY');
+    return {
+      limit: 1,
+      rank: 1,
+      peak: false,
+      year: this.$t('word.all_time') + '',
+      startYear: year,
+      endYear: year,
+      items: [] as any[],
+      rankings: [1],
+      peaks: {} as Record<string, Record<string, any>>,
+      tp: '',
+    };
+  },
   computed: {
     user: {
       get(): any {
@@ -98,17 +121,13 @@ export default Vue.extend({
         { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title' },
       ];
     },
-  },
-  data() {
-    return {
-      limit: 1,
-      rank: 1,
-      peak: false,
-      items: [] as any[],
-      rankings: [1],
-      peaks: {} as Record<string, Record<string, any>>,
-      tp: '',
-    };
+    years() {
+      const years = [this.$t('word.all_time')];
+      for (let i = parseInt(this.endYear, 10); i >= parseInt(this.startYear, 10); i--) {
+        years.push(i.toString());
+      }
+      return years;
+    },
   },
   watch: {
     rank(newValue: number) {
@@ -121,6 +140,9 @@ export default Vue.extend({
         this.loadCharts();
       }
     },
+    year(newValue: number) {
+      this.loadCharts();
+    },
   },
   methods: {
     setRankings() {
@@ -132,6 +154,7 @@ export default Vue.extend({
     loadCharts() {
       const weeks = getUserChartList(this.user, 'week');
       this.limit = weeks && weeks[0].limit ? weeks[0].limit : 1;
+      this.startYear = weeks && weeks[0].start ? moment(weeks[0].start).format('YYYY') : this.endYear;
       this.setRankings();
       if (this.rank > this.limit) {
         this.rank = this.limit;
@@ -139,7 +162,7 @@ export default Vue.extend({
       if (weeks.length > 0) {
         const type = this.$route.params.type || 'artists';
         this.tp = type;
-        this.items = getRankListAtRankX(weeks, type, this.rank);
+        this.items = getRankListAtRankX(weeks, type, this.rank, this.year);
         if (this.peak && this.rank > 1) {
           this.loadPeaks();
         }
@@ -148,16 +171,23 @@ export default Vue.extend({
     loadPeaks() {
       const type = this.$route.params.type || 'artists';
       let filtered = [];
+      let year = null;
+      if (parseInt(this.year, 10) > 0) {
+        year = this.year;
+      }
       for (let i = 0; i < this.items.length; i++) {
         let ki = this.items[i].name;
         if (type !== 'artists') {
           ki += '-' + this.items[i].artist;
         }
+        if (year) {
+          ki += '-' + year;
+        }
         if (!this.peaks[type]) {
           this.peaks[type] = {};
         }
         if (!this.peaks[type][ki]) {
-          this.peaks[type][ki] = this.$store.getters.getStats('week', type, this.items[i].name, this.items[i].artist).getCurrentResume().stats.peak;
+          this.peaks[type][ki] = this.$store.getters.getStats('week', type, this.items[i].name, this.items[i].artist, year).getCurrentResume().stats.peak;
         }
         if (this.peaks[type][ki] === this.rank) {
           filtered.push(this.items[i]);

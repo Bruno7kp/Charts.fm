@@ -1,5 +1,5 @@
 import { User, Week, Artist, Album, Track } from '@/charts';
-import * as moment from 'moment';
+import moment from 'moment';
 import { Stats } from '@/charts';
 import { getUserChartList } from '@/charts/helpers';
 
@@ -40,7 +40,7 @@ export default {
         return null;
     },
     getStats: (state: any, getters: any) =>
-    (chart: string, type: string, name: string, artist: string|null = null) => {
+    (chart: string, type: string, name: string, artist: string|null = null, year: string|null = null) => {
 
         const user = getters.getDefaultUser;
         const stats = new Stats(type, name, artist);
@@ -50,7 +50,9 @@ export default {
         if (user !== null) {
             const charts = getUserChartList(user, chart);
             for (let i = 0; i < charts.length; i++) {
-                stats.add(i, charts[i], charts[i][type].find(search));
+                if (year === null || moment(charts[i].end).format('YYYY') === year) {
+                    stats.add(i, charts[i], charts[i][type].find(search));
+                }
             }
         }
         return stats;

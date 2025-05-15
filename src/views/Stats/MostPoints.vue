@@ -8,19 +8,11 @@
                   :text-variant="theme === 'light' ? 'dark' : 'white'"
                   id="chart">
             <b-card-title>
-              {{ $tc('stats.most_top_xs', rank, { number: rank }) }}
+              {{ $t('stats.points.title') }}
             </b-card-title>
             <b-card-body>
               <b-row>
                 <b-col order-sm="1" order-md="1" sm="12" md="4" lg="3">
-                  <b-input-group class="mb-2">
-                    <b-input-group-prepend>
-                      <b-btn href="#" variant="danger">
-                        {{ $t('chart.top') }}:
-                      </b-btn>
-                    </b-input-group-prepend>
-                    <b-select v-model="rank" name="rank" :options="rankings" required></b-select>
-                  </b-input-group>
                   <b-input-group class="mb-3">
                     <b-input-group-prepend>
                       <b-btn href="#" variant="danger">
@@ -30,11 +22,11 @@
                     <b-select v-model="year" name="year" :options="years" required></b-select>
                   </b-input-group>
                 </b-col>
-                <b-col order-sm="2" order-md="2" sm="12" md="8" lg="9" class="text-right">
+                <b-col order-sm="3" order-md="2" sm="12" md="8" lg="9" class="text-right">
                   <b-button-group class="d-sm-flex d-md-block">
-                    <b-button variant="danger" :disabled="tp === 'artists'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'artists' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
-                    <b-button variant="danger" :disabled="tp === 'albums'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'albums' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
-                    <b-button variant="danger" :disabled="tp === 'tracks'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'tracks' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'artists'" :to="{ name: 'weekly.stats.points', params: { type: 'artists' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'albums'" :to="{ name: 'weekly.stats.points', params: { type: 'albums' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'tracks'" :to="{ name: 'weekly.stats.points', params: { type: 'tracks' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
                   </b-button-group>
                 </b-col>
               </b-row>
@@ -46,12 +38,12 @@
                   :dark="theme === 'dark'"
                   :striped="true"
                   :small="true">
+                <template #cell(ranking)="row">
+                  <span class="d-block">{{ row.index + 1 }}</span>
+                </template>
                 <template #cell(name_artist)="row">
                   <span class="d-block">{{ items[row.index].name }}</span>
                   <span class="d-block sub">{{ items[row.index].artist }}</span>
-                </template>
-                <template #cell(times)="row">
-                  <span class="d-block small">{{ items[row.index].times }}x</span>
                 </template>
               </b-table>
             </b-card-body>
@@ -75,21 +67,19 @@
 <script lang="ts">
 import moment from 'moment';
 import {Vue} from 'vue-property-decorator';
-import { getRankListAtTopX, getUserChartList} from "@/charts/helpers";
+import { getTopByPoints, getUserChartList} from "@/charts/helpers";
 
 export default Vue.extend({
-  name: 'MostNumberOnes',
+  name: 'MostPlays',
   data() {
     const year = moment().format('YYYY');
     return {
       limit: 1,
-      rank: 1,
       year: this.$t('word.all_time') + '',
       startYear: year,
       endYear: year,
-      loaded: false,
       items: [] as any[],
-      rankings: [1],
+      peaks: {} as Record<string, Record<string, any>>,
       tp: '',
     };
   },
@@ -113,8 +103,10 @@ export default Vue.extend({
     },
     fields() {
       return [
-        { key: 'times', label: 'X', class: 'text-center w-5' },
-        { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title' },
+        { key: 'ranking', label: '#', class: 'text-center w-5' },
+        { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title w-75' },
+        { key: 'weeks', label: this.$tc('word.week', 2), class: 'text-center w-15' },
+        { key: 'points', label: this.$t('chart.chart_points'), class: 'text-center w-25' },
       ];
     },
     years() {
@@ -134,25 +126,15 @@ export default Vue.extend({
     },
   },
   methods: {
-    setRankings() {
-      this.rankings = [1];
-      for (let i = 2; i <= this.limit; i++) {
-        this.rankings.push(i);
-      }
-    },
     loadCharts() {
       const weeks = getUserChartList(this.user, 'week');
       this.limit = weeks && weeks[0].limit ? weeks[0].limit : 1;
       this.startYear = weeks && weeks[0].start ? moment(weeks[0].start).format('YYYY') : this.endYear;
-      this.setRankings();
-      if (!this.loaded || this.rank > this.limit) {
-        this.loaded = true;
-        this.rank = this.limit;
-      }
+
       if (weeks.length > 0) {
         const type = this.$route.params.type || 'artists';
         this.tp = type;
-        this.items = getRankListAtTopX(weeks, type, this.rank, this.year);
+        this.items = getTopByPoints(weeks, type, this.year);
       }
     },
   },

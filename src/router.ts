@@ -89,6 +89,41 @@ export default new Router({
       meta: { requiresUser: true },
       props: true,
     },
+    {
+      path: '/weekly/stats/pak',
+      name: 'weekly.stats.allkill',
+      component: () => import('./views/Stats/PerfectAllKill.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
+    {
+      path: '/weekly/stats/most_plays/:type',
+      name: 'weekly.stats.most_plays',
+      component: () => import('./views/Stats/MostPlays.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
+    {
+      path: '/weekly/stats/debut/:type',
+      name: 'weekly.stats.debut',
+      component: () => import('./views/Stats/BiggestDebuts.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
+    {
+      path: '/weekly/stats/points/:type',
+      name: 'weekly.stats.points',
+      component: () => import('./views/Stats/MostPoints.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
+    {
+      path: '/weekly/stats/most_top_xs_by_artist/:type',
+      name: 'weekly.stats.artist_tracks',
+      component: () => import('./views/Stats/MostTopXsByArtist.vue'),
+      meta: { requiresUser: true },
+      props: true,
+    },
   ],
   scrollBehavior(to, from, savedPosition) {
     return { x: 0, y: 0 };

@@ -78,6 +78,7 @@ const en = {
         require_update: 'Update required',
         untie_complete: 'Chart updated!',
         untie_complete_sub: 'The page will refresh so that the changes take effect on your chart.',
+        may_update: 'May update',
     },
     word: {
         album: 'Album | Albums',
@@ -113,6 +114,9 @@ const en = {
         share: 'Share',
         new: 'New',
         publicity: 'Ads',
+        year: 'Year | Years',
+        all_time: 'All Time',
+        view_week: 'View Week',
     },
     blog: {
         first_stats_update: {
@@ -128,22 +132,42 @@ const en = {
     },
     stats: {
         more: 'More stats coming soon...',
-        number_xs: 'All the #{number}s',
+        number_xs: 'All #{number}s',
         number_ones: {
-            title: 'All the #1s',
-            content: 'List of all artists, albums, and tracks that reached #1 (or #2, #3, etc) on your weekly chart',
+            title: 'All #1s',
+            content: ' View the full list of artists, albums, and tracks that reached the top spot (or positions like #2, #3, etc.) on your weekly chart.',
+        },
+        allkill: {
+            title: 'Perfect All Kill',
+            content: 'Artists who dominated the week by simultaneously holding #1 on all three charts: artist, album, and track.',
         },
         most_number_xs: 'Most weeks at #{number}',
         most_number_ones: {
-            title: 'Most weeks at number one',
-            content: 'Discover the artists, albums, and tracks that stayed at number one the most in your weekly chart',
+            title: 'Most Weeks at #1',
+            content: 'See which artists, albums, and tracks stayed at the top for the most weeks.',
         },
         most_top_xs: 'Most weeks in the top {number}',
         most_weeks: {
-            title: 'Most weeks in the chart',
-            content: 'Discover the artists, albums, and tracks that spent the most time on your weekly chart',
+            title: 'Longest Charting',
+            content: ' Explore the artists, albums, and tracks that spent the most time on your weekly chart.',
         },
         include_only_peak_at: 'Show only those that peaked at #{number}',
+        most_plays: {
+            title: 'Most Plays',
+            content: 'Check out the artists, albums, and tracks you listened to the most in a single week.',
+        },
+        debut: {
+            title: 'Biggest Debuts',
+            content: 'Find out which artists, albums, and tracks had the strongest debut weeks on your charts.',
+        },
+        points: {
+            title: 'Most Chart Points',
+            content: 'Discover the most consistent performers who racked up the most points over time.',
+        },
+        artist_tracks: {
+            title: 'Artists with Most #1s',
+            content: ' See which artists topped your charts the most with their albums and tracks.',
+        },
     },
 };
 

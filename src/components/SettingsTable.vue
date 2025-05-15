@@ -26,7 +26,7 @@
       <h6>{{ $t('chart.dropout') }}:</h6>
       <b-row>
         <b-col>
-          <b-form-checkbox v-model="table.opts" value="dropouts" class="d-block">{{ $t('chart.show_dropouts') }} <span class="badge badge-danger">{{ $t('word.new') }}</span></b-form-checkbox>
+          <b-form-checkbox v-model="table.opts" value="dropouts" class="d-block">{{ $t('chart.show_dropouts') }}</b-form-checkbox>
         </b-col>
       </b-row>
     </b-col>

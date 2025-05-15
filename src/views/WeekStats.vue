@@ -5,59 +5,128 @@
         <b-col class="px-0 px-sm-3">
           <b-row>
             <b-col sm="12" md="6">
-              <b-card class="mb-4 mt-3 shadow border-0"
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
                       :bg-variant="theme === 'light' ? 'white' : 'dark'"
                       :text-variant="theme === 'light' ? 'dark' : 'white'"
-                      id="chart">
-                <b-card-title class="text-center">{{ $t('stats.number_ones.title') }}</b-card-title>
-                <b-card-body>{{ $t('stats.number_ones.content') }}</b-card-body>
-                <b-card-footer class="text-center">
+                      id="chart"
+                      :title="$t('stats.number_ones.title')">
+                <b-card-text class="text-left">{{ $t('stats.number_ones.content') }}</b-card-text>
+                <template #footer>
                   <b-button-group>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.number_ones', params: { type: 'artists' } }"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.number_ones', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.number_ones', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
                   </b-button-group>
-                </b-card-footer>
+                </template>
               </b-card>
             </b-col>
             <b-col sm="12" md="6">
-              <b-card class="mb-4 mt-3 shadow border-0"
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
                       :bg-variant="theme === 'light' ? 'white' : 'dark'"
                       :text-variant="theme === 'light' ? 'dark' : 'white'"
-                      id="chart">
-                <b-card-title class="text-center">{{ $t('stats.most_number_ones.title') }} <b-badge variant="danger">{{ $t("word.new") }}</b-badge></b-card-title>
-                <b-card-body>{{ $t('stats.most_number_ones.content') }}</b-card-body>
-                <b-card-footer class="text-center">
+                      id="chart"
+                      :title="$t('stats.allkill.title')">
+                <b-card-text class="text-left">{{ $t('stats.allkill.content') }}</b-card-text>
+                <template #footer>
+                  <b-button-group>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.allkill' }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'user']" /> {{ $t("stats.allkill.title") }}</b-button>
+                  </b-button-group>
+                </template>
+              </b-card>
+            </b-col>
+            <b-col sm="12" md="6">
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
+                      :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                      :text-variant="theme === 'light' ? 'dark' : 'white'"
+                      id="chart"
+                      :title="$t('stats.most_number_ones.title')">
+                <b-card-text class="text-left">{{ $t('stats.most_number_ones.content') }}</b-card-text>
+                <template #footer>
                   <b-button-group>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.most_number_ones', params: { type: 'artists' } }"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.most_number_ones', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.most_number_ones', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
                   </b-button-group>
-                </b-card-footer>
+                </template>
               </b-card>
             </b-col>
             <b-col sm="12" md="6">
-              <b-card class="mb-4 mt-3 shadow border-0"
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
                       :bg-variant="theme === 'light' ? 'white' : 'dark'"
                       :text-variant="theme === 'light' ? 'dark' : 'white'"
-                      id="chart">
-                <b-card-title class="text-center">{{ $t('stats.most_weeks.title') }} <b-badge variant="danger">{{ $t("word.new") }}</b-badge></b-card-title>
-                <b-card-body>{{ $t('stats.most_weeks.content') }}</b-card-body>
-                <b-card-footer class="text-center">
+                      id="chart"
+                      :title="$t('stats.most_weeks.title')">
+                <b-card-text class="text-left">{{ $t('stats.most_weeks.content') }}</b-card-text>
+                <template #footer>
                   <b-button-group>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'artists' } }"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
                     <b-button variant="danger" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
                   </b-button-group>
-                </b-card-footer>
+                </template>
               </b-card>
             </b-col>
             <b-col sm="12" md="6">
-              <b-card class="mb-4 mt-3 shadow border-0"
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
                       :bg-variant="theme === 'light' ? 'white' : 'dark'"
                       :text-variant="theme === 'light' ? 'dark' : 'white'"
-                      id="chart">
-                <b-card-body>{{ $t('stats.more') }}</b-card-body>
+                      id="chart"
+                      :title="$t('stats.most_plays.title')">
+                <b-card-text class="text-left">{{ $t('stats.most_plays.content') }}</b-card-text>
+                <template #footer>
+                  <b-button-group>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.most_plays', params: { type: 'artists' } }"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.most_plays', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.most_plays', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                  </b-button-group>
+                </template>
+              </b-card>
+            </b-col>
+            <b-col sm="12" md="6">
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
+                      :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                      :text-variant="theme === 'light' ? 'dark' : 'white'"
+                      id="chart"
+                      :title="$t('stats.debut.title')">
+                <b-card-text class="text-left">{{ $t('stats.debut.content') }}</b-card-text>
+                <template #footer>
+                  <b-button-group>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.debut', params: { type: 'artists' } }"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.debut', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.debut', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                  </b-button-group>
+                </template>
+              </b-card>
+            </b-col>
+            <b-col sm="12" md="6">
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
+                      :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                      :text-variant="theme === 'light' ? 'dark' : 'white'"
+                      id="chart"
+                      :title="$t('stats.points.title')">
+                <b-card-text class="text-left">{{ $t('stats.points.content') }}</b-card-text>
+                <template #footer>
+                  <b-button-group>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.points', params: { type: 'artists' } }"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.points', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.points', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                  </b-button-group>
+                </template>
+              </b-card>
+            </b-col>
+            <b-col sm="12" md="6">
+              <b-card class="mb-4 mt-3 shadow border-0 text-center"
+                      :bg-variant="theme === 'light' ? 'white' : 'dark'"
+                      :text-variant="theme === 'light' ? 'dark' : 'white'"
+                      id="chart"
+                      :title="$t('stats.artist_tracks.title')">
+                <b-card-text class="text-left">{{ $t('stats.artist_tracks.content') }}</b-card-text>
+                <template #footer>
+                  <b-button-group>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.artist_tracks', params: { type: 'albums' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :to="{ name: 'weekly.stats.artist_tracks', params: { type: 'tracks' } }"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                  </b-button-group>
+                </template>
               </b-card>
             </b-col>
           </b-row>

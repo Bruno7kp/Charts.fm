@@ -8,7 +8,7 @@
                   :text-variant="theme === 'light' ? 'dark' : 'white'"
                   id="chart">
             <b-card-title>
-              {{ $tc('stats.most_top_xs', rank, { number: rank }) }}
+              {{ $tc('stats.artist_tracks.title', rank, { number: rank }) }}
             </b-card-title>
             <b-card-body>
               <b-row>
@@ -32,9 +32,8 @@
                 </b-col>
                 <b-col order-sm="2" order-md="2" sm="12" md="8" lg="9" class="text-right">
                   <b-button-group class="d-sm-flex d-md-block">
-                    <b-button variant="danger" :disabled="tp === 'artists'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'artists' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" icon="user" /> {{ $tc("word.artist", 2) }}</b-button>
-                    <b-button variant="danger" :disabled="tp === 'albums'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'albums' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
-                    <b-button variant="danger" :disabled="tp === 'tracks'" :to="{ name: 'weekly.stats.most_top_xs', params: { type: 'tracks' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'albums'" :to="{ name: 'weekly.stats.artist_tracks', params: { type: 'albums' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'compact-disc']" /> {{ $tc("word.album", 2) }}</b-button>
+                    <b-button variant="danger" :disabled="tp === 'tracks'" :to="{ name: 'weekly.stats.artist_tracks', params: { type: 'tracks' } }" @click="loadCharts"><font-awesome-icon data-html2canvas-ignore="true" :icon="['fa', 'music']" /> {{ $tc("word.track", 2) }}</b-button>
                   </b-button-group>
                 </b-col>
               </b-row>
@@ -43,15 +42,17 @@
                   :items="items"
                   :class="'bg-' + theme + ' chart-table mt-4'"
                   responsive="lg"
+                  :sort-by.sync="sortBy"
+                  :sort-desc.sync="sortDesc"
                   :dark="theme === 'dark'"
                   :striped="true"
                   :small="true">
                 <template #cell(name_artist)="row">
-                  <span class="d-block">{{ items[row.index].name }}</span>
-                  <span class="d-block sub">{{ items[row.index].artist }}</span>
+                  <span class="d-block">{{ row.item.name }}</span>
+                  <span class="d-block sub">{{ row.item.artist }}</span>
                 </template>
-                <template #cell(times)="row">
-                  <span class="d-block small">{{ items[row.index].times }}x</span>
+                <template #cell(ranking)="row">
+                  <span class="d-block">{{ row.index + 1 }}</span>
                 </template>
               </b-table>
             </b-card-body>
@@ -75,7 +76,7 @@
 <script lang="ts">
 import moment from 'moment';
 import {Vue} from 'vue-property-decorator';
-import { getRankListAtTopX, getUserChartList} from "@/charts/helpers";
+import {getArtistsWithMostEntriesInTopX, getRankListAtTopX, getUserChartList} from "@/charts/helpers";
 
 export default Vue.extend({
   name: 'MostNumberOnes',
@@ -90,7 +91,9 @@ export default Vue.extend({
       loaded: false,
       items: [] as any[],
       rankings: [1],
-      tp: '',
+      tp: 'albums' as 'albums'|'tracks',
+      sortBy: 'ranking',
+      sortDesc: false,
     };
   },
   computed: {
@@ -112,9 +115,12 @@ export default Vue.extend({
       return this.$store.getters.getTheme;
     },
     fields() {
+      const item = this.tp === 'albums' ? this.$tc('word.album', 2) : this.$tc('word.track', 2);
       return [
-        { key: 'times', label: 'X', class: 'text-center w-5' },
-        { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title' },
+        { key: 'ranking', label: '#', class: 'text-center w-5' },
+        { key: 'name_artist', label: this.$tc('word.artist', 1), class: 'title' },
+        { key: 'total_items', label: item, class: 'text-center w-5', sortable: true },
+        { key: 'total_weeks', label: this.$tc('word.week', 2), class: 'text-center w-5', sortable: true },
       ];
     },
     years() {
@@ -147,12 +153,12 @@ export default Vue.extend({
       this.setRankings();
       if (!this.loaded || this.rank > this.limit) {
         this.loaded = true;
-        this.rank = this.limit;
+        this.rank = 1;
       }
       if (weeks.length > 0) {
-        const type = this.$route.params.type || 'artists';
-        this.tp = type;
-        this.items = getRankListAtTopX(weeks, type, this.rank, this.year);
+        const type = this.$route.params.type || 'albums';
+        this.tp = (type === 'albums' || type === 'tracks') ? type : 'albums';
+        this.items = getArtistsWithMostEntriesInTopX(weeks, this.tp, this.rank, this.year);
       }
     },
   },

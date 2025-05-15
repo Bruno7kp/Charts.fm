@@ -21,6 +21,14 @@
                     </b-input-group-prepend>
                     <b-select v-model="rank" name="rank" :options="rankings" required></b-select>
                   </b-input-group>
+                  <b-input-group class="mb-3">
+                    <b-input-group-prepend>
+                      <b-btn href="#" variant="danger">
+                        {{ $tc('word.year', 1) }}:
+                      </b-btn>
+                    </b-input-group-prepend>
+                    <b-select v-model="year" name="year" :options="years" required></b-select>
+                  </b-input-group>
                 </b-col>
                 <b-col sm="12" md="8" lg="9" class="text-right">
                   <b-button-group>
@@ -47,7 +55,13 @@
                 </template>
                 <template #cell(week)="row">
                   <span class="d-block">{{ items[row.index].week }}</span>
-                  <span class="d-block sub smaller">{{ items[row.index].week_full }}</span>
+                  <span class="d-block sub smaller">{{ items[row.index].week_start }}</span>
+                  <span class="d-block sub smaller">{{ items[row.index].week_end }}</span>
+                </template>
+                <template #cell(link)="row">
+                  <b-button variant="dark" size="sm" :to="{ name: 'weekly.' + tp, params: { week: items[row.index].week } }">
+                    {{ $t('word.view_week') }}
+                  </b-button>
                 </template>
               </b-table>
             </b-card-body>
@@ -75,6 +89,19 @@ import {getListAtRankX, getUserChartList} from "@/charts/helpers";
 
 export default Vue.extend({
   name: 'AllNumberOnes',
+  data() {
+    const year = moment().format('YYYY');
+    return {
+      limit: 1,
+      rank: 1,
+      year,
+      startYear: year,
+      endYear: year,
+      items: [] as any[],
+      rankings: [1],
+      tp: '',
+    };
+  },
   computed: {
     user: {
       get(): any {
@@ -99,22 +126,24 @@ export default Vue.extend({
         { key: 'times', label: 'X', class: 'text-center w-5' },
         { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title' },
         { key: 'playcount', label: this.$t('chart.playcount'), class: 'text-center w-10' },
+        { key: 'link', label: '', class: 'text-center w-10' },
       ];
     },
-  },
-  data() {
-    return {
-      limit: 1,
-      rank: 1,
-      items: [] as any[],
-      rankings: [1],
-      tp: '',
-    };
+    years() {
+      const years = [this.$t('word.all_time')];
+      for (let i = parseInt(this.endYear, 10); i >= parseInt(this.startYear, 10); i--) {
+        years.push(i.toString());
+      }
+      return years;
+    },
   },
   watch: {
     rank(newValue: number) {
       this.loadCharts();
-    }
+    },
+    year(newValue: number) {
+      this.loadCharts();
+    },
   },
   methods: {
     setRankings() {
@@ -126,6 +155,7 @@ export default Vue.extend({
     loadCharts() {
       const weeks = getUserChartList(this.user, 'week');
       this.limit = weeks && weeks[0].limit ? weeks[0].limit : 1;
+      this.startYear = weeks && weeks[0].start ? moment(weeks[0].start).format('YYYY') : this.endYear;
       this.setRankings();
       if (this.rank > this.limit) {
         this.rank = this.limit;
@@ -133,7 +163,7 @@ export default Vue.extend({
       if (weeks.length > 0) {
         const type = this.$route.params.type || 'artists';
         this.tp = type;
-        this.items = getListAtRankX(weeks, type, this.rank);
+        this.items = getListAtRankX(weeks, type, this.rank, this.year);
       }
     },
   },
