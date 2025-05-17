@@ -1,7 +1,7 @@
 {
   "name": "charts.fm",
   "short_name": "charts.fm",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "icons": [
     {
       "src": "/img/logo.png",
@@ -12,5 +12,5 @@
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",
-  "theme_color": "#DC3540"
+  "theme_color": "#DC3541"
 }

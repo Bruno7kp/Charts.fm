@@ -43,20 +43,28 @@
               </b-row>
               <b-table
                   :fields="fields"
-                  :items="items"
+                  :items="visibleItems"
                   :class="'bg-' + theme + ' chart-table mt-4'"
                   responsive="lg"
                   :dark="theme === 'dark'"
                   :striped="true"
                   :small="true">
+                <template #cell(ranking)="row">
+                  <span class="d-block">{{ row.index + 1 }}</span>
+                </template>
                 <template #cell(name_artist)="row">
                   <span class="d-block">{{ items[row.index].name }}</span>
                   <span class="d-block sub">{{ items[row.index].artist }}</span>
                 </template>
                 <template #cell(times)="row">
-                  <span class="d-block small">{{ items[row.index].times }}x</span>
+                  <span class="d-block">{{ items[row.index].times }}x</span>
                 </template>
               </b-table>
+              <div class="text-center d-block mt-3" v-if="visibleCount < items.length">
+                <b-button variant="outline-danger" @click="visibleCount += pageSize">
+                  {{ $t('messages.view_more') }}
+                </b-button>
+              </div>
             </b-card-body>
           </b-card>
         </b-col>
@@ -95,9 +103,14 @@ export default Vue.extend({
       rankings: [1],
       peaks: {} as Record<string, Record<string, any>>,
       tp: '',
+      visibleCount: 100,
+      pageSize: 100,
     };
   },
   computed: {
+    visibleItems(): any[] {
+      return this.items.slice(0, this.visibleCount);
+    },
     user: {
       get(): any {
         return this.$store.getters.getDefaultUser;
@@ -117,6 +130,7 @@ export default Vue.extend({
     },
     fields() {
       return [
+        { key: 'ranking', label: '#', class: 'text-center w-5' },
         { key: 'times', label: 'X', class: 'text-center w-5' },
         { key: 'name_artist', label: this.$tc('word.title', 1), class: 'title' },
       ];
@@ -154,6 +168,7 @@ export default Vue.extend({
     loadCharts() {
       const weeks = getUserChartList(this.user, 'week');
       this.limit = weeks && weeks[0].limit ? weeks[0].limit : 1;
+      this.visibleCount = this.pageSize;
       this.startYear = weeks && weeks[0].start ? moment(weeks[0].start).format('YYYY') : this.endYear;
       this.setRankings();
       if (this.rank > this.limit) {

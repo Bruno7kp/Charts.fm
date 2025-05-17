@@ -1,6 +1,8 @@
 import moment, { weekdays } from 'moment';
 import {Week, Artist, Album, Track, User, WeeklyCharts, MonthlyCharts, YearlyCharts, Stats} from '@/charts';
 
+const listLimit = 1000;
+
 const fixedStartDate = (start: Date, weekDay: number) => {
     const n = moment(start);
     const c = n.day(n.day() >= weekDay ? weekDay : (weekDay - 7));
@@ -188,8 +190,8 @@ export const getMostPlays = (
         for (const entry of filteredItems) {
             const playcount = entry.playcount;
 
-            // Otimização: se já temos 200 e playcount menor que o menor atual, ignora
-            if (topEntries.length >= 200 && playcount <= minPlaycountInTop) {
+            // Otimização: se já temos listLimit e playcount menor que o menor atual, ignora
+            if (topEntries.length >= listLimit && playcount <= minPlaycountInTop) {
                 continue;
             }
 
@@ -211,10 +213,10 @@ export const getMostPlays = (
 
             topEntries.push(obj);
 
-            // Ordena e mantém apenas os 200 com maior playcount
+            // Ordena e mantém apenas os listLimit com maior playcount
             topEntries.sort((a, b) => b.playcount - a.playcount);
-            if (topEntries.length > 200) {
-                topEntries.length = 200;
+            if (topEntries.length > listLimit) {
+                topEntries.length = listLimit;
             }
 
             minPlaycountInTop = topEntries[topEntries.length - 1].playcount;
@@ -261,7 +263,7 @@ export const getBiggestDebuts = (
             if (y && weekYear !== y) continue; // só inclui se for do ano filtrado
 
             const playcount = entry.playcount;
-            if (topEntries.length >= 200 && playcount <= minPlaycountInTop) continue;
+            if (topEntries.length >= listLimit && playcount <= minPlaycountInTop) continue;
 
             const obj: any = {
                 name: entry.name,
@@ -279,10 +281,10 @@ export const getBiggestDebuts = (
 
             topEntries.push(obj);
 
-            // Ordena e mantém apenas os 200 maiores
+            // Ordena e mantém apenas os listLimit maiores
             topEntries.sort((a, b) => b.playcount - a.playcount);
-            if (topEntries.length > 200) {
-                topEntries.length = 200;
+            if (topEntries.length > listLimit) {
+                topEntries.length = listLimit;
             }
 
             minPlaycountInTop = topEntries[topEntries.length - 1].playcount;

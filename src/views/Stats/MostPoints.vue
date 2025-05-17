@@ -32,7 +32,7 @@
               </b-row>
               <b-table
                   :fields="fields"
-                  :items="items"
+                  :items="visibleItems"
                   :class="'bg-' + theme + ' chart-table mt-4'"
                   responsive="lg"
                   :dark="theme === 'dark'"
@@ -46,6 +46,11 @@
                   <span class="d-block sub">{{ items[row.index].artist }}</span>
                 </template>
               </b-table>
+              <div class="text-center d-block mt-3" v-if="visibleCount < items.length">
+                <b-button variant="outline-danger" @click="visibleCount += pageSize">
+                  {{ $t('messages.view_more') }}
+                </b-button>
+              </div>
             </b-card-body>
           </b-card>
         </b-col>
@@ -81,9 +86,14 @@ export default Vue.extend({
       items: [] as any[],
       peaks: {} as Record<string, Record<string, any>>,
       tp: '',
+      visibleCount: 100,
+      pageSize: 100,
     };
   },
   computed: {
+    visibleItems(): any[] {
+      return this.items.slice(0, this.visibleCount);
+    },
     user: {
       get(): any {
         return this.$store.getters.getDefaultUser;
@@ -129,6 +139,7 @@ export default Vue.extend({
     loadCharts() {
       const weeks = getUserChartList(this.user, 'week');
       this.limit = weeks && weeks[0].limit ? weeks[0].limit : 1;
+      this.visibleCount = this.pageSize;
       this.startYear = weeks && weeks[0].start ? moment(weeks[0].start).format('YYYY') : this.endYear;
 
       if (weeks.length > 0) {

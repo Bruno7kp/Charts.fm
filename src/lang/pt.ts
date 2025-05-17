@@ -75,6 +75,7 @@ const pt = {
         privacy: 'Política de Privacidade',
         intro: 'Crie seus charts semanais baseado no que você escuta pelo Last.fm',
         read_more: 'Leia mais',
+        view_more: 'Ver mais',
         require_update: 'Atualize seus charts',
         untie_complete: 'Chart atualizado!',
         untie_complete_sub: 'A página irá atualizar para que as alterações tenham efeito no seu chart.',

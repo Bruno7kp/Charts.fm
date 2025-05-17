@@ -75,6 +75,7 @@ const en = {
         privacy: 'Privacy Policy',
         intro: 'Create your weekly charts based on what you listen to on Last.fm',
         read_more: 'Read more',
+        view_more: 'View more',
         require_update: 'Update required',
         untie_complete: 'Chart updated!',
         untie_complete_sub: 'The page will refresh so that the changes take effect on your chart.',
