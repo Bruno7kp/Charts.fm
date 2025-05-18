@@ -155,9 +155,9 @@ export default Vue.extend({
       for (let i = 0; i < list.length; i++) {
         let index = 0;
         if (type === 'artists') {
-          index = current.findIndex(obj => obj.name === list[i].name);
+          index = current.findIndex(obj => obj.name.toLowerCase() === list[i].name.toLowerCase());
         } else {
-          index = current.findIndex(obj => obj.name === list[i].name && obj.artist === list[i].artist);
+          index = current.findIndex(obj => obj.name.toLowerCase() === list[i].name.toLowerCase() && obj.artist.toLowerCase() === list[i].artist.toLowerCase());
         }
         if (index === -1) {
           index = out;
@@ -174,9 +174,9 @@ export default Vue.extend({
     change(item, key) {
       let index = 0;
       if (this.type === 'artists') {
-        index = this.items.findIndex(obj => obj.name === item.moved.element.name);
+        index = this.items.findIndex(obj => obj.name.toLowerCase() === item.moved.element.name.toLowerCase());
       } else {
-        index = this.items.findIndex(obj => obj.name === item.moved.element.name && obj.artist === item.moved.element.artist);
+        index = this.items.findIndex(obj => obj.name.toLowerCase() === item.moved.element.name.toLowerCase() && obj.artist.toLowerCase() === item.moved.element.artist.toLowerCase());
       }
       const change = item.moved.newIndex - item.moved.oldIndex;
       this.items[index].rank = this.items[index].rank + change;

@@ -41,13 +41,13 @@
       <b-table 
         :items="items"
         :fields="fields"
-        :class="'bg-' + theme + ' chart-table ' + (this.table.opts.indexOf('separateLine') >= 0 ? '': 'no-line')"
+        :class="'bg-' + theme + ' chart-table ' + (table.opts.indexOf('separateLine') >= 0 ? '': 'no-line')"
         responsive="lg"
         :dark="theme === 'dark'"
-        :small="this.table.opts.indexOf('small') >= 0"
-        :bordered="this.table.opts.indexOf('bordered') >= 0"
+        :small="table.opts.indexOf('small') >= 0"
+        :bordered="table.opts.indexOf('bordered') >= 0"
         :hover="true"
-        :striped="this.table.opts.indexOf('striped') >= 0">
+        :striped="table.opts.indexOf('striped') >= 0">
         <template #cell(show_details)="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
@@ -64,22 +64,18 @@
                   :text-variant="theme === 'light' ? 'dark' : 'white'">
             <b-row class="border rounded">
               <b-col cols="12" md="3" class="text-center border-right">
-                <b-row class="border-bottom py-2">
-                  <b-col>
+                <b-row>
+                  <b-col cols="4" md="12" class="border-bottom py-2">
+                    <h5 class="font-weight-bold">{{ resumes[row.index].current.rank }}</h5>
                     <small class="text-secondary text-uppercase">{{ $t("chart.current_rank") }}</small>
-                    <h4 class="font-weight-bold pt-2">{{ resumes[row.index].current.rank }}</h4>
                   </b-col>
-                </b-row>
-                <b-row class="border-bottom py-2">
-                  <b-col>
+                  <b-col cols="4" md="12" class="border-bottom py-2">
+                    <h5 class="font-weight-bold">{{ resumes[row.index].variation.previous.rank }}</h5>
                     <small class="text-secondary text-uppercase">{{ $t("chart.previous_rank") }}</small>
-                    <h5 class="font-weight-bold pt-2">{{ resumes[row.index].variation.previous.rank }}</h5>
                   </b-col>
-                </b-row>
-                <b-row class="py-2">
-                  <b-col>
+                  <b-col cols="4" md="12" class="border-bottom py-2">
+                    <h5 class="font-weight-bold">{{ resumes[row.index].total }}</h5>
                     <small class="text-secondary text-uppercase">{{ $tc("word." + chartType, 2) }}</small>
-                    <h5 class="font-weight-bold pt-2">{{ resumes[row.index].total }}</h5>
                   </b-col>
                 </b-row>
               </b-col>
@@ -131,7 +127,7 @@
             <b-row class="border rounded mt-3">
               <b-col>
                 <b-row>
-                  <b-col cols="12" class="border-bottom pb-2" 
+                  <b-col cols="12" class="border-bottom pb-2"
                     v-for="(runs, k) in resumes[row.index].stats.run" :key="k">
                     <h6 class="mt-2">
                       Chart-run: {{ runs.length }} {{ $tc('word.' + chartType, runs.length) }}
@@ -140,15 +136,15 @@
                     <hr class="m-1"/>
                     <b-button
                       v-for="(entry, key) in runs"
-                      :key="k + 'b' + key + row.index" 
-                      :variant="entry.rank === resumes[row.index].stats.peak ? 'outline-primary' : (theme === 'dark' ? 'outline-secondary' : 'outline-dark')" 
+                      :key="k + 'b' + key + row.index"
+                      :variant="entry.rank === resumes[row.index].stats.peak ? 'outline-primary' : (theme === 'dark' ? 'outline-secondary' : 'outline-dark')"
                       class="rounded-0 m-1 p-0 b-run"
                       :id="k + 'i' + key + row.index">
                       {{ entry.rank }}
                     </b-button>
                     <b-popover
                       v-for="(entry, key) in runs"
-                      :key="k + 'p' + key + row.index" 
+                      :key="k + 'p' + key + row.index"
                       :target="k + 'i' + key + row.index"
                       placement="top"
                       triggers="focus">
@@ -185,21 +181,21 @@
         </template>
       </b-table>
       <!-- DROPOUTS TABLE -->
-      <b-row v-if="this.table.opts.indexOf('dropouts') >= 0 && dropouts.length > 0">
+      <b-row v-if="table.opts.indexOf('dropouts') >= 0 && dropouts.length > 0">
         <b-col sm="12" class="text-center mb-2">
           <span class="h5">{{ $t('chart.dropout') }}</span>
         </b-col>
       </b-row>
-      <b-table v-if="this.table.opts.indexOf('dropouts') >= 0 && dropouts.length > 0"
+      <b-table v-if="table.opts.indexOf('dropouts') >= 0 && dropouts.length > 0"
         :items="dropouts"
         :fields="dropoutsFields"
-        :class="'bg-' + theme + ' chart-table ' + (this.table.opts.indexOf('separateLine') >= 0 ? '': 'no-line')"
+        :class="'bg-' + theme + ' chart-table ' + (table.opts.indexOf('separateLine') >= 0 ? '': 'no-line')"
         responsive="lg"
         :dark="theme === 'dark'"
-        :small="this.table.opts.indexOf('small') >= 0"
-        :bordered="this.table.opts.indexOf('bordered') >= 0"
+        :small="table.opts.indexOf('small') >= 0"
+        :bordered="table.opts.indexOf('bordered') >= 0"
         :hover="true"
-        :striped="this.table.opts.indexOf('striped') >= 0">
+        :striped="table.opts.indexOf('striped') >= 0">
         <template #cell(show_details)="row">
           <!-- we use @click.stop here to prevent emitting of a 'row-clicked' event  -->
           <b-button size="sm" :variant="theme === 'dark' ? 'outline-light border-0': 'outline-dark border-0'" @click.stop="row.toggleDetails" class="p-0 px-1">
@@ -333,11 +329,11 @@
       <b-row>
         <b-col class="small-legend text-md-right">
           <span><strong>{{ $t("chart.abbr.cr") }}</strong> {{ $t("chart.current_rank") }}</span>
-          <span v-if="this.table.opts.indexOf('previousRank') >= 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
-          <span v-if="this.table.opts.indexOf('peak') >= 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
+          <span v-if="table.opts.indexOf('previousRank') >= 0"> | <strong>{{ $t("chart.abbr.pr") }}</strong> {{ $t("chart.previous_rank") }}</span>
+          <span v-if="table.opts.indexOf('peak') >= 0"> | <strong>{{ $t("chart.abbr.pk") }}</strong> {{ $t("chart.peak") }}</span>
           <span> | <strong>{{ $t("chart.abbr.cp") }}</strong> {{ $t("chart.current_playcount") }}</span>
-          <span v-if="this.table.opts.indexOf('previousPlaycount') >= 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
-          <span v-if="this.table.opts.indexOf('onChart') >= 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
+          <span v-if="table.opts.indexOf('previousPlaycount') >= 0"> | <strong>{{ $t("chart.abbr.pp") }}</strong> {{ $t("chart.previous_playcount") }}</span>
+          <span v-if="table.opts.indexOf('onChart') >= 0"> | <strong>{{ $t("chart.abbr.to") }}</strong> {{ $t("chart.total_" + chartType) }}</span>
           <br/>
           <span><strong>{{ $t("chart.abbr.re") }}</strong> {{ $t("chart.re_entry") }} | </span>
           <span><strong>{{ $t("chart.abbr.ne") }}</strong> {{ $t("chart.new_entry") }} | </span>
